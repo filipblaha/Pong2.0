@@ -109,6 +109,11 @@ public:
 
 
 	}
+	void smazani_HUD_power_up()
+	{
+		setCursorPosition(12, VYSKA);
+		std::cout << ' ';
+	}
 private:
 };
 class Menu
@@ -395,7 +400,9 @@ int vstup_hra(Pong& navod)
 	{
 		if (navod.power_up)
 		{
-			navod.slow = 0;
+			navod.slow = 1;
+			navod.power_up = 0;
+			navod.smazani_HUD_power_up();
 		}
 		break;
 	}
@@ -1096,29 +1103,10 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 					navod.pocet_rozbitych_bloku++;
 				}
 			}
-			///////////   zrychleni    /////////////
-
-
-			if (navod.ax_mic == 1)
-			{
-				navod.x_mic++;
-			}
-			if (navod.ax_mic == -1)
-			{
-				navod.x_mic--;
-			}
-			if (navod.ay_mic == 1)
-			{
-				navod.y_mic++;
-			}
-			if (navod.ay_mic == -1)
-			{
-				navod.y_mic--;
-			}
 
 			////////////    power-up    ////////////
 
-			if (navod.pocet_vykresleni % 100 == 0)
+			if (navod.pocet_vykresleni % 200 == 0)
 			{
 				while (navod.bloky.at(navod.y_powerup).at(navod.x_powerup) != 0)
 				{
@@ -1147,6 +1135,25 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 			{
 				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)++;
 				navod.power_up = 1;
+			}
+
+			///////////   zrychleni    /////////////
+
+			if (navod.ax_mic == 1)
+			{
+				navod.x_mic++;
+			}
+			if (navod.ax_mic == -1)
+			{
+				navod.x_mic--;
+			}
+			if (navod.ay_mic == 1)
+			{
+				navod.y_mic++;
+			}
+			if (navod.ay_mic == -1)
+			{
+				navod.y_mic--;
 			}
 		}
 
@@ -1576,45 +1583,45 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 			std::cout << " ";
 		}
 		////////////    mazani power-upu    ////////////
-		if (navod.bloky[navod.y_mic + 1][navod.x_mic] == -1)
+		if (D == -1)
 		{
-			setCursorPosition(navod.x_mic + 1, navod.y_mic);
+			setCursorPosition(SCX, SD);
 			std::cout << " ";
 		}
-		if (navod.bloky[navod.y_mic - 1][navod.x_mic] == -1)
+		if (U == -1)
 		{
-			setCursorPosition(navod.x_mic - 1, navod.y_mic);
+			setCursorPosition(SCX, SU);
 			std::cout << " ";
 		}
-		if (navod.bloky[navod.y_mic][navod.x_mic + 1] == -1)
+		if (R == -1)
 		{
-			setCursorPosition(navod.x_mic, navod.y_mic + 1);
+			setCursorPosition(SR, SCY);
 			std::cout << " ";
 		}
-		if (navod.bloky[navod.y_mic][navod.x_mic - 1] == -1)
+		if (L == -1)
 		{
-			setCursorPosition(navod.x_mic, navod.y_mic - 1);
+			setCursorPosition(SL, SCY);
 			std::cout << " ";
 		}
 
-		if (navod.bloky[navod.y_mic + 1][navod.x_mic + 1] == -1)
+		if (DR == -1)
 		{
-			setCursorPosition(navod.x_mic + 1, navod.y_mic + 1);
+			setCursorPosition(SR, SD);
 			std::cout << " ";
 		}
-		if (navod.bloky[navod.y_mic - 1][navod.x_mic + 1] == -1)
+		if (UR == -1)
 		{
-			setCursorPosition(navod.x_mic - 1, navod.y_mic + 1);
+			setCursorPosition(SR, SU);
 			std::cout << " ";
 		}
-		if (navod.bloky[navod.y_mic + 1][navod.x_mic - 1] == -1)
+		if (DL == -1)
 		{
-			setCursorPosition(navod.x_mic + 1, navod.y_mic - 1);
+			setCursorPosition(SL, SD);
 			std::cout << " ";
 		}
-		if (navod.bloky[navod.y_mic - 1][navod.x_mic - 1] == -1)
+		if (UL == -1)
 		{
-			setCursorPosition(navod.x_mic - 1, navod.y_mic - 1);
+			setCursorPosition(SU, SL);
 			std::cout << " ";
 		}
 	}
@@ -1671,7 +1678,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			}
 
 			////////////    vykreslovani power-upu   ////////////
-			if (navod.pocet_vykresleni % 100 == 0)
+			if (navod.pocet_vykresleni % 200 == 0)
 			{
 				for (int j = 0; j < navod.bloky.size(); j++)
 				{
@@ -1700,13 +1707,12 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 		setCursorPosition(navod.DELKA - 4, navod.VYSKA);
 		std::cout << navod.cas;
 
-		//////////    vykreslovani power-up  ////////////
+		//////////    vykreslovani HUD power-up  ////////////
 		if (navod.power_up)
 		{
 			setCursorPosition(12, navod.VYSKA);
 			std::cout << '$';
 			navod.slow = 1;
-			navod.power_up = 0;
 		}
 	}
 }
