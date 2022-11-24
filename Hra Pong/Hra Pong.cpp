@@ -19,6 +19,7 @@ public:
 	bool ztrata_zivotu = 0;
 	bool power_up = 0;
 	bool slow = 0;
+	bool trvani = 0;
 
 	char zed = char(219);
 	char blok1 = char(176);
@@ -41,11 +42,13 @@ public:
 
 	int pocet_bloku = 0;
 	int pocet_vykresleni = 0;
+	int pocet_rozbitych_bloku;
+	int pocet_trvani_power_up = 0;
+
 	int cas = 0;
 	int rychlost_hry = 2;
 	int padani = 0;
 	int zivoty = 0;
-	int pocet_rozbitych_bloku;
 	int n_exp = 0;
 
 	std::vector<std::vector<int>> bloky;
@@ -398,11 +401,12 @@ int vstup_hra(Pong& navod)
 	}
 	case ' ':
 	{
-		if (navod.power_up)
+		if (navod.slow)
 		{
-			navod.slow = 1;
-			navod.power_up = 0;
+			navod.slow = 0;
 			navod.smazani_HUD_power_up();
+			navod.trvani = 1;
+			
 		}
 		break;
 	}
@@ -879,6 +883,20 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 		navod.cas++;
 	if (navod.pocet_vykresleni % 20 == 0)
 		navod.padani++;
+
+	////////////    power-up trvani    ////////////
+
+	if (navod.trvani)
+	{
+		navod.rychlost_hry = 4;
+		navod.pocet_trvani_power_up++;
+		if (navod.pocet_trvani_power_up == 50)
+		{
+			navod.rychlost_hry = 2;
+			navod.trvani = 0;
+			navod.pocet_trvani_power_up = 0;
+		}
+	}
 
 	////////////   prohra / vyhra   ////////////
 
@@ -1713,6 +1731,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			setCursorPosition(12, navod.VYSKA);
 			std::cout << '$';
 			navod.slow = 1;
+			navod.power_up = 0;
 		}
 	}
 }
