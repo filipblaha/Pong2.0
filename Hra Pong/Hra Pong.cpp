@@ -27,6 +27,17 @@ public:
 	char blok3 = char(178);
 	char mic = 'O';
 
+	char pohyb_vpravo = 'd';
+	char pohyb_vlevo = 'a';
+	char pauza = char(27);
+	char pouziti_schopnosti = ' ';
+
+	enum Constants
+	{
+		POHYB_VPRAVO = 'd',
+		POHYB_VLEVO = 
+	};
+
 	int DELKA = 20;
 	int VYSKA = 20;
 	int velikost_plosina = 6;
@@ -151,11 +162,6 @@ public:
 	int potr_urov3 = 3;
 	int potr_urov4 = 4;
 	int potr_urov5 = 5;
-
-	char pohyb_vpravo = 'd';
-	char pohyb_vlevo = 'a';
-	char pauza = char(27);
-	char pouziti_schopnosti = ' ';
 
 	std::vector<char> pole_skin;
 
@@ -387,6 +393,41 @@ public:
 				return jazyk_zmena = 1;
 			}
 		}
+
+		/////////////////////    Ovladani     //////////////////////////
+
+		if (strana == 4)
+		{
+			if (y_tecka == 12)
+			{
+				setCursorPosition(29, 12);
+				std::cout << "        ";
+				setCursorPosition(29, 12);
+				pohyb_vlevo = _getche();
+			}
+			if (y_tecka == 13)
+			{
+				setCursorPosition(29, 13);
+				std::cout << "        ";
+				setCursorPosition(29, 13);
+				pohyb_vpravo = _getche();
+			}
+			if (y_tecka == 14)
+			{
+				setCursorPosition(29, 14);
+				std::cout << "        ";
+				setCursorPosition(29, 14);
+				pouziti_schopnosti = _getche();
+			}
+			if (y_tecka == 15)
+			{
+				setCursorPosition(29, 15);
+				std::cout << "        ";
+				setCursorPosition(29, 15);
+				pauza = _getche();
+			}
+			exit = 0;
+		}
 	}
 private:
 };
@@ -431,9 +472,10 @@ void prechod()
 
 int vstup_hra(Pong& navod)
 {
+	char vlevo = navod.pohyb_vlevo;
 	switch (_getch())
 	{
-	case 'd':
+	case :
 	{
 		if (!(navod.x_plosina == navod.DELKA - navod.velikost_plosina - 1)) //zed vpravo
 		{
@@ -2534,8 +2576,8 @@ void menu_ovladani(Menu& navod_menu, Pong& navod)
 		vstup_menu(navod_menu, navod, 4);
 		if (navod_menu.enter == 1)
 		{
-			navod_menu.rozhodovac(3, navod_menu.plosina_skin, navod_menu.jazyk);
 			navod_menu.exit = 1;
+			navod_menu.rozhodovac(4, navod_menu.plosina_skin, navod_menu.jazyk);
 		}
 	}
 }
@@ -2610,7 +2652,7 @@ int main()
 		//bloky_padaji(navod_menu);
 		//menu_vzhled_plosiny(navod_menu, navod);
 		//menu_nastaveni(navod_menu, navod);
-		//menu_ovladani(navod_menu, navod);
+		menu_ovladani(navod_menu, navod);
 		//klasik(navod_menu);
 		menu_hlavni(navod_menu, navod);
 	}
