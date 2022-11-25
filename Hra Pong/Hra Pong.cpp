@@ -4,6 +4,8 @@
 #include <windows.h>
 #include "Pong.h"
 #include "Menu.h"
+#include "tinyxml2.cpp"
+#include "tinyxml2.h"
 
 /////////////////////    Commands     //////////////////////////
 

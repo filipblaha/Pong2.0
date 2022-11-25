@@ -130,8 +130,10 @@
     <ClCompile Include="Hra Pong.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Pong.cpp" />
+    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pong.h" />
   </ItemGroup>
