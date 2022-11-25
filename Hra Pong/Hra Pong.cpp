@@ -5,8 +5,6 @@
 #include "Pong.h"
 #include "Menu.h"
 
-
-
 /////////////////////    Commands     //////////////////////////
 
 void font(int f1, int f2)
@@ -50,6 +48,8 @@ void smazani_HUD_power_up(Pong navod)
 	navod_menu.setCursorPosition(12, navod.VYSKA);
 	std::cout << ' ';
 }
+
+/////////////////////    Vstupy     //////////////////////////
 
 int vstup_hra(Pong& navod)
 {
