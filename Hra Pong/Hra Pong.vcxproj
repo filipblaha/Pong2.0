@@ -128,6 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Hra Pong.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Pong.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Pong.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

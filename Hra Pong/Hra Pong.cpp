@@ -2,394 +2,10 @@
 #include <vector>
 #include <conio.h>
 #include <windows.h>
-
-void setCursorPosition(int x, int y)
-{
-	static const HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	std::cout.flush();
-	COORD coord = { (SHORT)x, (SHORT)y };
-	SetConsoleCursorPosition(hOut, coord);
-}
-
-class Pong
-{
-public:
-	bool program = 1;
-	bool pokracovani = 1;
-	bool ztrata_zivotu = 0;
-	bool power_up = 0;
-	bool slow = 0;
-	bool trvani = 0;
-
-	char zed = char(219);
-	char blok1 = char(176);
-	char blok2 = char(177);
-	char blok3 = char(178);
-	char mic = 'O';
-
-	int DELKA = 20;
-	int VYSKA = 20;
-	int velikost_plosina = 6;
-	int x_plosina = (DELKA - velikost_plosina) / 2;
-
-	int pohyb = 0;
-	int ax_mic = 1;
-	int ay_mic = -1;
-	int x_mic = DELKA / 2;
-	int y_mic = VYSKA - 5;
-	int x_powerup = y_mic;
-	int y_powerup = x_mic;
-
-	int pocet_bloku = 0;
-	int pocet_vykresleni = 0;
-	int pocet_rozbitych_bloku;
-	int pocet_trvani_power_up = 0;
-
-	int cas = 0;
-	int rychlost_hry = 2;
-	int padani = 0;
-	int zivoty = 0;
-	int n_exp = 0;
-
-	std::vector<std::vector<int>> bloky;
-	std::vector<std::vector<int>> zasobnik;
-	std::vector<int> docas;
-	std::vector<int> exp_pole;
-
-	void bloky_vytvoreni_klasik()
-	{
-		for (int j = 0; j < VYSKA; j++)
-		{
-			docas.clear();
-			for (int i = 0; i < DELKA; i++)
-			{
-				if (i != 0 && i != DELKA - 1 && j != 0 && j < 7 && i % 3 == 0)
-				{
-					if (j < 4)
-					{
-						if (j < 2)
-							docas.push_back(3);
-						else
-							docas.push_back(2);
-					}
-					else
-						docas.push_back(1);
-				}
-				else
-					docas.push_back(0);
-			}
-			bloky.push_back(docas);
-		}
-	}
-	void bloky_vytvoreni_padajici()
-	{
-		/////////////////    hraci pole   ////////////////////
-		for (int j = 0; j < VYSKA; j++)
-		{
-			docas.clear();
-			for (int i = 0; i < DELKA; i++)
-			{
-				if (i != 0 && i != DELKA - 1 && j < 2)
-					docas.push_back(1);
-				else
-					docas.push_back(0);
-			}
-			bloky.push_back(docas);
-		}
-		/////////////////    zasobnik   ////////////////////
-		for (int j = 0; j < 50; j++)
-		{
-			docas.clear();
-			for (int i = 0; i < DELKA; i++)
-			{
-				if (i != 0 && i != DELKA - 1 && j % 2 == 0)
-					docas.push_back(1);
-				else
-					docas.push_back(0);
-			}
-			zasobnik.push_back(docas);
-		}
+#include "Pong.h"
+#include "Menu.h"
 
 
-	}
-	void smazani_HUD_power_up()
-	{
-		setCursorPosition(12, VYSKA);
-		std::cout << ' ';
-	}
-private:
-};
-class Menu
-{
-public:
-	int delka_menu = 40;
-	int vyska_menu = 20;
-	int x_tecka = 0;
-	int y_tecka = 0;
-	int x_oznaceni = 0;
-	int y_oznaceni = 0;
-	int horni_zavora_hlavni = 0;
-	int dolni_zavora_hlavni = 0;
-	int prava_zavora_hlavni = 0;
-	int leva_zavora_hlavni = 0;
-
-	bool enter = 0;
-	bool exit = 0;
-	bool reset = 0;
-	bool vytazeno = 0;
-	bool balic = 0;
-
-	int jazyk = 0;
-	int plosina_skin = 0;
-	int highscore_cas = 0;
-	int highscore_znicenych_bloku = 0;
-	int level = 7;
-	int exp = 0;
-	int pocet_zivotu = 3;
-	int potr_urov1 = 1;
-	int potr_urov2 = 2;
-	int potr_urov3 = 3;
-	int potr_urov4 = 4;
-	int potr_urov5 = 5;
-
-	char pohyb_vpravo = 'd';
-	char pohyb_vlevo = 'a';
-	char pauza = char(27);
-	char pouziti_schopnosti = ' ';
-
-	std::vector<char> pole_skin;
-
-	/////////////////////    Skiny     //////////////////////////
-	void skin()
-	{
-		Pong navod;
-		pole_skin.resize(navod.velikost_plosina);
-
-		if (plosina_skin == 0)
-		{
-			for (int i = 0; i < pole_skin.size(); i++)
-			{
-				pole_skin.at(i) = 'I';
-			}
-		}
-		if (plosina_skin == 1)
-		{
-			for (int i = 0; i < pole_skin.size(); i++)
-			{
-				pole_skin.at(i) = '=';
-			}
-		}
-		if (plosina_skin == 2)
-		{
-			pole_skin.at(0) = 'F';
-			pole_skin.at(1) = 'E';
-			pole_skin.at(2) = 'L';
-			pole_skin.at(3) = 'Z';
-			pole_skin.at(4) = 'C';
-			pole_skin.at(5) = 'U';
-		}
-		if (plosina_skin == 3)
-		{
-			pole_skin.at(0) = '8';
-			pole_skin.at(1) = '=';
-			pole_skin.at(2) = '=';
-			pole_skin.at(3) = '=';
-			pole_skin.at(4) = '=';
-			pole_skin.at(5) = 'D';
-		}
-		if (plosina_skin == 4)
-		{
-			for (int i = 0; i < pole_skin.size() / 2; i++)
-			{
-				pole_skin.at(i) = char(174);
-			}
-			for (int i = pole_skin.size() / 2; i < pole_skin.size(); i++)
-			{
-				pole_skin.at(i) = char(175);
-			}
-		}
-		if (plosina_skin == 5)
-		{
-			for (int i = 0; i < pole_skin.size(); i++)
-			{
-				pole_skin.at(i);
-			}
-		}
-	}
-
-	/////////////////////    Preklad     //////////////////////////
-	std::string herni_modyCZ = "Herni mody";
-	std::string herni_modyEN = "Game modes";
-	std::string vzhled_plosinyCZ = "Vzhled plosiny";
-	std::string vzhled_plosinyEN = "Skins";
-	std::string nastaveniCZ = "Nastaveni";
-	std::string nastaveniEN = "Settings";
-	std::string verzeCZ = "verze ";
-	std::string verzeEN = "version ";
-	std::string HERNI_MODYCZ = "HERNI MODY";
-	std::string HERNI_MODYEN = "GAME MODES";
-	std::string NASTAVENICZ = "NASTAVENI";
-	std::string NASTAVENIEN = "SETTINGS";
-	std::string VZHLED_PLOSINYCZ = "VZHLED PLOSINY";
-	std::string VZHLED_PLOSINYEN = "SKINS";
-	std::string neodemcenoCZ = "Odemkne se na urovni  ";
-	std::string neodemcenoEN = "Unlocks after level ";
-	std::string klasikCZ = "Klasik";
-	std::string klasikEN = "Classic";
-	std::string rogue_likeCZ = "Rogue like - zatim nefunkcni";
-	std::string rogue_likeEN = "Rogue like - zatim nefunkcni";
-	std::string stejne_tvaryCZ = "Stejne tvary - zatim nefunkcni";
-	std::string stejne_tvaryEN = "Hit the same color - zatim nefunkcni";
-	std::string bloky_padajiCZ = "Bloky padaji";
-	std::string bloky_padajiEN = "Falling blocks";
-	std::string jazykCZ = "Jazyk";
-	std::string jazykEN = "Language";
-	std::string ceskyCZ = "Cesky";
-	std::string ceskyEN = "Czech";
-	std::string anglickyCZ = "Anglicky";
-	std::string anglickyEN = "English";
-	std::string ovladaniCZ = "Ovladani";
-	std::string ovladaniEN = "Controls";
-	std::string OVLADANICZ = "OVLADANI";
-	std::string OVLADANIEN = "CONTROLS";
-
-	std::string odchodP1CZ = "Zkus to znovu.";
-	std::string odchodP1EN = "Try again.";
-	std::string odchodV1CZ = "VYHRAL JSI!";
-	std::string odchodV1EN = "YOU'VE WON!";
-	std::string odchod2CZ = "Restart[MEZERNIK]";
-	std::string odchod2EN = "Restart [SPACEBAR]";
-	std::string odchod3CZ = "Menu[ESC]";
-	std::string odchod3EN = "Menu [ESC]";
-	std::string odchod4CZ = "NEJLEPSI CAS: ";
-	std::string odchod4EN = "BEST TIME: ";
-	std::string odchodV5CZ = "Dosazeny cas: ";
-	std::string odchodV5EN = "Your time: ";
-	std::string odchodP5CZ = "Bloku zbylo: ";
-	std::string odchodP5EN = "Blocks left: ";
-	std::string odchod6CZ = "Uroven ";
-	std::string odchod6EN = "Level ";
-	std::string odchod7CZ = "Bloku zniceno: ";
-	std::string odchod7EN = "Blocks destroyed: ";
-	std::string odchod8CZ = "NEJVICE ZNICENYCH BLOKU: ";
-	std::string odchod8EN = "HIGHSCORE: ";
-
-	std::string ovladani_menuCZ = "Ovladani v menu";
-	std::string ovladani_menuEN = "Menu controls";
-	std::string ovladani_hraCZ = "Ovladani ve hre";
-	std::string ovladani_hraEN = "In-game controls";
-	std::string ovladani_mezernikCZ = "Mezernik";
-	std::string ovladani_mezernikEN = "Spacebar";
-	std::string ovladani_schopnostCZ = "Pouzit schopnost";
-	std::string ovladani_schopnostEN = "Use ability";
-	std::string ovladani_pohyb_vlevoCZ = "Pohyb - vlevo";
-	std::string ovladani_pohyb_vlevoEN = "Movement - left";
-	std::string ovladani_pohyb_vpravoCZ = "Pohyb - vpravo";
-	std::string ovladani_pohyb_vpravoEN = "Movement - right";
-	std::string ovladani_pauzaCZ = "Pauza";
-	std::string ovladani_pauzaEN = "Pause";
-
-	int rozhodovac(int strana, int& plosina_skin_zmena, int& jazyk_zmena)
-	{
-		/////////////////////    Hlavni menu     //////////////////////////
-		if (strana == 0)
-		{
-			if (y_tecka == 10)
-				return 1;
-			if (y_tecka == 12)
-				return 2;
-			if (y_tecka == 14)
-				return 3;
-		}
-
-		/////////////////////    Herni mody     //////////////////////////
-		if (strana == 1)
-		{
-			if (y_tecka == 8)
-				return 1;
-			/*if (navod_menu.y_tecka == 10)
-			if (navod_menu.y_tecka == 12)*/
-			if (y_tecka == 14)
-				return 4;
-		}
-
-		/////////////////////    Skiny     //////////////////////////
-		if (strana == 2)
-		{
-			if (y_oznaceni == 9 && x_oznaceni == 6)
-				return plosina_skin_zmena = 0;
-			if (y_oznaceni == 9 && x_oznaceni == 16)
-				if (level >= potr_urov1)
-					return plosina_skin_zmena = 1;
-				else
-					return -1;
-			if (y_oznaceni == 9 && x_oznaceni == 26)
-				if (level >= potr_urov2)
-					return plosina_skin_zmena = 2;
-				else
-					return -2;
-			if (y_oznaceni == 13 && x_oznaceni == 6)
-				if (level >= potr_urov3)
-					return plosina_skin_zmena = 3;
-				else
-					return -3;
-			if (y_oznaceni == 13 && x_oznaceni == 16)
-				if (level >= potr_urov4)
-					return plosina_skin_zmena = 4;
-				else
-					return -4;
-			if (y_oznaceni == 13 && x_oznaceni == 26)
-			{
-				if (level >= potr_urov5)
-				{
-					setCursorPosition(27, 14);
-					std::cout << "      ";
-					setCursorPosition(27, 14);
-					Pong navod;
-					pole_skin.resize(navod.velikost_plosina);
-					for (int i = 0; i < pole_skin.size(); i++)
-					{
-						pole_skin.at(i) = _getche();
-					}
-					return plosina_skin_zmena = 5;
-				}
-				else
-					return -5;
-			}
-		}
-
-		/////////////////////    Nastaveni     //////////////////////////
-		if (strana == 3)
-		{
-			if (y_tecka == 8)
-			{
-				return -1;
-			}
-			if (y_tecka == 10)
-			{
-				exit = 0;
-				if (vytazeno)
-					vytazeno = 0;
-				else
-					vytazeno = 1;
-				return balic = 1;
-			}
-			if (y_tecka == 12)
-			{
-				vytazeno = 0;
-				exit = 1;
-				return jazyk_zmena = 0;
-			}
-			if (y_tecka == 14)
-			{
-				vytazeno = 0;
-				exit = 1;
-				return jazyk_zmena = 1;
-			}
-		}
-	}
-private:
-};
 
 /////////////////////    Commands     //////////////////////////
 
@@ -416,9 +32,9 @@ void SetWindow(int delka, int vyska)
 	SetConsoleScreenBufferSize(Handle, coord);
 	SetConsoleWindowInfo(Handle, TRUE, &Rect);
 }
-void prechod()
+void prechod(Menu navod_menu)
 {
-	setCursorPosition(0, 0);
+	navod_menu.setCursorPosition(0, 0);
 	for (int j = 0; j < 20; j++)
 	{
 		for (int i = 0; i < 40; i++)
@@ -427,6 +43,12 @@ void prechod()
 		}
 		std::cout << "\n";
 	}
+}
+void smazani_HUD_power_up(Pong navod)
+{
+	Menu navod_menu;
+	navod_menu.setCursorPosition(12, navod.VYSKA);
+	std::cout << ' ';
 }
 
 int vstup_hra(Pong& navod)
@@ -454,7 +76,7 @@ int vstup_hra(Pong& navod)
 		if (navod.slow)
 		{
 			navod.slow = 0;
-			navod.smazani_HUD_power_up();
+			smazani_HUD_power_up(navod);
 			navod.trvani = 1;
 			
 		}
@@ -475,7 +97,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 			{
 				navod_menu.y_tecka = navod_menu.y_tecka - 2;
 			}
-			
+
 			if ((navod_menu.y_oznaceni > navod_menu.horni_zavora_hlavni) && (strana == 2))
 			{
 				navod_menu.y_oznaceni = navod_menu.y_oznaceni - 4;
@@ -582,7 +204,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 		}
 		break;
 	}
-	case 'q' :
+	case 'q':
 	{
 		{
 			if (strana == 0)
@@ -609,10 +231,9 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 		break;
 	}
 	default:
-	{
 		break;
 	}
-	}
+	return navod_menu;
 }
 
 /////////////////////    Vyhra / prohra     //////////////////////////
@@ -621,11 +242,11 @@ void vykresleni_konec(Menu navod_menu)
 {
 	int m = 4;
 	int n = 2;
-	setCursorPosition(m, n);
+	navod_menu.setCursorPosition(m, n);
 	////////////    vykreslovani plocha    ////////////
 	for (int j = 0; j < navod_menu.vyska_menu * 3 / 4 + 1; j++)
 	{
-		setCursorPosition(m, n + j);
+		navod_menu.setCursorPosition(m, n + j);
 		for (int i = 0; i < navod_menu.delka_menu * 3 / 4 + 2; i++)
 		{
 			if (j == 0 && i == 0)
@@ -754,20 +375,20 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 		konec_logika(3, 0, navod_menu, navod);
 	if (navod.zivoty <= 1)
 	{
-		prechod();
+		prechod(navod_menu);
 		font(0, 20);
 		SetWindow(navod_menu.delka_menu, navod_menu.vyska_menu - 2);
 
 		vykresleni_konec(navod_menu);
-		setCursorPosition(14, 4);
+		navod_menu.setCursorPosition(14, 4);
 		if (!navod_menu.jazyk)
 		{
 			std::cout << navod_menu.odchodP1CZ;
-			setCursorPosition(6, 16);
+			navod_menu.setCursorPosition(6, 16);
 			std::cout << navod_menu.odchod2CZ;
-			setCursorPosition(27, 16);
+			navod_menu.setCursorPosition(27, 16);
 			std::cout << navod_menu.odchod3CZ;
-			setCursorPosition(6, 8);
+			navod_menu.setCursorPosition(6, 8);
 			if (mod == 0)
 			{
 				if (navod_menu.highscore_cas == 0)
@@ -782,7 +403,7 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 			{
 				std::cout << navod_menu.odchod8CZ << navod_menu.highscore_znicenych_bloku;
 			}
-			setCursorPosition(8, 10);
+			navod_menu.setCursorPosition(8, 10);
 			if (mod == 0)
 			{
 				std::cout << navod_menu.odchodP5CZ << navod.cas;
@@ -791,9 +412,9 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 			{
 				std::cout << navod_menu.odchod7CZ << navod.pocet_rozbitych_bloku;
 			}
-			setCursorPosition(16, 12);
+			navod_menu.setCursorPosition(16, 12);
 			std::cout << navod_menu.odchod6CZ << navod_menu.level;
-			setCursorPosition(10, 14);
+			navod_menu.setCursorPosition(10, 14);
 			for (int i = 0; i < navod.exp_pole.size(); i++)
 			{
 				if (navod.exp_pole.at(i) == 2)
@@ -807,11 +428,11 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 		if (navod_menu.jazyk)
 		{
 			std::cout << navod_menu.odchodP1EN;
-			setCursorPosition(6, 16);
+			navod_menu.setCursorPosition(6, 16);
 			std::cout << navod_menu.odchod2EN;
-			setCursorPosition(27, 16);
+			navod_menu.setCursorPosition(27, 16);
 			std::cout << navod_menu.odchod3EN;
-			setCursorPosition(6, 8);
+			navod_menu.setCursorPosition(6, 8);
 			if (mod == 0)
 			{
 				if (navod_menu.highscore_cas == 0)
@@ -826,7 +447,7 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 			{
 				std::cout << navod_menu.odchod8CZ << navod_menu.highscore_znicenych_bloku;
 			}
-			setCursorPosition(8, 10);
+			navod_menu.setCursorPosition(8, 10);
 			if (mod == 0)
 			{
 				std::cout << navod_menu.odchodP5EN << navod.cas;
@@ -835,11 +456,11 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 			{
 				std::cout << navod_menu.odchod7CZ << navod.pocet_rozbitych_bloku;
 			}
-			setCursorPosition(16, 12);
+			navod_menu.setCursorPosition(16, 12);
 			std::cout << navod_menu.odchod6EN << navod_menu.level;
 
 
-			setCursorPosition(10, 14);
+			navod_menu.setCursorPosition(10, 14);
 			for (int i = 0; i < navod.exp_pole.size(); i++)
 			{
 				if (navod.exp_pole.at(i) == 2)
@@ -869,28 +490,28 @@ void vyhra(int mod, Menu& navod_menu, Pong& navod)
 		konec_logika(0, 1, navod_menu, navod);
 	if (mod == 3)
 		konec_logika(3, 1, navod_menu, navod);
-	prechod();
+	prechod(navod_menu);
 	font(0, 20);
 	SetWindow(navod_menu.delka_menu, navod_menu.vyska_menu - 2);
 
 	vykresleni_konec(navod_menu);
-	setCursorPosition(14, 4);
+	navod_menu.setCursorPosition(14, 4);
 	if (!navod_menu.jazyk)
 	{
 		std::cout << navod_menu.odchodV1CZ;
-		setCursorPosition(6, 16);
+		navod_menu.setCursorPosition(6, 16);
 		std::cout << navod_menu.odchod2CZ;
-		setCursorPosition(27, 16);
+		navod_menu.setCursorPosition(27, 16);
 		std::cout << navod_menu.odchod3CZ;
-		setCursorPosition(6, 8);
+		navod_menu.setCursorPosition(6, 8);
 		std::cout << navod_menu.odchod4CZ << navod_menu.highscore_cas;
-		setCursorPosition(8, 10);
+		navod_menu.setCursorPosition(8, 10);
 		std::cout << navod_menu.odchodV5CZ << navod.cas;
-		setCursorPosition(16, 12);
+		navod_menu.setCursorPosition(16, 12);
 		std::cout << navod_menu.odchod6CZ << navod_menu.level;
 
 
-		setCursorPosition(10, 14);
+		navod_menu.setCursorPosition(10, 14);
 		for (int i = 0; i < navod.exp_pole.size(); i++)
 		{
 			if (navod.exp_pole.at(i) == 2)
@@ -904,19 +525,19 @@ void vyhra(int mod, Menu& navod_menu, Pong& navod)
 	if (navod_menu.jazyk)
 	{
 		std::cout << navod_menu.odchodV1EN;
-		setCursorPosition(6, 16);
+		navod_menu.setCursorPosition(6, 16);
 		std::cout << navod_menu.odchod2EN;
-		setCursorPosition(27, 16);
+		navod_menu.setCursorPosition(27, 16);
 		std::cout << navod_menu.odchod3EN;
-		setCursorPosition(6, 8);
+		navod_menu.setCursorPosition(6, 8);
 		std::cout << navod_menu.odchod4EN << navod_menu.highscore_cas;;
-		setCursorPosition(8, 10);
+		navod_menu.setCursorPosition(8, 10);
 		std::cout << navod_menu.odchodV5EN << navod.cas;
-		setCursorPosition(16, 12);
+		navod_menu.setCursorPosition(16, 12);
 		std::cout << navod_menu.odchod6EN << navod_menu.level;
 
 
-		setCursorPosition(10, 14);
+		navod_menu.setCursorPosition(10, 14);
 		for (int i = 0; i < 4; i++)
 			std::cout << char(219);
 		for (int i = 0; i < 8; i++)
@@ -1276,7 +897,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 Pong vykresleni_start(int mod, Menu& navod_menu, Pong& navod)
 {
 	////////////    vykreslovani plocha    ////////////
-	setCursorPosition(0, 0);
+	navod_menu.setCursorPosition(0, 0);
 	for (int j = 0; j < navod.VYSKA - 1; j++)
 	{
 		for (int i = 0; i < navod.DELKA; i++)
@@ -1297,12 +918,12 @@ Pong vykresleni_start(int mod, Menu& navod_menu, Pong& navod)
 	navod_menu.skin();
 	for (int i = 0; i < navod.velikost_plosina; i++)
 	{
-		setCursorPosition(navod.x_plosina + i, navod.VYSKA - 3);
+		navod_menu.setCursorPosition(navod.x_plosina + i, navod.VYSKA - 3);
 		std::cout << navod_menu.pole_skin[i];
 	}
 
 	////////////    vykreslovani mice na zacatku    ////////////
-	setCursorPosition(navod.x_mic, navod.y_mic);
+	navod_menu.setCursorPosition(navod.x_mic, navod.y_mic);
 	std::cout << navod.mic;
 
 	////////////    vykreslovani bloku na zacatku    ////////////
@@ -1312,19 +933,19 @@ Pong vykresleni_start(int mod, Menu& navod_menu, Pong& navod)
 		{
 			if (navod.bloky.at(j).at(i) == 1)
 			{
-				setCursorPosition(i, j);
+				navod_menu.setCursorPosition(i, j);
 				std::cout << navod.blok1;
 				navod.pocet_bloku++;
 			}
 			if (navod.bloky.at(j).at(i) == 2)
 			{
-				setCursorPosition(i, j);
+				navod_menu.setCursorPosition(i, j);
 				std::cout << navod.blok2;
 				navod.pocet_bloku = navod.pocet_bloku + 2;
 			}
 			if (navod.bloky.at(j).at(i) == 3)
 			{
-				setCursorPosition(i, j);
+				navod_menu.setCursorPosition(i, j);
 				std::cout << navod.blok3;
 				navod.pocet_bloku = navod.pocet_bloku + 3;
 			}
@@ -1332,7 +953,7 @@ Pong vykresleni_start(int mod, Menu& navod_menu, Pong& navod)
 	}
 
 	////////////    vykreslovani HUD    ////////////
-	setCursorPosition(0, navod.VYSKA - 1);
+	navod_menu.setCursorPosition(0, navod.VYSKA - 1);
 	for (int i = 0; i < navod.DELKA; i++)
 	{
 		if (i == 0 || i == navod.DELKA - 1)
@@ -1342,14 +963,14 @@ Pong vykresleni_start(int mod, Menu& navod_menu, Pong& navod)
 	}
 	if (mod == 0)
 	{
-		setCursorPosition(2, navod.VYSKA);
+		navod_menu.setCursorPosition(2, navod.VYSKA);
 		std::cout << navod.blok2 << navod.pocet_bloku;
 	}
 
-	setCursorPosition(navod.DELKA - 4, navod.VYSKA);
+	navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
 	std::cout << navod.cas;
 
-	setCursorPosition(8, navod.VYSKA);
+	navod_menu.setCursorPosition(8, navod.VYSKA);
 	for (int i = 0; i < navod.zivoty; i++)
 		std::cout << char(3);
 
@@ -1385,7 +1006,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 	////////////    mazani plosiny    ////////////
 	if (!(navod.pohyb == 0))
 	{
-		setCursorPosition(navod.x_plosina, navod.VYSKA - 3);
+		navod_menu.setCursorPosition(navod.x_plosina, navod.VYSKA - 3);
 		for (int i = 0; i < navod.velikost_plosina; i++)
 		{
 			std::cout << " ";
@@ -1403,7 +1024,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				{
 					if (navod.bloky.at(j).at(i))
 					{
-						setCursorPosition(i, j);
+						navod_menu.setCursorPosition(i, j);
 						std::cout << ' ';
 					}
 				}
@@ -1414,7 +1035,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 	////////////    zmena zivotu    ////////////
 	if (navod.ztrata_zivotu == 1)
 	{
-		setCursorPosition(8, navod.VYSKA);
+		navod_menu.setCursorPosition(8, navod.VYSKA);
 		for (int i = 0; i < navod.zivoty + 1; i++)
 		{
 			if (i < navod.zivoty)
@@ -1437,7 +1058,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 
 				if (L > 0) // levy
 				{
-					setCursorPosition(SL, SCY);
+					navod_menu.setCursorPosition(SL, SCY);
 					if (L == 1)
 						std::cout << " ";
 					if (L == 2)
@@ -1447,7 +1068,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				}
 				if (R > 0) // pravy
 				{
-					setCursorPosition(SR, SCY);
+					navod_menu.setCursorPosition(SR, SCY);
 					if (R == 1)
 						std::cout << " ";
 					if (R == 2)
@@ -1457,7 +1078,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				}
 				if (U > 0) // horni
 				{
-					setCursorPosition(SCX, SU);
+					navod_menu.setCursorPosition(SCX, SU);
 					if (U == 1)
 						std::cout << " ";
 					if (U == 2)
@@ -1467,7 +1088,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				}
 				if (D > 0) // spodni
 				{
-					setCursorPosition(SCX, SD);
+					navod_menu.setCursorPosition(SCX, SD);
 					if (D == 1)
 						std::cout << " ";
 					if (D == 2)
@@ -1484,7 +1105,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (U > 0)
 						{
-							setCursorPosition(SCX, SU);
+							navod_menu.setCursorPosition(SCX, SU);
 							if (U == 1)
 								std::cout << " ";
 							if (U == 2)
@@ -1498,7 +1119,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (L > 0)
 						{
-							setCursorPosition(SL, SCY);
+							navod_menu.setCursorPosition(SL, SCY);
 							if (L == 1)
 								std::cout << " ";
 							if (L == 2)
@@ -1507,7 +1128,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 								std::cout << navod.blok2;
 						}
 					}
-					setCursorPosition(SR, SD);
+					navod_menu.setCursorPosition(SR, SD);
 					if (DR == 1)
 						std::cout << " ";
 					if (DR == 2)
@@ -1521,7 +1142,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (D > 0)
 						{
-							setCursorPosition(SCX, SD);
+							navod_menu.setCursorPosition(SCX, SD);
 							if (D == 1)
 								std::cout << " ";
 							if (D == 2)
@@ -1534,7 +1155,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (R > 0)
 						{
-							setCursorPosition(SR, SCY);
+							navod_menu.setCursorPosition(SR, SCY);
 							if (R == 1)
 								std::cout << " ";
 							if (R == 2)
@@ -1543,7 +1164,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 								std::cout << navod.blok2;
 						}
 					}
-					setCursorPosition(SL, SU);
+					navod_menu.setCursorPosition(SL, SU);
 					if (UL == 1)
 						std::cout << " ";
 					if (UL == 2)
@@ -1557,7 +1178,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (U > 0)
 						{
-							setCursorPosition(SCX, SU);
+							navod_menu.setCursorPosition(SCX, SU);
 							if (U == 1)
 								std::cout << " ";
 							if (U == 2)
@@ -1570,7 +1191,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (R > 0)
 						{
-							setCursorPosition(SR, SCY);
+							navod_menu.setCursorPosition(SR, SCY);
 							if (R == 1)
 								std::cout << " ";
 							if (R == 2)
@@ -1579,7 +1200,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 								std::cout << navod.blok2;
 						}
 					}
-					setCursorPosition(SL, SD);
+					navod_menu.setCursorPosition(SL, SD);
 					if (DL == 1)
 						std::cout << " ";
 					if (DL == 2)
@@ -1593,7 +1214,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (D > 0)
 						{
-							setCursorPosition(SCX, SD);
+							navod_menu.setCursorPosition(SCX, SD);
 							if (D == 1)
 								std::cout << " ";
 							if (D == 2)
@@ -1606,7 +1227,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (L > 0)
 						{
-							setCursorPosition(SL, SCY);
+							navod_menu.setCursorPosition(SL, SCY);
 							if (L == 1)
 								std::cout << " ";
 							if (L == 2)
@@ -1615,7 +1236,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 								std::cout << navod.blok2;
 						}
 					}
-					setCursorPosition(SR, SU);
+					navod_menu.setCursorPosition(SR, SU);
 					if (UR == 1)
 						std::cout << " ";
 					if (UR == 2)
@@ -1628,7 +1249,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 			{
 				if (DL > 0 && navod.ax_mic == -1 && navod.ay_mic == 1) // levo/spodni
 				{
-					setCursorPosition(SL, SD);
+					navod_menu.setCursorPosition(SL, SD);
 					if (DL == 1)
 						std::cout << " ";
 					if (DL == 2)
@@ -1638,7 +1259,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				}
 				if (DR > 0 && navod.ax_mic == 1 && navod.ay_mic == 1) // pravo/spodni
 				{
-					setCursorPosition(SR, SD);
+					navod_menu.setCursorPosition(SR, SD);
 					if (DR == 1)
 						std::cout << " ";
 					if (DR == 2)
@@ -1648,7 +1269,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				}
 				if (UL > 0 && navod.ax_mic == -1 && navod.ay_mic == -1) // levo/horni
 				{
-					setCursorPosition(SL, SU);
+					navod_menu.setCursorPosition(SL, SU);
 					if (UL == 1)
 						std::cout << " ";
 					if (UL == 2)
@@ -1658,7 +1279,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				}
 				if (UR > 0 && navod.ax_mic == 1 && navod.ay_mic == -1) // pravo/horni
 				{
-					setCursorPosition(SR, SU);
+					navod_menu.setCursorPosition(SR, SU);
 					if (UR == 1)
 						std::cout << " ";
 					if (UR == 2)
@@ -1672,49 +1293,49 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 
 			////////////    mazani mice    ////////////
 
-			setCursorPosition(SCX, SCY);
+			navod_menu.setCursorPosition(SCX, SCY);
 			std::cout << " ";
 		}
 		////////////    mazani power-upu    ////////////
 		if (D == -1)
 		{
-			setCursorPosition(SCX, SD);
+			navod_menu.setCursorPosition(SCX, SD);
 			std::cout << " ";
 		}
 		if (U == -1)
 		{
-			setCursorPosition(SCX, SU);
+			navod_menu.setCursorPosition(SCX, SU);
 			std::cout << " ";
 		}
 		if (R == -1)
 		{
-			setCursorPosition(SR, SCY);
+			navod_menu.setCursorPosition(SR, SCY);
 			std::cout << " ";
 		}
 		if (L == -1)
 		{
-			setCursorPosition(SL, SCY);
+			navod_menu.setCursorPosition(SL, SCY);
 			std::cout << " ";
 		}
 
 		if (DR == -1)
 		{
-			setCursorPosition(SR, SD);
+			navod_menu.setCursorPosition(SR, SD);
 			std::cout << " ";
 		}
 		if (UR == -1)
 		{
-			setCursorPosition(SR, SU);
+			navod_menu.setCursorPosition(SR, SU);
 			std::cout << " ";
 		}
 		if (DL == -1)
 		{
-			setCursorPosition(SL, SD);
+			navod_menu.setCursorPosition(SL, SD);
 			std::cout << " ";
 		}
 		if (UL == -1)
 		{
-			setCursorPosition(SU, SL);
+			navod_menu.setCursorPosition(SU, SL);
 			std::cout << " ";
 		}
 	}
@@ -1729,7 +1350,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			navod_menu.skin();
 			for (int i = 0; i < navod.velikost_plosina; i++)
 			{
-				setCursorPosition(navod.x_plosina + i, navod.VYSKA - 3);
+				navod_menu.setCursorPosition(navod.x_plosina + i, navod.VYSKA - 3);
 				std::cout << navod_menu.pole_skin[i];
 			}
 			navod.pohyb = 0;
@@ -1737,7 +1358,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 		if (navod.pocet_vykresleni % navod.rychlost_hry == 0)
 		{
 			////////////    vykreslovani mice    ////////////
-			setCursorPosition(navod.x_mic, navod.y_mic);
+			navod_menu.setCursorPosition(navod.x_mic, navod.y_mic);
 			std::cout << navod.mic;
 
 			////////////    vykreslovani bloku    ////////////
@@ -1749,19 +1370,19 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (navod.bloky.at(j).at(i) == 1)
 						{
-							setCursorPosition(i, j);
+							navod_menu.setCursorPosition(i, j);
 							std::cout << navod.blok1;
 							navod.pocet_bloku++;
 						}
 						if (navod.bloky.at(j).at(i) == 2)
 						{
-							setCursorPosition(i, j);
+							navod_menu.setCursorPosition(i, j);
 							std::cout << navod.blok2;
 							navod.pocet_bloku = navod.pocet_bloku + 2;
 						}
 						if (navod.bloky.at(j).at(i) == 3)
 						{
-							setCursorPosition(i, j);
+							navod_menu.setCursorPosition(i, j);
 							std::cout << navod.blok3;
 							navod.pocet_bloku = navod.pocet_bloku + 3;
 						}
@@ -1779,7 +1400,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 					{
 						if (navod.bloky.at(j).at(i) == -1)
 						{
-							setCursorPosition(navod.x_powerup, navod.y_powerup);
+							navod_menu.setCursorPosition(navod.x_powerup, navod.y_powerup);
 							std::cout << '$';
 						}
 					}
@@ -1788,22 +1409,22 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			////////////    vykreslovani poctu bloku    ////////////
 			if (mod == 0)
 			{
-				setCursorPosition(3, navod.VYSKA);
+				navod_menu.setCursorPosition(3, navod.VYSKA);
 				std::cout << "    ";
-				setCursorPosition(3, navod.VYSKA);
+				navod_menu.setCursorPosition(3, navod.VYSKA);
 				std::cout << navod.pocet_bloku;
 			}
 		}
 		//////////    vykreslovani casomiry  ////////////
-		setCursorPosition(navod.DELKA - 4, navod.VYSKA);
+		navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
 		std::cout << "   ";
-		setCursorPosition(navod.DELKA - 4, navod.VYSKA);
+		navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
 		std::cout << navod.cas;
 
 		//////////    vykreslovani HUD power-up  ////////////
 		if (navod.power_up)
 		{
-			setCursorPosition(12, navod.VYSKA);
+			navod_menu.setCursorPosition(12, navod.VYSKA);
 			std::cout << '$';
 			navod.slow = 1;
 			navod.power_up = 0;
@@ -1819,7 +1440,7 @@ void klasik(Menu& navod_menu)
 	{
 		Pong navod;
 		navod.zivoty = navod_menu.pocet_zivotu;
-		prechod();
+		prechod(navod_menu);
 		font(20, 20);
 		SetWindow(navod.DELKA, navod.VYSKA);
 
@@ -1851,7 +1472,7 @@ void stejna_barva(Menu& navod_menu)
 	{
 		Pong navod;
 		navod.zivoty = navod_menu.pocet_zivotu;
-		prechod();
+		prechod(navod_menu);
 		font(20, 20);
 		SetWindow(navod.DELKA, navod.VYSKA);
 
@@ -1883,7 +1504,7 @@ void bloky_padaji(Menu& navod_menu)
 	{
 		Pong navod;
 		navod.zivoty = navod_menu.pocet_zivotu;
-		prechod();
+		prechod(navod_menu);
 		SetWindow(navod.DELKA, navod.VYSKA);
 		font(20, 20);
 		navod.bloky_vytvoreni_padajici();
@@ -1912,7 +1533,7 @@ void vykresleni_logo(Menu navod_menu)
 {
 	int m = 10;
 	int n = 2;
-	setCursorPosition(m, n);
+	navod_menu.setCursorPosition(m, n);
 	for (int j = 0; j < navod_menu.vyska_menu; j++)
 	{
 		for (int i = 0; i < navod_menu.delka_menu; i++)
@@ -1931,7 +1552,7 @@ void vykresleni_logo(Menu navod_menu)
 			}
 		}
 	}
-	setCursorPosition(m, n + 1);
+	navod_menu.setCursorPosition(m, n + 1);
 	for (int j = 0; j < navod_menu.vyska_menu; j++)
 	{
 		for (int i = 0; i < navod_menu.delka_menu; i++)
@@ -1948,7 +1569,7 @@ void vykresleni_logo(Menu navod_menu)
 			}
 		}
 	}
-	setCursorPosition(m, n + 2);
+	navod_menu.setCursorPosition(m, n + 2);
 	for (int j = 0; j < navod_menu.vyska_menu; j++)
 	{
 		for (int i = 0; i < navod_menu.delka_menu; i++)
@@ -1967,7 +1588,7 @@ void vykresleni_logo(Menu navod_menu)
 			}
 		}
 	}
-	setCursorPosition(m, n + 3);
+	navod_menu.setCursorPosition(m, n + 3);
 	for (int j = 0; j < navod_menu.vyska_menu; j++)
 	{
 		for (int i = 0; i < navod_menu.delka_menu; i++)
@@ -1989,22 +1610,22 @@ void vykresleni_logo(Menu navod_menu)
 }
 Menu vykresleni_text_hlavni(Menu navod_menu)
 {
-	setCursorPosition(6, 10);
+	navod_menu.setCursorPosition(6, 10);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.herni_modyCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.herni_modyEN;
-	setCursorPosition(6, 12);
+	navod_menu.setCursorPosition(6, 12);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.vzhled_plosinyCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.vzhled_plosinyEN;
-	setCursorPosition(6, 14);
+	navod_menu.setCursorPosition(6, 14);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.nastaveniCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.nastaveniEN;
-	setCursorPosition(2, 18);
+	navod_menu.setCursorPosition(2, 18);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.verzeCZ << 2.9;
 	if (navod_menu.jazyk)
@@ -2018,27 +1639,27 @@ Menu vykresleni_text_hlavni(Menu navod_menu)
 }
 Menu vykresleni_text_herni_mody(Menu navod_menu)
 {
-	setCursorPosition(14, 3);
+	navod_menu.setCursorPosition(14, 3);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.HERNI_MODYCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.HERNI_MODYEN;
-	setCursorPosition(6, 8);
+	navod_menu.setCursorPosition(6, 8);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.klasikCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.klasikEN;
-	setCursorPosition(6, 10);
+	navod_menu.setCursorPosition(6, 10);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.rogue_likeCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.rogue_likeEN;
-	setCursorPosition(6, 12);
+	navod_menu.setCursorPosition(6, 12);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.stejne_tvaryCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.stejne_tvaryEN;
-	setCursorPosition(6, 14);
+	navod_menu.setCursorPosition(6, 14);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.bloky_padajiCZ;
 	if (navod_menu.jazyk)
@@ -2052,29 +1673,29 @@ Menu vykresleni_text_herni_mody(Menu navod_menu)
 }
 Menu vykresleni_text_nastaveni(Menu navod_menu)
 {
-	setCursorPosition(15, 3);
+	navod_menu.setCursorPosition(15, 3);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.NASTAVENICZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.NASTAVENIEN;
-	setCursorPosition(6, 8);
+	navod_menu.setCursorPosition(6, 8);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladaniCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladaniEN;
-	setCursorPosition(6, 10);
+	navod_menu.setCursorPosition(6, 10);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.jazykCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.jazykEN;
 	if (navod_menu.vytazeno)
 	{
-		setCursorPosition(9, 12);
+		navod_menu.setCursorPosition(9, 12);
 		if (!navod_menu.jazyk)
 			std::cout << navod_menu.ceskyCZ;
 		if (navod_menu.jazyk)
 			std::cout << navod_menu.ceskyEN;
-		setCursorPosition(9, 14);
+		navod_menu.setCursorPosition(9, 14);
 		if (!navod_menu.jazyk)
 			std::cout << navod_menu.anglickyCZ;
 		if (navod_menu.jazyk)
@@ -2082,9 +1703,9 @@ Menu vykresleni_text_nastaveni(Menu navod_menu)
 	}
 	else
 	{
-		setCursorPosition(9, 12);
+		navod_menu.setCursorPosition(9, 12);
 			std::cout << "        ";
-		setCursorPosition(9, 14);
+		navod_menu.setCursorPosition(9, 14);
 		std::cout << "        ";
 	}
 
@@ -2103,76 +1724,76 @@ Menu vykresleni_text_nastaveni(Menu navod_menu)
 }
 Menu vykresleni_text_ovladani(Menu navod_menu)
 {
-	setCursorPosition(15, 3);
+	navod_menu.setCursorPosition(15, 3);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.OVLADANICZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.OVLADANIEN;
-	setCursorPosition(6, 5);
+	navod_menu.setCursorPosition(6, 5);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_menuCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_menuEN;
-	setCursorPosition(9, 7);
+	navod_menu.setCursorPosition(9, 7);
 		std::cout << "W";
-	setCursorPosition(7, 8);
+	navod_menu.setCursorPosition(7, 8);
 		std::cout << "A S D";
-	setCursorPosition(15, 8);
+	navod_menu.setCursorPosition(15, 8);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_mezernikCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_mezernikEN;
-	setCursorPosition(26, 8);
-	std::cout << "Escape";
+	navod_menu.setCursorPosition(26, 8);
+	std::cout << "Q";
 
-	setCursorPosition(7, 12);
+	navod_menu.setCursorPosition(7, 12);
 	for (int i = 0; i < 20;i++)
 		std::cout << ".";
-	setCursorPosition(7, 13);
+	navod_menu.setCursorPosition(7, 13);
 	for (int i = 0; i < 20;i++)
 		std::cout << ".";
-	setCursorPosition(7, 14);
+	navod_menu.setCursorPosition(7, 14);
 	for (int i = 0; i < 20;i++)
 		std::cout << ".";
-	setCursorPosition(7, 15);
+	navod_menu.setCursorPosition(7, 15);
 	for (int i = 0; i < 20;i++)
 		std::cout << ".";
 
-	setCursorPosition(6, 10);
+	navod_menu.setCursorPosition(6, 10);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_hraCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_hraEN;
-	setCursorPosition(7, 12);
+	navod_menu.setCursorPosition(7, 12);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pohyb_vlevoCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pohyb_vlevoEN;
-	setCursorPosition(29, 12);
+	navod_menu.setCursorPosition(29, 12);
 	std::cout << navod_menu.pohyb_vpravo;
-	setCursorPosition(7, 13);
+	navod_menu.setCursorPosition(7, 13);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pohyb_vpravoCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pohyb_vpravoEN;
-	setCursorPosition(29, 13);
+	navod_menu.setCursorPosition(29, 13);
 	std::cout << navod_menu.pohyb_vlevo;
-	setCursorPosition(7, 14);
+	navod_menu.setCursorPosition(7, 14);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_schopnostCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_schopnostEN;
-	setCursorPosition(29, 14);
+	navod_menu.setCursorPosition(29, 14);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_mezernikCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_mezernikEN;
-	setCursorPosition(7, 15);
+	navod_menu.setCursorPosition(7, 15);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pauzaCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pauzaEN;
-	setCursorPosition(29, 15);
+	navod_menu.setCursorPosition(29, 15);
 	std::cout << "Esc";
 
 	navod_menu.x_tecka = 5;
@@ -2185,66 +1806,66 @@ Menu vykresleni_vzhled_plosiny(Menu navod_menu)
 {
 	if (!navod_menu.jazyk)
 	{
-		setCursorPosition(13, 3);
+		navod_menu.setCursorPosition(13, 3);
 		std::cout << navod_menu.VZHLED_PLOSINYCZ;
 	}
 	if (navod_menu.jazyk)
 	{
-		setCursorPosition(18, 3);
+		navod_menu.setCursorPosition(18, 3);
 		std::cout << navod_menu.VZHLED_PLOSINYEN;
 	}
 
-	setCursorPosition(7, 10);
+	navod_menu.setCursorPosition(7, 10);
 	std::cout << "IIIIII";
 
 	if (navod_menu.level >= navod_menu.potr_urov1)
 	{
-		setCursorPosition(17, 10);
+		navod_menu.setCursorPosition(17, 10);
 		std::cout << "======";
 	}
 	else
 	{
-		setCursorPosition(17, 10);
+		navod_menu.setCursorPosition(17, 10);
 		std::cout << "??????";
 	}
 	if (navod_menu.level >= navod_menu.potr_urov2)
 	{
-		setCursorPosition(27, 10);
+		navod_menu.setCursorPosition(27, 10);
 		std::cout << "FELZCU";
 	}
 	else
 	{
-		setCursorPosition(27, 10);
+		navod_menu.setCursorPosition(27, 10);
 		std::cout << "??????";
 	}
 	if (navod_menu.level >= navod_menu.potr_urov3)
 	{
-		setCursorPosition(7, 14);
+		navod_menu.setCursorPosition(7, 14);
 		std::cout << "8====D";
 	}
 	else
 	{
-		setCursorPosition(7, 14);
+		navod_menu.setCursorPosition(7, 14);
 		std::cout << "??????";
 	}
 	if (navod_menu.level >= navod_menu.potr_urov4)
 	{
-		setCursorPosition(17, 14);
+		navod_menu.setCursorPosition(17, 14);
 		std::cout << char(174) << char(174) << char(174) << char(175) << char(175) << char(175);
 	}
 	else
 	{
-		setCursorPosition(17, 14);
+		navod_menu.setCursorPosition(17, 14);
 		std::cout << "??????";
 	}
 	if (navod_menu.level >= navod_menu.potr_urov5)
 	{
-		setCursorPosition(27, 14);
+		navod_menu.setCursorPosition(27, 14);
 		std::cout << "______";
 	}
 	else
 	{
-		setCursorPosition(27, 14);
+		navod_menu.setCursorPosition(27, 14);
 		std::cout << "??????";
 	}
 	navod_menu.x_oznaceni = 6;
@@ -2258,12 +1879,12 @@ Menu vykresleni_vzhled_plosiny(Menu navod_menu)
 
 void vykresleni_tecka(Menu navod_menu)
 {
-	setCursorPosition(navod_menu.x_tecka, navod_menu.y_tecka);
+	navod_menu.setCursorPosition(navod_menu.x_tecka, navod_menu.y_tecka);
 	std::cout << char(254);
 }
 void smazani_tecka(Menu navod_menu)
 {
-	setCursorPosition(navod_menu.x_tecka, navod_menu.y_tecka);
+	navod_menu.setCursorPosition(navod_menu.x_tecka, navod_menu.y_tecka);
 	std::cout << ' ';
 }
 void vykresleni_oznaceni(Menu navod_menu)
@@ -2274,22 +1895,22 @@ void vykresleni_oznaceni(Menu navod_menu)
 		{
 			if (j == 0 && i == 0)
 			{
-				setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni);
 				std::cout << char(201);
 			}
 			if (j == 0 && i == 7)
 			{
-				setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni);
 				std::cout << char(187);
 			}
 			if (j == 2 && i == 0)
 			{
-				setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni + 2);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni + 2);
 				std::cout << char(200);
 			}
 			if (j == 2 && i == 7)
 			{
-				setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni + 2);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni + 2);
 				std::cout << char(188);
 			}
 		}
@@ -2304,22 +1925,22 @@ void smazani_oznaceni(Menu navod_menu)
 		{
 			if (i == 0 && j == 0)
 			{
-				setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni);
 				std::cout << ' ';
 			}
 			if (i == 7 && j == 0)
 			{
-				setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni);
 				std::cout << ' ';
 			}
 			if (i == 0 && j == 2)
 			{
-				setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni + 2);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni + 2);
 				std::cout << ' ';
 			}
 			if (i == 7 && j == 2)
 			{
-				setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni + 2);
+				navod_menu.setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni + 2);
 				std::cout << ' ';
 			}
 		}
@@ -2328,7 +1949,7 @@ void smazani_oznaceni(Menu navod_menu)
 
 void vykresleni_menu_start(Menu navod_menu, Pong navod)
 {
-	setCursorPosition(0, 0);
+	navod_menu.setCursorPosition(0, 0);
 	////////////    vykreslovani plocha    ////////////
 	for (int j = 0; j < navod_menu.vyska_menu; j++)
 	{
@@ -2370,18 +1991,18 @@ void vykresleni_menu_start(Menu navod_menu, Pong navod)
 	////////////    vykreslovani uroven    ////////////
 	if (!navod_menu.jazyk)
 	{
-		setCursorPosition(27, 17);
+		navod_menu.setCursorPosition(27, 17);
 		std::cout << navod_menu.odchod6CZ << navod_menu.level;
 	}
 	else
 	{
-		setCursorPosition(27, 17);
+		navod_menu.setCursorPosition(27, 17);
 		std::cout << navod_menu.odchod6EN << navod_menu.level;
 	}
 
 	navod.zivoty = 0;
 	konec_logika(0, 0, navod_menu, navod);
-	setCursorPosition(17, 18);
+	navod_menu.setCursorPosition(17, 18);
 	for (int i = 0; i < navod.exp_pole.size(); i++)
 	{
 		if (navod.exp_pole.at(i) == 2)
@@ -2392,9 +2013,9 @@ void vykresleni_menu_start(Menu navod_menu, Pong navod)
 			std::cout << char(176);
 	}
 }
-void smazani_menu()
+void smazani_menu(Menu navod_menu)
 {
-	setCursorPosition(0, 0);
+	navod_menu.setCursorPosition(0, 0);
 	for (int i = 0; i < 40; i++)
 	{
 		std::cout << " ";
@@ -2405,7 +2026,7 @@ void smazani_menu()
 
 void menu_herni_mody(Menu& navod_menu, Pong& navod)
 {
-	prechod();
+	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
 	navod_menu = vykresleni_text_herni_mody(navod_menu);
 	navod_menu.exit = 0;
@@ -2430,7 +2051,7 @@ void menu_herni_mody(Menu& navod_menu, Pong& navod)
 
 void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 {
-	prechod();
+	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
 	navod_menu = vykresleni_vzhled_plosiny(navod_menu);
 	navod_menu.exit = 0;
@@ -2450,12 +2071,12 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 				{
 					if (!navod_menu.jazyk)
 					{
-						setCursorPosition(8, 7);
+						navod_menu.setCursorPosition(8, 7);
 						std::cout << navod_menu.neodemcenoCZ << navod_menu.potr_urov1;
 					}
 					else
 					{
-						setCursorPosition(9, 7);
+						navod_menu.setCursorPosition(9, 7);
 						std::cout << navod_menu.neodemcenoEN << navod_menu.potr_urov1;
 					}
 					navod_menu.exit = 1;
@@ -2464,12 +2085,12 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 				{
 					if (!navod_menu.jazyk)
 					{
-						setCursorPosition(8, 7);
+						navod_menu.setCursorPosition(8, 7);
 						std::cout << navod_menu.neodemcenoCZ << navod_menu.potr_urov2;
 					}
 					else
 					{
-						setCursorPosition(9, 7);
+						navod_menu.setCursorPosition(9, 7);
 						std::cout << navod_menu.neodemcenoEN << navod_menu.potr_urov2;
 					}
 				}
@@ -2477,12 +2098,12 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 				{
 					if (!navod_menu.jazyk)
 					{
-						setCursorPosition(8, 7);
+						navod_menu.setCursorPosition(8, 7);
 						std::cout << navod_menu.neodemcenoCZ << navod_menu.potr_urov3;
 					}
 					else
 					{
-						setCursorPosition(9, 7);
+						navod_menu.setCursorPosition(9, 7);
 						std::cout << navod_menu.neodemcenoEN << navod_menu.potr_urov3;
 					}
 				}
@@ -2490,12 +2111,12 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 					{
 					if (!navod_menu.jazyk)
 					{
-						setCursorPosition(8, 7);
+						navod_menu.setCursorPosition(8, 7);
 						std::cout << navod_menu.neodemcenoCZ << navod_menu.potr_urov4;
 					}
 					else
 					{
-						setCursorPosition(9, 7);
+						navod_menu.setCursorPosition(9, 7);
 						std::cout << navod_menu.neodemcenoEN << navod_menu.potr_urov4;
 					}
 				}
@@ -2503,12 +2124,12 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 				{
 					if (!navod_menu.jazyk)
 					{
-						setCursorPosition(8, 7);
+						navod_menu.setCursorPosition(8, 7);
 						std::cout << navod_menu.neodemcenoCZ << navod_menu.potr_urov5;
 					}
 					else
 					{
-						setCursorPosition(9, 7);
+						navod_menu.setCursorPosition(9, 7);
 						std::cout << navod_menu.neodemcenoEN << navod_menu.potr_urov5;
 					}
 				}
@@ -2520,7 +2141,7 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 
 void menu_ovladani(Menu& navod_menu, Pong& navod)
 {
-	prechod();
+	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
 	navod_menu = vykresleni_text_ovladani(navod_menu);
 	navod_menu.exit = 0;
@@ -2541,7 +2162,7 @@ void menu_ovladani(Menu& navod_menu, Pong& navod)
 }
 void menu_nastaveni(Menu& navod_menu, Pong& navod)
 {
-	prechod();
+	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
 	navod_menu = vykresleni_text_nastaveni(navod_menu);
 	navod_menu.exit = 0;
@@ -2571,7 +2192,7 @@ void menu_nastaveni(Menu& navod_menu, Pong& navod)
 
 void menu_hlavni(Menu& navod_menu, Pong& navod)
 {
-	prechod();
+	prechod(navod_menu);
 	font(0, 20);
 	SetWindow(navod_menu.delka_menu, navod_menu.vyska_menu - 2);
 
