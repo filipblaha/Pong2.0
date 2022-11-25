@@ -461,7 +461,6 @@ int vstup_hra(Pong& navod)
 		break;
 	}
 	default:
-		navod.pohyb = 0;
 		break;
 	}
 }
@@ -611,11 +610,8 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 	}
 	default:
 	{
-		navod_menu.exit = 0;
-		navod_menu.enter = 0;
-		return navod_menu;
+		break;
 	}
-	break;
 	}
 }
 
