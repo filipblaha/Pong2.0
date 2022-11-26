@@ -2,9 +2,15 @@
 #include <iostream>
 #include <vector>
 #include <conio.h>
-#include <windows.h>
+
+#ifndef WIN32_LEAN_AND_MEAN // xml a windows.h nejdou do sebe, tohle to vyresi
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <Windows.h>
 
 #include "Pong.h"
+#include "Profily.h"
+#include "Profily_ukladani.h"
 
 class Menu
 {
@@ -30,8 +36,69 @@ public:
 	int plosina_skin = 0;
 	int highscore_cas = 0;
 	int highscore_znicenych_bloku = 0;
-	int level = 7;
+	int level = 0;
 	int exp = 0;
+	int profil_probiha = 0;
+	void vyber_profilu(int vybrany_profil)
+	{
+		if (vybrany_profil == 0)
+		{
+			profil_probiha = 0;
+
+			profil0 profil;
+			profil.nacteni_profilu();
+			jazyk = profil.jazyk_s;
+			plosina_skin = profil.plosina_skin_s;
+			highscore_cas = profil.highscore_cas_s;
+			highscore_znicenych_bloku = profil.highscore_znicenych_bloku_s;
+			level = profil.level_s;
+			exp = profil.exp_s;
+		}
+		if (vybrany_profil == 1)
+		{
+			profil_probiha = 1;
+
+			profil1 profil;
+			profil.nacteni_profilu();
+			jazyk = profil.jazyk_s;
+			plosina_skin = profil.plosina_skin_s;
+			highscore_cas = profil.highscore_cas_s;
+			highscore_znicenych_bloku = profil.highscore_znicenych_bloku_s;
+			level = profil.level_s;
+			exp = profil.exp_s;
+		}
+		if (vybrany_profil == 2)
+		{
+			profil_probiha = 2;
+
+			profil2 profil;
+			profil.nacteni_profilu();
+			jazyk = profil.jazyk_s;
+			plosina_skin = profil.plosina_skin_s;
+			highscore_cas = profil.highscore_cas_s;
+			highscore_znicenych_bloku = profil.highscore_znicenych_bloku_s;
+			level = profil.level_s;
+			exp = profil.exp_s;
+		}
+	}
+	void ukladani_profilu(int vybrany_profil)
+	{
+		if (profil_probiha == 0)
+		{
+			profil0_ukladani profil;
+			profil.ulozeni_profilu();
+		}
+		if (profil_probiha == 1)
+		{
+			profil1_ukladani profil;
+			profil.ulozeni_profilu();
+		}
+		if (profil_probiha == 2)
+		{
+			profil2_ukladani profil;
+			profil.ulozeni_profilu();
+		}
+	}
 	int pocet_zivotu = 3;
 	int potr_urov1 = 1;
 	int potr_urov2 = 2;
@@ -187,7 +254,19 @@ public:
 
 	int rozhodovac(int strana, int& plosina_skin_zmena, int& jazyk_zmena)
 	{
+		/////////////////////    Profily     //////////////////////////
+		if (strana == -1)
+		{
+			if (y_tecka == 10)
+				vyber_profilu(0);
+			if (y_tecka == 12)
+				vyber_profilu(1);
+			if (y_tecka == 14)
+				vyber_profilu(2);
+		}
+
 		/////////////////////    Hlavni menu     //////////////////////////
+
 		if (strana == 0)
 		{
 			if (y_tecka == 10)
@@ -199,6 +278,7 @@ public:
 		}
 
 		/////////////////////    Herni mody     //////////////////////////
+
 		if (strana == 1)
 		{
 			if (y_tecka == 8)
@@ -210,6 +290,7 @@ public:
 		}
 
 		/////////////////////    Skiny     //////////////////////////
+
 		if (strana == 2)
 		{
 			if (y_oznaceni == 9 && x_oznaceni == 6)
@@ -255,6 +336,7 @@ public:
 		}
 
 		/////////////////////    Nastaveni     //////////////////////////
+
 		if (strana == 3)
 		{
 			if (y_tecka == 8)

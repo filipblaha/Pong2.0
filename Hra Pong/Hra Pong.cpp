@@ -9,7 +9,7 @@
 
 #include "Menu.h"
 #include "Pong.h"
-#include "Profily.h"
+#include "Profily_ukladani.h"
 
 /////////////////////    Commands     //////////////////////////
 
@@ -2227,13 +2227,37 @@ void menu_hlavni(Menu& navod_menu, Pong& navod)
 	}
 }
 
-int main()
+void vyber_profilu()
 {
 	Menu navod_menu;
 	Pong navod;
-	Profily profil;
-	profil.vytvoreni_xml();
-	profil.nacteni_xml();
+	prechod(navod_menu);
+	font(0, 20);
+	SetWindow(navod_menu.delka_menu, navod_menu.vyska_menu - 2);
+
+	vykresleni_menu_start(navod_menu, navod);
+	vykresleni_logo(navod_menu);
+	navod_menu = vykresleni_text_hlavni(navod_menu);
+	navod_menu.exit = 0;
+	navod_menu.enter = 0;
+
+	while (!navod_menu.exit)
+	{
+		vykresleni_tecka(navod_menu);
+		while (!_kbhit());
+		smazani_tecka(navod_menu);
+		vstup_menu(navod_menu, navod, 0);
+		if (navod_menu.enter == 1)
+		{
+			if (navod_menu.rozhodovac(-1, navod_menu.plosina_skin, navod_menu.jazyk) == 1)
+				menu_herni_mody(navod_menu, navod);
+			else if (navod_menu.rozhodovac(-1, navod_menu.plosina_skin, navod_menu.jazyk) == 2)
+				menu_vzhled_plosiny(navod_menu, navod);
+			else if (navod_menu.rozhodovac(-1, navod_menu.plosina_skin, navod_menu.jazyk) == 3)
+				menu_nastaveni(navod_menu, navod);
+			navod_menu.exit = 1;
+		}
+	}
 	while (navod.program)
 	{
 		//stejna_barva(navod_menu);
@@ -2244,4 +2268,8 @@ int main()
 		//klasik(navod_menu);
 		menu_hlavni(navod_menu, navod);
 	}
+}
+int main()
+{
+	vyber_profilu();
 }
