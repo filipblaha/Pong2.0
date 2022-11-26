@@ -9,7 +9,6 @@
 
 #include "Menu.h"
 #include "Pong.h"
-#include "Profily_ukladani.h"
 
 /////////////////////    Commands     //////////////////////////
 
@@ -1614,6 +1613,35 @@ void vykresleni_logo(Menu navod_menu)
 		}
 	}
 }
+Menu vykresleni_text_profil(Menu navod_menu)
+{
+	navod_menu.setCursorPosition(9, 5);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.vyber_profiluCZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.vyber_profiluEN;
+	navod_menu.setCursorPosition(6, 10);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.novy_profilCZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.novy_profilEN;
+	navod_menu.setCursorPosition(6, 12);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.novy_profilCZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.novy_profilEN;
+	navod_menu.setCursorPosition(6, 14);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.novy_profilCZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.novy_profilEN;
+
+	navod_menu.x_tecka = 4;
+	navod_menu.y_tecka = 10;
+	navod_menu.horni_zavora_hlavni = 10;
+	navod_menu.dolni_zavora_hlavni = 14;
+	return navod_menu;
+}
 Menu vykresleni_text_hlavni(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(6, 10);
@@ -1993,8 +2021,9 @@ void vykresleni_menu_start(Menu navod_menu, Pong navod)
 		if (!(j == navod_menu.vyska_menu - 1))
 			std::cout << '\n';
 	}
-
-	////////////    vykreslovani uroven    ////////////
+}
+void vykresleni_uroven(Menu navod_menu, Pong navod)
+{
 	if (!navod_menu.jazyk)
 	{
 		navod_menu.setCursorPosition(27, 17);
@@ -2034,6 +2063,7 @@ void menu_herni_mody(Menu& navod_menu, Pong& navod)
 {
 	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
+	vykresleni_uroven(navod_menu, navod);
 	navod_menu = vykresleni_text_herni_mody(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
@@ -2059,6 +2089,7 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 {
 	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
+	vykresleni_uroven(navod_menu, navod);
 	navod_menu = vykresleni_vzhled_plosiny(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
@@ -2149,6 +2180,7 @@ void menu_ovladani(Menu& navod_menu, Pong& navod)
 {
 	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
+	vykresleni_uroven(navod_menu, navod);
 	navod_menu = vykresleni_text_ovladani(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
@@ -2170,6 +2202,7 @@ void menu_nastaveni(Menu& navod_menu, Pong& navod)
 {
 	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
+	vykresleni_uroven(navod_menu, navod);
 	navod_menu = vykresleni_text_nastaveni(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
@@ -2204,6 +2237,7 @@ void menu_hlavni(Menu& navod_menu, Pong& navod)
 
 	vykresleni_menu_start(navod_menu, navod);
 	vykresleni_logo(navod_menu);
+	vykresleni_uroven(navod_menu, navod);
 	navod_menu = vykresleni_text_hlavni(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
@@ -2226,8 +2260,7 @@ void menu_hlavni(Menu& navod_menu, Pong& navod)
 		}
 	}
 }
-
-void vyber_profilu()
+void menu_profil()
 {
 	Menu navod_menu;
 	Pong navod;
@@ -2236,8 +2269,7 @@ void vyber_profilu()
 	SetWindow(navod_menu.delka_menu, navod_menu.vyska_menu - 2);
 
 	vykresleni_menu_start(navod_menu, navod);
-	vykresleni_logo(navod_menu);
-	navod_menu = vykresleni_text_hlavni(navod_menu);
+	navod_menu = vykresleni_text_profil(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
 
@@ -2268,8 +2300,10 @@ void vyber_profilu()
 		//klasik(navod_menu);
 		menu_hlavni(navod_menu, navod);
 	}
+	navod_menu.ukladani_profilu();
 }
+
 int main()
 {
-	vyber_profilu();
+	menu_profil();
 }
