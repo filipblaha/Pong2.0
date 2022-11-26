@@ -49,5 +49,11 @@
     <Xml Include="profil0.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="profil1.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="profil2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
