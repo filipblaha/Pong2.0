@@ -1,11 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <conio.h>
-#include <windows.h>
-#include "Pong.h"
+
+#ifndef WIN32_LEAN_AND_MEAN // xml a windows.h nejdou do sebe, tohle to vyresi
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <Windows.h>
+
 #include "Menu.h"
-#include "tinyxml2.cpp"
-#include "tinyxml2.h"
+#include "Pong.h"
+#include "Profily.h"
 
 /////////////////////    Commands     //////////////////////////
 
@@ -2227,6 +2231,9 @@ int main()
 {
 	Menu navod_menu;
 	Pong navod;
+	Profily profil;
+	profil.vytvoreni_xml();
+	profil.nacteni_xml();
 	while (navod.program)
 	{
 		//stejna_barva(navod_menu);
