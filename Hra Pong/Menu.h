@@ -21,6 +21,7 @@ class profil0
 {
 public:
 	XMLDocument xmlDoc;
+	int pouzit_s = 0;
 	int jazyk_s = 0;
 	int plosina_skin_s = 0;
 	int highscore_cas_s = 0;
@@ -32,6 +33,10 @@ public:
 	{
 		XMLNode* pRoot = xmlDoc.NewElement("Profil");
 		xmlDoc.InsertFirstChild(pRoot);
+
+		XMLElement* pElement0 = xmlDoc.NewElement("pouzit");
+		pElement0->SetText(0);
+		pRoot->InsertEndChild(pElement0);
 
 		XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
 		pElement1->SetText(0);
@@ -69,34 +74,39 @@ public:
 		XMLNode* pRoot = xmlDoc.FirstChild();
 		if (pRoot == nullptr) return XML_ERROR_FILE_READ_ERROR;
 
-		XMLElement* pElement0 = pRoot->FirstChildElement("jazyk"); //nalezeni int value
+		XMLElement* pElement0 = pRoot->FirstChildElement("pouzit"); //nalezeni int value
 		if (pElement0 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement0->QueryIntText(&jazyk_s); // vyndani int
+		eResult = pElement0->QueryIntText(&pouzit_s); // vyndani int
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement1 = pRoot->FirstChildElement("plosina_skin");
+		XMLElement* pElement1 = pRoot->FirstChildElement("jazyk");
 		if (pElement1 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement1->QueryIntText(&plosina_skin_s);
+		eResult = pElement1->QueryIntText(&jazyk_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement2 = pRoot->FirstChildElement("highscore_cas");
+		XMLElement* pElement2 = pRoot->FirstChildElement("plosina_skin");
 		if (pElement2 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement2->QueryIntText(&highscore_cas_s);
+		eResult = pElement2->QueryIntText(&plosina_skin_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement3 = pRoot->FirstChildElement("highscore_znicenych_bloku");
+		XMLElement* pElement3 = pRoot->FirstChildElement("highscore_cas");
 		if (pElement3 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement3->QueryIntText(&highscore_znicenych_bloku_s);
+		eResult = pElement3->QueryIntText(&highscore_cas_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement4 = pRoot->FirstChildElement("level");
+		XMLElement* pElement4 = pRoot->FirstChildElement("highscore_znicenych_bloku");
 		if (pElement4 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement4->QueryIntText(&level_s);
+		eResult = pElement4->QueryIntText(&highscore_znicenych_bloku_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement5 = pRoot->FirstChildElement("exp");
+		XMLElement* pElement5 = pRoot->FirstChildElement("level");
 		if (pElement5 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement5->QueryIntText(&exp_s);
+		eResult = pElement5->QueryIntText(&level_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement6 = pRoot->FirstChildElement("exp");
+		if (pElement6 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement6->QueryIntText(&exp_s);
 		XMLCheckResult(eResult);
 		return XML_SUCCESS;
 	}
@@ -105,6 +115,7 @@ class profil1
 {
 public:
 	XMLDocument xmlDoc;
+	int pouzit_s = 0;
 	int jazyk_s = 0;
 	int plosina_skin_s = 0;
 	int highscore_cas_s = 0;
@@ -116,6 +127,10 @@ public:
 	{
 		XMLNode* pRoot = xmlDoc.NewElement("Profil");
 		xmlDoc.InsertFirstChild(pRoot);
+
+		XMLElement* pElement0 = xmlDoc.NewElement("pouzit");
+		pElement0->SetText(0);
+		pRoot->InsertEndChild(pElement0);
 
 		XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
 		pElement1->SetText(0);
@@ -153,34 +168,39 @@ public:
 		XMLNode* pRoot = xmlDoc.FirstChild();
 		if (pRoot == nullptr) return XML_ERROR_FILE_READ_ERROR;
 
-		XMLElement* pElement0 = pRoot->FirstChildElement("jazyk"); //nalezeni int value
+		XMLElement* pElement0 = pRoot->FirstChildElement("pouzit"); //nalezeni int value
 		if (pElement0 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement0->QueryIntText(&jazyk_s); // vyndani int
+		eResult = pElement0->QueryIntText(&pouzit_s); // vyndani int
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement1 = pRoot->FirstChildElement("plosina_skin");
+		XMLElement* pElement1 = pRoot->FirstChildElement("jazyk");
 		if (pElement1 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement1->QueryIntText(&plosina_skin_s);
+		eResult = pElement1->QueryIntText(&jazyk_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement2 = pRoot->FirstChildElement("highscore_cas");
+		XMLElement* pElement2 = pRoot->FirstChildElement("plosina_skin");
 		if (pElement2 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement2->QueryIntText(&highscore_cas_s);
+		eResult = pElement2->QueryIntText(&plosina_skin_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement3 = pRoot->FirstChildElement("highscore_znicenych_bloku");
+		XMLElement* pElement3 = pRoot->FirstChildElement("highscore_cas");
 		if (pElement3 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement3->QueryIntText(&highscore_znicenych_bloku_s);
+		eResult = pElement3->QueryIntText(&highscore_cas_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement4 = pRoot->FirstChildElement("level");
+		XMLElement* pElement4 = pRoot->FirstChildElement("highscore_znicenych_bloku");
 		if (pElement4 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement4->QueryIntText(&level_s);
+		eResult = pElement4->QueryIntText(&highscore_znicenych_bloku_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement5 = pRoot->FirstChildElement("exp");
+		XMLElement* pElement5 = pRoot->FirstChildElement("level");
 		if (pElement5 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement5->QueryIntText(&exp_s);
+		eResult = pElement5->QueryIntText(&level_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement6 = pRoot->FirstChildElement("exp");
+		if (pElement6 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement6->QueryIntText(&exp_s);
 		XMLCheckResult(eResult);
 		return XML_SUCCESS;
 	}
@@ -189,6 +209,7 @@ class profil2
 {
 public:
 	XMLDocument xmlDoc;
+	int pouzit_s = 0;
 	int jazyk_s = 0;
 	int plosina_skin_s = 0;
 	int highscore_cas_s = 0;
@@ -200,6 +221,10 @@ public:
 	{
 		XMLNode* pRoot = xmlDoc.NewElement("Profil");
 		xmlDoc.InsertFirstChild(pRoot);
+
+		XMLElement* pElement0 = xmlDoc.NewElement("pouzit");
+		pElement0->SetText(0);
+		pRoot->InsertEndChild(pElement0);
 
 		XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
 		pElement1->SetText(0);
@@ -237,34 +262,39 @@ public:
 		XMLNode* pRoot = xmlDoc.FirstChild();
 		if (pRoot == nullptr) return XML_ERROR_FILE_READ_ERROR;
 
-		XMLElement* pElement0 = pRoot->FirstChildElement("jazyk"); //nalezeni int value
+		XMLElement* pElement0 = pRoot->FirstChildElement("pouzit"); //nalezeni int value
 		if (pElement0 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement0->QueryIntText(&jazyk_s); // vyndani int
+		eResult = pElement0->QueryIntText(&pouzit_s); // vyndani int
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement1 = pRoot->FirstChildElement("plosina_skin");
+		XMLElement* pElement1 = pRoot->FirstChildElement("jazyk");
 		if (pElement1 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement1->QueryIntText(&plosina_skin_s);
+		eResult = pElement1->QueryIntText(&jazyk_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement2 = pRoot->FirstChildElement("highscore_cas");
+		XMLElement* pElement2 = pRoot->FirstChildElement("plosina_skin");
 		if (pElement2 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement2->QueryIntText(&highscore_cas_s);
+		eResult = pElement2->QueryIntText(&plosina_skin_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement3 = pRoot->FirstChildElement("highscore_znicenych_bloku");
+		XMLElement* pElement3 = pRoot->FirstChildElement("highscore_cas");
 		if (pElement3 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement3->QueryIntText(&highscore_znicenych_bloku_s);
+		eResult = pElement3->QueryIntText(&highscore_cas_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement4 = pRoot->FirstChildElement("level");
+		XMLElement* pElement4 = pRoot->FirstChildElement("highscore_znicenych_bloku");
 		if (pElement4 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement4->QueryIntText(&level_s);
+		eResult = pElement4->QueryIntText(&highscore_znicenych_bloku_s);
 		XMLCheckResult(eResult);
 
-		XMLElement* pElement5 = pRoot->FirstChildElement("exp");
+		XMLElement* pElement5 = pRoot->FirstChildElement("level");
 		if (pElement5 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		eResult = pElement5->QueryIntText(&exp_s);
+		eResult = pElement5->QueryIntText(&level_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement6 = pRoot->FirstChildElement("exp");
+		if (pElement6 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement6->QueryIntText(&exp_s);
 		XMLCheckResult(eResult);
 		return XML_SUCCESS;
 	}
@@ -292,6 +322,7 @@ public:
 	bool zmena_jazyka = 1;
 	bool del = 0;
 	
+	int pouzit = 0;
 	int jazyk = 0;
 	int plosina_skin = 0;
 	int highscore_cas = 0;
@@ -308,6 +339,7 @@ public:
 
 			profil0 profil;
 			profil.nacteni_profilu();
+			pouzit = profil.pouzit_s;
 			jazyk = profil.jazyk_s;
 			plosina_skin = profil.plosina_skin_s;
 			highscore_cas = profil.highscore_cas_s;
@@ -321,6 +353,7 @@ public:
 
 			profil1 profil;
 			profil.nacteni_profilu();
+			pouzit = profil.pouzit_s;
 			jazyk = profil.jazyk_s;
 			plosina_skin = profil.plosina_skin_s;
 			highscore_cas = profil.highscore_cas_s;
@@ -334,6 +367,7 @@ public:
 
 			profil2 profil;
 			profil.nacteni_profilu();
+			pouzit = profil.pouzit_s;
 			jazyk = profil.jazyk_s;
 			plosina_skin = profil.plosina_skin_s;
 			highscore_cas = profil.highscore_cas_s;
@@ -344,11 +378,16 @@ public:
 	}
 	int ukladani_profilu()
 	{
+		pouzit = 1;
 		XMLDocument xmlDoc;
 		if (profil_probiha == 0)
 		{
 			XMLNode* pRoot = xmlDoc.NewElement("Profil");
 			xmlDoc.InsertFirstChild(pRoot);
+
+			XMLElement* pElement0 = xmlDoc.NewElement("pouzit");
+			pElement0->SetText(pouzit);
+			pRoot->InsertEndChild(pElement0);
 
 			XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
 			pElement1->SetText(jazyk);
@@ -383,6 +422,11 @@ public:
 			XMLNode* pRoot = xmlDoc.NewElement("Profil");
 			xmlDoc.InsertFirstChild(pRoot);
 
+			XMLElement* pElement0 = xmlDoc.NewElement("pouzit");
+			pElement0->SetText(pouzit);
+			pRoot->InsertEndChild(pElement0);
+
+
 			XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
 			pElement1->SetText(jazyk);
 			pRoot->InsertEndChild(pElement1);
@@ -415,6 +459,11 @@ public:
 		{
 			XMLNode* pRoot = xmlDoc.NewElement("Profil");
 			xmlDoc.InsertFirstChild(pRoot);
+
+			XMLElement* pElement0 = xmlDoc.NewElement("pouzit");
+			pElement0->SetText(pouzit);
+			pRoot->InsertEndChild(pElement0);
+
 
 			XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
 			pElement1->SetText(jazyk);
@@ -460,6 +509,50 @@ public:
 
 	std::vector<char> pole_skin;
 
+	char char1 = 's';
+	char char2 = 'p';
+	char char3 = 'd';
+	char char4 = 'd';
+	char char5 = 'd';
+	char char6 = 'd';
+	char char7 = 'd';
+
+	std::vector<char> nazev_profil0;
+	std::vector<char> vektor_profil0()
+	{
+		nazev_profil0.push_back(char1);
+		nazev_profil0.push_back(char2);
+		nazev_profil0.push_back(char3);
+		nazev_profil0.push_back(char4);
+		nazev_profil0.push_back(char5);
+		nazev_profil0.push_back(char6);
+		nazev_profil0.push_back(char7);
+		return nazev_profil0;
+	}
+	std::vector<char> nazev_profil1;
+	std::vector<char> vektor_profil1()
+	{
+		nazev_profil1.push_back(char1);
+		nazev_profil1.push_back(char2);
+		nazev_profil1.push_back(char3);
+		nazev_profil1.push_back(char4);
+		nazev_profil1.push_back(char5);
+		nazev_profil1.push_back(char6);
+		nazev_profil1.push_back(char7);
+		return nazev_profil1;
+	}
+	std::vector<char> nazev_profil2;
+	std::vector<char> vektor_profil2()
+	{
+		nazev_profil2.push_back(char1);
+		nazev_profil2.push_back(char2);
+		nazev_profil2.push_back(char3);
+		nazev_profil2.push_back(char4);
+		nazev_profil2.push_back(char5);
+		nazev_profil2.push_back(char6);
+		nazev_profil2.push_back(char7);
+		return nazev_profil2;
+	}
 
 	void setCursorPosition(int x, int y)
 	{
@@ -767,5 +860,55 @@ public:
 				return jazyk_zmena = 1;
 			}
 		}
+	}
+};
+
+class profil_vyber
+{
+public:
+	XMLDocument xmlDoc;
+	Menu navod_menu;
+	std::vector<char> vec = navod_menu.vektor_profil0();
+
+	int vytvoreni_noveho_profilu()
+	{
+		XMLNode* pRoot = xmlDoc.NewElement("Profil");
+		xmlDoc.InsertFirstChild(pRoot);
+
+		XMLElement* pElement0 = xmlDoc.NewElement("profil0");
+		for (const auto& item : vec)
+		{
+			XMLElement* pListElement = xmlDoc.NewElement("Item");
+			pListElement->SetText(item);
+
+			pElement0->InsertEndChild(pListElement);
+		}
+		pRoot->InsertEndChild(pElement0);
+
+		XMLError eResult = xmlDoc.SaveFile("profil_vyber.xml");
+		XMLCheckResult(eResult);
+	}
+	int nacteni_profilu()
+	{
+		XMLError eResult = xmlDoc.LoadFile("profil_vyber.xml");
+		XMLCheckResult(eResult);
+
+		XMLNode* pRoot = xmlDoc.FirstChild();
+		if (pRoot == nullptr) return XML_ERROR_FILE_READ_ERROR;
+
+		XMLElement* pElement0 = pRoot->FirstChildElement("profil0");
+		if (pElement0 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		XMLElement* pListElement = pElement0->FirstChildElement("Item");
+		vec.clear();
+		while (pListElement != nullptr)
+		{
+			int iOutListValue;
+			eResult = pListElement->QueryIntText(&iOutListValue);
+			XMLCheckResult(eResult);
+
+			vec.push_back(iOutListValue);
+			pListElement = pListElement->NextSiblingElement("Item");
+		}
+		return XML_SUCCESS;
 	}
 };

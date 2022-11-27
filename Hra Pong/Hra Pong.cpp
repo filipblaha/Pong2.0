@@ -2475,6 +2475,7 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 			{
 				if (navod_menu.enter)
 				{
+					//if ("novej profil")
 					while (navod.program)
 					{
 						menu_hlavni(navod_menu, navod);
@@ -2496,7 +2497,9 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 int main()
 {
 	Menu navod_menu;
-	Pong navod;
+	Pong navod;/*
+	profil_vyber profil;
+	profil.vytvoreni_noveho_profilu();*/
 	while(navod_menu.zmena_jazyka)
 	{
 		//klasik(navod_menu);
