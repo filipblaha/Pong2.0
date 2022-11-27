@@ -1558,85 +1558,6 @@ void bloky_padaji(Menu& navod_menu)
 
 /////////////////////    Menu vykresleni   //////////////////////////
 
-void vykresleni_logo(Menu navod_menu)
-{
-	int m = 10;
-	int n = 2;
-	navod_menu.setCursorPosition(m, n);
-	for (int j = 0; j < navod_menu.vyska_menu; j++)
-	{
-		for (int i = 0; i < navod_menu.delka_menu; i++)
-		{
-			if (j == 2)
-			{
-				if (i == 0 || i == 3 || i == 5 || i == 8 || i == 10 || i == 13 || i == 15 || i == 18)
-					std::cout << char(219);
-				else if (i == 1 || i == 2 || i == 6 || i == 7 || i == 16 || i == 17)
-					std::cout << char(223);
-				else
-				{
-					if (i < 19)
-						std::cout << ' ';
-				}
-			}
-		}
-	}
-	navod_menu.setCursorPosition(m, n + 1);
-	for (int j = 0; j < navod_menu.vyska_menu; j++)
-	{
-		for (int i = 0; i < navod_menu.delka_menu; i++)
-		{
-			if (j == 2)
-			{
-				if (i == 0 || i == 3 || i == 5 || i == 8 || i == 10 || i == 11 || i == 13 || i == 15)
-					std::cout << char(219);
-				else
-				{
-					if (i < 19)
-						std::cout << ' ';
-				}
-			}
-		}
-	}
-	navod_menu.setCursorPosition(m, n + 2);
-	for (int j = 0; j < navod_menu.vyska_menu; j++)
-	{
-		for (int i = 0; i < navod_menu.delka_menu; i++)
-		{
-			if (j == 2)
-			{
-				if (i == 0 || i == 5 || i == 8 || i == 10 || i == 12 || i == 13 || i == 15 || i == 18)
-					std::cout << char(219);
-				else if (i > 0 && i < 4 || i == 17)
-					std::cout << char(223);
-				else
-				{
-					if (i < 19)
-						std::cout << ' ';
-				}
-			}
-		}
-	}
-	navod_menu.setCursorPosition(m, n + 3);
-	for (int j = 0; j < navod_menu.vyska_menu; j++)
-	{
-		for (int i = 0; i < navod_menu.delka_menu; i++)
-		{
-			if (j == 2)
-			{
-				if (i == 0 || i == 5 || i == 8 || i == 10 || i == 13 || i == 15 || i == 18)
-					std::cout << char(219);
-				else if (i == 6 || i == 7 || i == 16 || i == 17)
-					std::cout << char(220);
-				else
-				{
-					if (i < 19)
-						std::cout << ' ';
-				}
-			}
-		}
-	}
-}
 Menu vykresleni_text_profil(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(9, 5);
@@ -1946,6 +1867,85 @@ Menu vykresleni_vzhled_plosiny(Menu navod_menu)
 	return navod_menu;
 }
 
+void vykresleni_logo(Menu navod_menu)
+{
+	int m = 10;
+	int n = 2;
+	navod_menu.setCursorPosition(m, n);
+	for (int j = 0; j < navod_menu.vyska_menu; j++)
+	{
+		for (int i = 0; i < navod_menu.delka_menu; i++)
+		{
+			if (j == 2)
+			{
+				if (i == 0 || i == 3 || i == 5 || i == 8 || i == 10 || i == 13 || i == 15 || i == 18)
+					std::cout << char(219);
+				else if (i == 1 || i == 2 || i == 6 || i == 7 || i == 16 || i == 17)
+					std::cout << char(223);
+				else
+				{
+					if (i < 19)
+						std::cout << ' ';
+				}
+			}
+		}
+	}
+	navod_menu.setCursorPosition(m, n + 1);
+	for (int j = 0; j < navod_menu.vyska_menu; j++)
+	{
+		for (int i = 0; i < navod_menu.delka_menu; i++)
+		{
+			if (j == 2)
+			{
+				if (i == 0 || i == 3 || i == 5 || i == 8 || i == 10 || i == 11 || i == 13 || i == 15)
+					std::cout << char(219);
+				else
+				{
+					if (i < 19)
+						std::cout << ' ';
+				}
+			}
+		}
+	}
+	navod_menu.setCursorPosition(m, n + 2);
+	for (int j = 0; j < navod_menu.vyska_menu; j++)
+	{
+		for (int i = 0; i < navod_menu.delka_menu; i++)
+		{
+			if (j == 2)
+			{
+				if (i == 0 || i == 5 || i == 8 || i == 10 || i == 12 || i == 13 || i == 15 || i == 18)
+					std::cout << char(219);
+				else if (i > 0 && i < 4 || i == 17)
+					std::cout << char(223);
+				else
+				{
+					if (i < 19)
+						std::cout << ' ';
+				}
+			}
+		}
+	}
+	navod_menu.setCursorPosition(m, n + 3);
+	for (int j = 0; j < navod_menu.vyska_menu; j++)
+	{
+		for (int i = 0; i < navod_menu.delka_menu; i++)
+		{
+			if (j == 2)
+			{
+				if (i == 0 || i == 5 || i == 8 || i == 10 || i == 13 || i == 15 || i == 18)
+					std::cout << char(219);
+				else if (i == 6 || i == 7 || i == 16 || i == 17)
+					std::cout << char(220);
+				else
+				{
+					if (i < 19)
+						std::cout << ' ';
+				}
+			}
+		}
+	}
+}
 void vykresleni_tecka(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(navod_menu.x_tecka, navod_menu.y_tecka);
