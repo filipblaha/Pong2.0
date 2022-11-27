@@ -342,14 +342,6 @@ public:
 			exp = profil.exp_s;
 		}
 	}
-	
-	int jazyk_s;
-	int plosina_skin_s;
-	int highscore_cas_s;
-	int highscore_znicenych_bloku_s;
-	int level_s;
-	int exp_s;
-
 	int ukladani_profilu()
 	{
 		XMLDocument xmlDoc;
@@ -517,11 +509,11 @@ public:
 		}
 		if (plosina_skin == 4)
 		{
-			for (int i = 0; i < pole_skin.size() / 2; i++)
+			for (int i = 0; i < (int)pole_skin.size() / 2; i++)
 			{
 				pole_skin.at(i) = char(174);
 			}
-			for (int i = pole_skin.size() / 2; i < pole_skin.size(); i++)
+			for (int i = pole_skin.size() / 2; i < (int)pole_skin.size(); i++)
 			{
 				pole_skin.at(i) = char(175);
 			}

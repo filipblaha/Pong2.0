@@ -33,7 +33,7 @@ public:
 
 	int pocet_bloku = 0;
 	int pocet_vykresleni = 0;
-	int pocet_rozbitych_bloku;
+	int pocet_rozbitych_bloku = 0;
 	int pocet_trvani_power_up = 0;
 
 	int cas = 0;
@@ -100,8 +100,5 @@ public:
 			}
 			zasobnik.push_back(docas);
 		}
-
-
 	}
-private:
 };
