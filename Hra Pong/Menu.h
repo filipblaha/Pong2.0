@@ -534,8 +534,8 @@ public:
 	std::string profil2EN = "Profile 2";
 	std::string profil3CZ = "Profil 3";
 	std::string profil3EN = "Profile 3";
-	std::string smazani_pokrokCZ = "Smazat pokrok [DEL]";
-	std::string smazani_pokrokEN = "Delete progress [DEL]";
+	std::string smazani_pokrokCZ = "Smazat pokrok";
+	std::string smazani_pokrokEN = "Delete progress";
 	std::string smazani_pokrok_otazka1CZ = "Opravdu chcete smazat pokrok?";
 	std::string smazani_pokrok_otazka1EN = "Do you want to delete progress?";
 	std::string smazani_pokrok_otazka2CZ = "[ENTER]";

@@ -1639,6 +1639,38 @@ Menu vykresleni_profil(Menu navod_menu)
 		else
 			std::cout << char(196);
 	}
+	navod_menu.setCursorPosition(32, 16);
+	for (int i = 0; i < 7; i++)
+	{
+		if (i == 0)
+			std::cout << char(218);
+		else if (i == 6)
+			std::cout << char(191);
+		else
+			std::cout << char(196);
+	}
+	navod_menu.setCursorPosition(32, 17);
+	for (int i = 0; i < 7; i++)
+	{
+		if (i == 0 || i == 6)
+			std::cout << char(179);
+		else if (i == 3)
+			std::cout << char(17);
+		else if (i == 4 || i == 5)
+			std::cout << char(196);
+		else
+			std::cout << ' ';
+	}
+	navod_menu.setCursorPosition(32, 18);
+	for (int i = 0; i < 7; i++)
+	{
+		if (i == 0)
+			std::cout << char(192);
+		else if (i == 6)
+			std::cout << char(217);
+		else
+			std::cout << char(196);
+	}
 
 	///////    Text   ///////
 	navod_menu.setCursorPosition(10, 5);
