@@ -137,6 +137,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 			}
 			navod_menu.exit = 0;
 			navod_menu.enter = 0;
+			navod_menu.del = 0;
 			return navod_menu;
 		}
 		break;
@@ -153,7 +154,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 				else
 				{
 					navod_menu.y_tecka += 5;
-					navod_menu.x_tecka = 4;
+					navod_menu.x_tecka = 2;
 				}
 			}
 			if ((navod_menu.y_tecka < navod_menu.dolni_zavora_hlavni) && (strana == 0 || strana == 1))
@@ -182,6 +183,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 			}
 			navod_menu.exit = 0;
 			navod_menu.enter = 0;
+			navod_menu.del = 0;
 			return navod_menu;
 		}
 		break;
@@ -194,6 +196,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 				navod_menu.y_tecka -= 10;
 				navod_menu.exit = 0;
 				navod_menu.enter = 0;
+				navod_menu.del = 0;
 				return navod_menu;
 			}
 		}
@@ -207,6 +210,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 				navod_menu.y_tecka += 10;
 				navod_menu.exit = 0;
 				navod_menu.enter = 0;
+				navod_menu.del = 0;
 				return navod_menu;
 			}
 		}
@@ -215,8 +219,8 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 	case '\r':
 	{
 		{
-			navod_menu.exit = 0;
 			navod_menu.enter = 1;
+			navod_menu.exit = 0;
 			return navod_menu;
 		}
 		break;
@@ -226,8 +230,9 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 		{
 			if (strana == -1)
 			{
-				navod.pokracovani = 0;
 				navod_menu.exit = 1;
+				navod_menu.del = 0;
+				navod.pokracovani = 0;
 				return navod_menu;
 			}
 		}
@@ -238,24 +243,30 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 		{
 			if (strana == 0)
 			{
-				navod_menu.exit = 1;
 				navod.program = 0;
-				return navod_menu;
 			}
 			else if (strana == -1)
 			{
 				navod_menu.reset = 1;
 				navod.pokracovani = 0;
-				navod_menu.exit = 1;
 				navod_menu.enter = 0;
-				return navod_menu;
+				navod_menu.del = 0;
 			}
 			else
 			{
-				navod_menu.exit = 1;
 				navod_menu.enter = 0;
-				return navod_menu;
+				navod_menu.del = 0;
 			}
+			navod_menu.exit = 1;
+			return navod_menu;
+		}
+		break;
+	}
+	case char(8):
+	{
+		if (strana == -1)
+		{
+			navod_menu.del = 1;
 		}
 		break;
 	}
@@ -1558,7 +1569,7 @@ void bloky_padaji(Menu& navod_menu)
 
 /////////////////////    Menu vykresleni   //////////////////////////
 
-Menu vykresleni_text_profil(Menu navod_menu)
+Menu vykresleni_profil(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(9, 5);
 	if (!navod_menu.jazyk)
@@ -1581,16 +1592,26 @@ Menu vykresleni_text_profil(Menu navod_menu)
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.profil3EN;
 
-	navod_menu.setCursorPosition(6, 16);
+	navod_menu.setCursorPosition(4, 16);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.jazykCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.jazykEN;
-	navod_menu.setCursorPosition(6, 17);
+	navod_menu.setCursorPosition(4, 17);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ceskyCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.anglickyEN;
+	if (!navod_menu.jazyk)
+	{
+		navod_menu.setCursorPosition(18, 17);
+		std::cout << navod_menu.smazani_pokrokCZ;
+	}
+	if (navod_menu.jazyk)
+	{
+		navod_menu.setCursorPosition(17, 17);
+		std::cout << navod_menu.smazani_pokrokEN;
+	}
 
 	navod_menu.x_tecka = 10;
 	navod_menu.y_tecka = 8;
@@ -1598,7 +1619,7 @@ Menu vykresleni_text_profil(Menu navod_menu)
 	navod_menu.dolni_zavora_hlavni = 17;
 	return navod_menu;
 }
-Menu vykresleni_text_hlavni(Menu navod_menu)
+Menu vykresleni_hlavni(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(6, 10);
 	if (!navod_menu.jazyk)
@@ -1627,7 +1648,7 @@ Menu vykresleni_text_hlavni(Menu navod_menu)
 	navod_menu.dolni_zavora_hlavni = 14;
 	return navod_menu;
 }
-Menu vykresleni_text_herni_mody(Menu navod_menu)
+Menu vykresleni_herni_mody(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(14, 3);
 	if (!navod_menu.jazyk)
@@ -1661,7 +1682,7 @@ Menu vykresleni_text_herni_mody(Menu navod_menu)
 	navod_menu.dolni_zavora_hlavni = 14;
 	return navod_menu;
 }
-Menu vykresleni_text_nastaveni(Menu navod_menu)
+Menu vykresleni_nastaveni(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(15, 3);
 	if (!navod_menu.jazyk)
@@ -1712,7 +1733,7 @@ Menu vykresleni_text_nastaveni(Menu navod_menu)
 		navod_menu.dolni_zavora_hlavni = 10;
 	return navod_menu;
 }
-Menu vykresleni_text_ovladani(Menu navod_menu)
+Menu vykresleni_ovladani(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(15, 3);
 	if (!navod_menu.jazyk)
@@ -1867,6 +1888,26 @@ Menu vykresleni_vzhled_plosiny(Menu navod_menu)
 	return navod_menu;
 }
 
+void vykresleni_otazka(Menu navod_menu)
+{
+	navod_menu.setCursorPosition(5, 14);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.smazani_pokrok_otazka1CZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.smazani_pokrok_otazka1EN;
+	navod_menu.setCursorPosition(26, 15);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.smazani_pokrok_otazka2CZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.smazani_pokrok_otazka2EN;
+}
+void smazani_otazka(Menu navod_menu)
+{
+	navod_menu.setCursorPosition(5, 14);
+	std::cout << "                               ";
+	navod_menu.setCursorPosition(26, 15);
+	std::cout << "       ";
+}
 void vykresleni_logo(Menu navod_menu)
 {
 	int m = 10;
@@ -2099,7 +2140,7 @@ void menu_herni_mody(Menu& navod_menu, Pong& navod)
 	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
 	vykresleni_uroven(navod_menu, navod);
-	navod_menu = vykresleni_text_herni_mody(navod_menu);
+	navod_menu = vykresleni_herni_mody(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
 
@@ -2216,7 +2257,7 @@ void menu_ovladani(Menu& navod_menu, Pong& navod)
 	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
 	vykresleni_uroven(navod_menu, navod);
-	navod_menu = vykresleni_text_ovladani(navod_menu);
+	navod_menu = vykresleni_ovladani(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
 
@@ -2238,7 +2279,7 @@ void menu_nastaveni(Menu& navod_menu, Pong& navod)
 	prechod(navod_menu);
 	vykresleni_menu_start(navod_menu, navod);
 	vykresleni_uroven(navod_menu, navod);
-	navod_menu = vykresleni_text_nastaveni(navod_menu);
+	navod_menu = vykresleni_nastaveni(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
 
@@ -2258,7 +2299,7 @@ void menu_nastaveni(Menu& navod_menu, Pong& navod)
 		}
 		if (navod_menu.balic)
 		{
-			navod_menu = vykresleni_text_nastaveni(navod_menu);
+			navod_menu = vykresleni_nastaveni(navod_menu);
 			navod_menu.balic = 0;
 		}
 	}
@@ -2273,9 +2314,10 @@ void menu_hlavni(Menu& navod_menu, Pong& navod)
 	vykresleni_menu_start(navod_menu, navod);
 	vykresleni_logo(navod_menu);
 	vykresleni_uroven(navod_menu, navod);
-	navod_menu = vykresleni_text_hlavni(navod_menu);
+	navod_menu = vykresleni_hlavni(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
+	navod_menu.del = 0;
 
 	while (!navod_menu.exit)
 	{
@@ -2302,9 +2344,10 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 	SetWindow(navod_menu.delka_menu, navod_menu.vyska_menu - 2);
 
 	vykresleni_menu_start(navod_menu, navod);
-	navod_menu = vykresleni_text_profil(navod_menu);
+	navod_menu = vykresleni_profil(navod_menu);
 	navod_menu.exit = 0;
 	navod_menu.enter = 0;
+	navod_menu.del = 0;
 	navod_menu.zmena_jazyka = 0;
 	navod.program = 1;
 
@@ -2314,34 +2357,39 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 		while (!_kbhit());
 		smazani_tecka(navod_menu);
 		vstup_menu(navod_menu, navod, -1);
-		if (navod_menu.enter == 1)
+		if (navod_menu.enter || navod_menu.del)
 		{
+			if (navod_menu.del)
+			{
+				vykresleni_otazka(navod_menu);
+				while (!_kbhit());
+				vstup_menu(navod_menu, navod, -1);
+				smazani_otazka(navod_menu);
+			}
 			if (navod_menu.rozhodovac(-1, navod_menu.plosina_skin, navod_menu.jazyk) == 2)
-				menu_hlavni(navod_menu, navod);
+			{
+				if (navod_menu.enter)
+				{
+					while (navod.program)
+					{
+						menu_hlavni(navod_menu, navod);
+						navod_menu.ukladani_profilu();
+						navod_menu.exit = 1;
+					}
+				}
+			}
 			else
 			{
 				navod_menu.zmena_jazyka = 1;
 				navod.program = 0;
+				navod_menu.exit = 1;
 			}
-			navod_menu.exit = 1;
 		}
-	}
-	while (navod.program)
-	{
-		//stejna_barva(navod_menu);
-		//bloky_padaji(navod_menu);
-		//menu_vzhled_plosiny(navod_menu, navod);
-		//menu_nastaveni(navod_menu, navod);
-		//menu_ovladani(navod_menu, navod);
-		//klasik(navod_menu);
-		menu_hlavni(navod_menu, navod);
-		navod_menu.ukladani_profilu();
 	}
 }
 
 int main()
 {
-
 	Menu navod_menu;
 	Pong navod;
 	while(navod_menu.zmena_jazyka)

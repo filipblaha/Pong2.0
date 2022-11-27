@@ -290,6 +290,7 @@ public:
 	bool vytazeno = 0;
 	bool balic = 0;
 	bool zmena_jazyka = 1;
+	bool del = 0;
 	
 	int jazyk = 0;
 	int plosina_skin = 0;
@@ -544,6 +545,12 @@ public:
 	std::string profil2EN = "Profile 2";
 	std::string profil3CZ = "Profil 3";
 	std::string profil3EN = "Profile 3";
+	std::string smazani_pokrokCZ = "Smazat pokrok [DEL]";
+	std::string smazani_pokrokEN = "Delete progress [DEL]";
+	std::string smazani_pokrok_otazka1CZ = "Opravdu chcete smazat pokrok?";
+	std::string smazani_pokrok_otazka1EN = "Do you want to delete progress?";
+	std::string smazani_pokrok_otazka2CZ = "[ENTER]";
+	std::string smazani_pokrok_otazka2EN = "[ENTER]";
 
 	std::string herni_modyCZ = "Herni mody";
 	std::string herni_modyEN = "Game modes";
@@ -624,17 +631,41 @@ public:
 		{
 			if (y_tecka == 8)
 			{
-				vyber_profilu(0);
+				profil0 profil;
+				if (enter)
+					vyber_profilu(0);
+				if (del)
+				{
+					profil.vytvoreni_noveho_profilu();
+					enter = 0;
+					del = 0;
+				}
 				return 2;
 			}
 			if (y_tecka == 10)
 			{
-				vyber_profilu(1);
+				profil1 profil;
+				if (enter)
+					vyber_profilu(1);
+				if (del)
+				{
+					profil.vytvoreni_noveho_profilu();
+					enter = 0;
+					del = 0;
+				}
 				return 2;
 			}
 			if (y_tecka == 12)
 			{
-				vyber_profilu(2);
+				profil2 profil;
+				if (enter)
+					vyber_profilu(2);
+				if (del)
+				{
+					profil.vytvoreni_noveho_profilu();
+					enter = 0;
+					del = 0;
+				}
 				return 2;
 			}
 			if (y_tecka == 17)
