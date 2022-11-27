@@ -289,7 +289,8 @@ public:
 	bool reset = 0;
 	bool vytazeno = 0;
 	bool balic = 0;
-
+	bool zmena_jazyka = 1;
+	
 	int jazyk = 0;
 	int plosina_skin = 0;
 	int highscore_cas = 0;
@@ -537,10 +538,13 @@ public:
 	
 	std::string vyber_profiluCZ = "Vyber si svuj profil";
 	std::string vyber_profiluEN = "Choose your profile";
-	std::string novy_profilCZ = "Novy profil";
-	std::string novy_profilEN = "New profile";
-	std::string muj_profilCZ = "Muj profil";
-	std::string muj_profilEN = "My profile";
+	std::string profil1CZ = "Profil 1";
+	std::string profil1EN = "Profile 1";
+	std::string profil2CZ = "Profil 2";
+	std::string profil2EN = "Profile 2";
+	std::string profil3CZ = "Profil 3";
+	std::string profil3EN = "Profile 3";
+
 	std::string herni_modyCZ = "Herni mody";
 	std::string herni_modyEN = "Game modes";
 	std::string vzhled_plosinyCZ = "Vzhled plosiny";
@@ -614,15 +618,32 @@ public:
 
 	int rozhodovac(int strana, int& plosina_skin_zmena, int& jazyk_zmena)
 	{
+		Pong navod;
 		/////////////////////    Profily     //////////////////////////
 		if (strana == -1)
 		{
-			if (y_tecka == 10)
+			if (y_tecka == 8)
+			{
 				vyber_profilu(0);
-			if (y_tecka == 12)
+				return 2;
+			}
+			if (y_tecka == 10)
+			{
 				vyber_profilu(1);
-			if (y_tecka == 14)
+				return 2;
+			}
+			if (y_tecka == 12)
+			{
 				vyber_profilu(2);
+				return 2;
+			}
+			if (y_tecka == 17)
+			{
+				if (!jazyk)
+					return jazyk_zmena = 1;
+				else
+					return jazyk_zmena = 0;
+			}
 		}
 
 		/////////////////////    Hlavni menu     //////////////////////////
@@ -635,6 +656,7 @@ public:
 				return 2;
 			if (y_tecka == 14)
 				return 3;
+		
 		}
 
 		/////////////////////    Herni mody     //////////////////////////
