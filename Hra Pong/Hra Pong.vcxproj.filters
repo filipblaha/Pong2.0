@@ -30,6 +30,9 @@
     <ClCompile Include="tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vyber_profilu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pong.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Profily.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vyber_profilu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

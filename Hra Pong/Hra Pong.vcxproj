@@ -132,12 +132,14 @@
     <ClCompile Include="Pong.cpp" />
     <ClCompile Include="profily.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
+    <ClCompile Include="vyber_profilu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pong.h" />
     <ClInclude Include="Profily.h" />
     <ClInclude Include="tinyxml2.h" />
+    <ClInclude Include="vyber_profilu.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="profil0.xml" />

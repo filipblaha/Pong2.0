@@ -24,30 +24,30 @@ public:
         XMLNode* pRoot = xmlDoc.NewElement("Profil");
         xmlDoc.InsertFirstChild(pRoot);
 
-        XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
+        XMLElement* pElement0 = xmlDoc.NewElement("jazyk");
+        pElement0->SetText(0);
+        pRoot->InsertEndChild(pElement0);
+
+        XMLElement* pElement1 = xmlDoc.NewElement("plosina_skin");
         pElement1->SetText(0);
         pRoot->InsertEndChild(pElement1);
 
-        XMLElement* pElement2 = xmlDoc.NewElement("plosina_skin");
+
+        XMLElement* pElement2 = xmlDoc.NewElement("highscore_cas");
         pElement2->SetText(0);
         pRoot->InsertEndChild(pElement2);
 
-
-        XMLElement* pElement3 = xmlDoc.NewElement("highscore_cas");
+        XMLElement* pElement3 = xmlDoc.NewElement("highscore_znicenych_bloku");
         pElement3->SetText(0);
         pRoot->InsertEndChild(pElement3);
 
-        XMLElement* pElement4 = xmlDoc.NewElement("highscore_znicenych_bloku");
+        XMLElement* pElement4 = xmlDoc.NewElement("level");
         pElement4->SetText(0);
         pRoot->InsertEndChild(pElement4);
 
-        XMLElement* pElement5 = xmlDoc.NewElement("level");
+        XMLElement* pElement5 = xmlDoc.NewElement("exp");
         pElement5->SetText(0);
         pRoot->InsertEndChild(pElement5);
-
-        XMLElement* pElement6 = xmlDoc.NewElement("exp");
-        pElement6->SetText(0);
-        pRoot->InsertEndChild(pElement6);
 
         XMLError eResult = xmlDoc.SaveFile("profil0.xml");
         XMLCheckResult(eResult);
@@ -108,30 +108,30 @@ public:
         XMLNode* pRoot = xmlDoc.NewElement("Profil");
         xmlDoc.InsertFirstChild(pRoot);
 
-        XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
+        XMLElement* pElement0 = xmlDoc.NewElement("jazyk");
+        pElement0->SetText(0);
+        pRoot->InsertEndChild(pElement0);
+
+        XMLElement* pElement1 = xmlDoc.NewElement("plosina_skin");
         pElement1->SetText(0);
         pRoot->InsertEndChild(pElement1);
 
-        XMLElement* pElement2 = xmlDoc.NewElement("plosina_skin");
+
+        XMLElement* pElement2 = xmlDoc.NewElement("highscore_cas");
         pElement2->SetText(0);
         pRoot->InsertEndChild(pElement2);
 
-
-        XMLElement* pElement3 = xmlDoc.NewElement("highscore_cas");
+        XMLElement* pElement3 = xmlDoc.NewElement("highscore_znicenych_bloku");
         pElement3->SetText(0);
         pRoot->InsertEndChild(pElement3);
 
-        XMLElement* pElement4 = xmlDoc.NewElement("highscore_znicenych_bloku");
+        XMLElement* pElement4 = xmlDoc.NewElement("level");
         pElement4->SetText(0);
         pRoot->InsertEndChild(pElement4);
 
-        XMLElement* pElement5 = xmlDoc.NewElement("level");
+        XMLElement* pElement5 = xmlDoc.NewElement("exp");
         pElement5->SetText(0);
         pRoot->InsertEndChild(pElement5);
-
-        XMLElement* pElement6 = xmlDoc.NewElement("exp");
-        pElement6->SetText(0);
-        pRoot->InsertEndChild(pElement6);
 
         XMLError eResult = xmlDoc.SaveFile("profil1.xml");
         XMLCheckResult(eResult);
@@ -192,30 +192,30 @@ public:
         XMLNode* pRoot = xmlDoc.NewElement("Profil");
         xmlDoc.InsertFirstChild(pRoot);
 
-        XMLElement* pElement1 = xmlDoc.NewElement("jazyk");
+        XMLElement* pElement0 = xmlDoc.NewElement("jazyk");
+        pElement0->SetText(0);
+        pRoot->InsertEndChild(pElement0);
+
+        XMLElement* pElement1 = xmlDoc.NewElement("plosina_skin");
         pElement1->SetText(0);
         pRoot->InsertEndChild(pElement1);
 
-        XMLElement* pElement2 = xmlDoc.NewElement("plosina_skin");
+
+        XMLElement* pElement2 = xmlDoc.NewElement("highscore_cas");
         pElement2->SetText(0);
         pRoot->InsertEndChild(pElement2);
 
-
-        XMLElement* pElement3 = xmlDoc.NewElement("highscore_cas");
+        XMLElement* pElement3 = xmlDoc.NewElement("highscore_znicenych_bloku");
         pElement3->SetText(0);
         pRoot->InsertEndChild(pElement3);
 
-        XMLElement* pElement4 = xmlDoc.NewElement("highscore_znicenych_bloku");
+        XMLElement* pElement4 = xmlDoc.NewElement("level");
         pElement4->SetText(0);
         pRoot->InsertEndChild(pElement4);
 
-        XMLElement* pElement5 = xmlDoc.NewElement("level");
+        XMLElement* pElement5 = xmlDoc.NewElement("exp");
         pElement5->SetText(0);
         pRoot->InsertEndChild(pElement5);
-
-        XMLElement* pElement6 = xmlDoc.NewElement("exp");
-        pElement6->SetText(0);
-        pRoot->InsertEndChild(pElement6);
 
         XMLError eResult = xmlDoc.SaveFile("profil2.xml");
         XMLCheckResult(eResult);
