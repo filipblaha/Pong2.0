@@ -339,7 +339,7 @@ void konec_logika(int mod, bool vyhra, Menu& navod_menu, Pong& navod)
 		navod_menu.exit = 0;
 
 		if (vyhra)
-			navod.n_exp = 7;
+			navod.n_exp += 7;
 
 		if (mod == 0)
 			navod.n_exp += navod.pocet_rozbitych_bloku / 5;
@@ -1600,7 +1600,48 @@ void bloky_padaji(Menu& navod_menu)
 
 Menu vykresleni_profil(Menu navod_menu)
 {
-	navod_menu.setCursorPosition(9, 5);
+	///////    Ramecek   ///////
+	navod_menu.setCursorPosition(8, 7);
+	for (int i = 0; i < 24; i++)
+	{
+		if(i == 0)
+			std::cout << char(218);
+		else if (i == 23)
+			std::cout << char(191);
+		else
+			std::cout << char(196);
+	}
+	for (int j = 8; j < 13; j++)
+	{
+		navod_menu.setCursorPosition(8, j);
+		for (int i = 0; i < 24; i++)
+		{
+			if (i == 0)
+				std::cout << char(179);
+		}
+	}
+	for (int j = 8; j < 13; j++)
+	{
+		navod_menu.setCursorPosition(31, j);
+		for (int i = 0; i < 24; i++)
+		{
+			if (i == 0)
+				std::cout << char(179);
+		}
+	}
+	navod_menu.setCursorPosition(8, 13);
+	for (int i = 0; i < 24; i++)
+	{
+		if (i == 0)
+			std::cout << char(192);
+		else if (i == 23)
+			std::cout << char(217);
+		else
+			std::cout << char(196);
+	}
+
+	///////    Text   ///////
+	navod_menu.setCursorPosition(10, 5);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.vyber_profiluCZ;
 	if (navod_menu.jazyk)
@@ -1919,12 +1960,12 @@ Menu vykresleni_vzhled_plosiny(Menu navod_menu)
 
 void vykresleni_otazka(Menu navod_menu)
 {
-	navod_menu.setCursorPosition(5, 14);
+	navod_menu.setCursorPosition(5, 2);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.smazani_pokrok_otazka1CZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.smazani_pokrok_otazka1EN;
-	navod_menu.setCursorPosition(26, 15);
+	navod_menu.setCursorPosition(26, 3);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.smazani_pokrok_otazka2CZ;
 	if (navod_menu.jazyk)
@@ -1932,9 +1973,9 @@ void vykresleni_otazka(Menu navod_menu)
 }
 void smazani_otazka(Menu navod_menu)
 {
-	navod_menu.setCursorPosition(5, 14);
+	navod_menu.setCursorPosition(5, 2);
 	std::cout << "                               ";
-	navod_menu.setCursorPosition(26, 15);
+	navod_menu.setCursorPosition(26, 3);
 	std::cout << "       ";
 }
 void vykresleni_logo(Menu navod_menu)

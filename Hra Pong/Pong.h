@@ -54,7 +54,7 @@ public:
 			docas.clear();
 			for (int i = 0; i < DELKA; i++)
 			{
-				if (i != 0 && i != DELKA - 1 && j != 0 && j < 7 && i % 3 == 0)
+				if (i != 0 && i != DELKA - 1 && j > 0 && j < 7 && ((i % 3 == 0 && i < 10) || (i % 3 == 1 && i >= 10)))
 				{
 					if (j < 4)
 					{
