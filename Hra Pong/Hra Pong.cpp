@@ -442,6 +442,7 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 				{
 					navod_menu.highscore_cas = 45;
 					std::cout << navod_menu.odchod4CZ << (char)navod_menu.highscore_cas;
+					navod_menu.highscore_cas = 0;
 				}
 				else
 					std::cout << navod_menu.odchod4CZ << navod_menu.highscore_cas;
