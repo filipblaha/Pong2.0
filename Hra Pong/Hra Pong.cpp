@@ -342,7 +342,7 @@ void konec_logika(int mod, bool vyhra, Menu& navod_menu, Pong& navod)
 			navod.n_exp = 7;
 
 		if (mod == 0)
-			navod.n_exp = navod.n_exp + navod.cas / 5;
+			navod.n_exp += navod.pocet_rozbitych_bloku / 5;
 
 		//////////    Highscore    ////////
 		if (vyhra)
@@ -369,18 +369,25 @@ void konec_logika(int mod, bool vyhra, Menu& navod_menu, Pong& navod)
 
 		//////////    Level bar    ////////
 		navod.exp_pole.clear();
-		navod_menu.exp = navod_menu.exp + navod.n_exp;
 		int docas_exp = 0;
-		bool level_up = 0;
+		int level_up = 0;
+		while (navod.n_exp >= 20)
+		{
+			navod.n_exp -= 20;
+			level_up++;
+			docas_exp = navod.n_exp;
+		}
+
+		navod_menu.exp += navod.n_exp;
 		if (navod_menu.exp >= 20)
 		{
-			navod_menu.exp = navod_menu.exp - 20;
+			navod_menu.exp -= 20;
 			docas_exp = navod_menu.exp;
-			navod_menu.level++;
-			level_up = 1;
+			level_up++;
 		}
-		if (level_up)
+		if (level_up > 0)
 		{
+			navod_menu.level += level_up;
 			for (int i = 0; i < docas_exp; i++)
 			{
 				navod.exp_pole.push_back(1);
@@ -446,7 +453,7 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 			navod_menu.setCursorPosition(8, 10);
 			if (mod == 0)
 			{
-				std::cout << navod_menu.odchodP5CZ << navod.cas;
+				std::cout << navod_menu.odchodP5CZ << navod.pocet_bloku;
 			}
 			if (mod == 3)
 			{
@@ -615,7 +622,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	////////////    casomira    ////////////
 
 	navod.pocet_vykresleni++;
-	if (navod.pocet_vykresleni % 11 == 0)
+	if (navod.pocet_vykresleni % 20 == 0)
 		navod.cas++;
 	if (navod.pocet_vykresleni % 20 == 0)
 		navod.padani++;
@@ -890,7 +897,26 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)++;
 				navod.power_up = 1;
 			}
-
+			if (DR == -1)
+			{
+				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic + 1)++;
+				navod.power_up = 1;
+			}
+			if (UR == -1)
+			{
+				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic + 1)++;
+				navod.power_up = 1;
+			}
+			if (DL == -1)
+			{
+				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic - 1)++;
+				navod.power_up = 1;
+			}
+			if (UL == -1)
+			{
+				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic - 1)++;
+				navod.power_up = 1;
+			}
 			///////////   zrychleni    /////////////
 
 			if (navod.ax_mic == 1)
@@ -1357,7 +1383,6 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 			navod_menu.setCursorPosition(SL, SCY);
 			std::cout << " ";
 		}
-
 		if (DR == -1)
 		{
 			navod_menu.setCursorPosition(SR, SD);
@@ -1456,10 +1481,13 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			}
 		}
 		//////////    vykreslovani casomiry  ////////////
-		navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
-		std::cout << "   ";
-		navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
-		std::cout << navod.cas;
+		if (navod.pocet_vykresleni % 20 == 0)
+		{
+			navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
+			std::cout << "   ";
+			navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
+			std::cout << navod.cas;
+		}
 
 		//////////    vykreslovani HUD power-up  ////////////
 		if (navod.power_up)
@@ -2110,16 +2138,19 @@ void vykresleni_uroven(Menu navod_menu, Pong navod)
 		navod_menu.setCursorPosition(27, 17);
 		std::cout << navod_menu.odchod6EN << navod_menu.level;
 	}
-
-	navod.zivoty = 0;
-	konec_logika(0, 0, navod_menu, navod);
+	for (int i = 0; i < navod_menu.exp; i++)
+	{
+		navod.exp_pole.push_back(2);
+	}
+	for (int i = 0; i < 20 - navod_menu.exp; i++)
+	{
+		navod.exp_pole.push_back(0);
+	}
 	navod_menu.setCursorPosition(17, 18);
 	for (int i = 0; i < navod.exp_pole.size(); i++)
 	{
 		if (navod.exp_pole.at(i) == 2)
 			std::cout << char(219);
-		if (navod.exp_pole.at(i) == 1)
-			std::cout << char(178);
 		if (navod.exp_pole.at(i) == 0)
 			std::cout << char(176);
 	}
@@ -2394,6 +2425,7 @@ int main()
 	Pong navod;
 	while(navod_menu.zmena_jazyka)
 	{
-		menu_profil(navod_menu, navod);
+		klasik(navod_menu);
+		//menu_profil(navod_menu, navod);
 	}
 }

@@ -454,7 +454,7 @@ public:
 		}
 	}
 
-	int pocet_zivotu = 3;
+	int pocet_zivotu = 1;
 	int potr_urov1 = 1;
 	int potr_urov2 = 2;
 	int potr_urov3 = 3;
