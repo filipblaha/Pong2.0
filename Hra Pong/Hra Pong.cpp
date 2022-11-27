@@ -117,7 +117,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 
 			if ((navod_menu.y_oznaceni > navod_menu.horni_zavora_hlavni) && (strana == 2))
 			{
-				navod_menu.y_tecka -= 4;
+				navod_menu.y_oznaceni -= 4;
 			}
 			if ((navod_menu.y_tecka > navod_menu.horni_zavora_hlavni) && (strana == 3))
 			{
@@ -163,7 +163,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 			}
 			if ((navod_menu.y_oznaceni < navod_menu.dolni_zavora_hlavni) && (strana == 2))
 			{
-				navod_menu.y_tecka += 4;
+				navod_menu.y_oznaceni += 4;
 			}
 			if ((navod_menu.y_tecka < navod_menu.dolni_zavora_hlavni) && (strana == 3))
 			{
@@ -193,7 +193,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 		{
 			if (navod_menu.x_oznaceni > navod_menu.leva_zavora_hlavni)
 			{
-				navod_menu.y_tecka -= 10;
+				navod_menu.x_oznaceni -= 10;
 				navod_menu.exit = 0;
 				navod_menu.enter = 0;
 				navod_menu.del = 0;
@@ -207,7 +207,7 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 		{
 			if (navod_menu.x_oznaceni < navod_menu.prava_zavora_hlavni)
 			{
-				navod_menu.y_tecka += 10;
+				navod_menu.x_oznaceni += 10;
 				navod_menu.exit = 0;
 				navod_menu.enter = 0;
 				navod_menu.del = 0;
@@ -2426,7 +2426,7 @@ int main()
 	Pong navod;
 	while(navod_menu.zmena_jazyka)
 	{
-		klasik(navod_menu);
-		//menu_profil(navod_menu, navod);
+		//klasik(navod_menu);
+		menu_profil(navod_menu, navod);
 	}
 }

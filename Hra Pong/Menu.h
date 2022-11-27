@@ -21,12 +21,12 @@ class profil0
 {
 public:
 	XMLDocument xmlDoc;
-	int jazyk_s;
-	int plosina_skin_s;
-	int highscore_cas_s;
-	int highscore_znicenych_bloku_s;
-	int level_s;
-	int exp_s;
+	int jazyk_s = 0;
+	int plosina_skin_s = 0;
+	int highscore_cas_s = 0;
+	int highscore_znicenych_bloku_s = 0;
+	int level_s = 0;
+	int exp_s = 0;
 
 	int vytvoreni_noveho_profilu()
 	{
@@ -105,12 +105,12 @@ class profil1
 {
 public:
 	XMLDocument xmlDoc;
-	int jazyk_s;
-	int plosina_skin_s;
-	int highscore_cas_s;
-	int highscore_znicenych_bloku_s;
-	int level_s;
-	int exp_s;
+	int jazyk_s = 0;
+	int plosina_skin_s = 0;
+	int highscore_cas_s = 0;
+	int highscore_znicenych_bloku_s = 0;
+	int level_s = 0;
+	int exp_s = 0;
 
 	int vytvoreni_noveho_profilu()
 	{
@@ -189,12 +189,12 @@ class profil2
 {
 public:
 	XMLDocument xmlDoc;
-	int jazyk_s;
-	int plosina_skin_s;
-	int highscore_cas_s;
-	int highscore_znicenych_bloku_s;
-	int level_s;
-	int exp_s;
+	int jazyk_s = 0;
+	int plosina_skin_s = 0;
+	int highscore_cas_s = 0;
+	int highscore_znicenych_bloku_s = 0;
+	int level_s = 0;
+	int exp_s = 0;
 
 	int vytvoreni_noveho_profilu()
 	{
@@ -528,10 +528,7 @@ public:
 		}
 		if (plosina_skin == 5)
 		{
-			for (int i = 0; i < pole_skin.size(); i++)
-			{
-				pole_skin.at(i);
-			}
+				pole_skin;
 		}
 	}
 
