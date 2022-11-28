@@ -713,7 +713,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 			vyhra(0, navod_menu, navod);
 		}
 	}
-	if (navod.y_bomba == navod.VYSKA - 2 && navod.pocet_vykresleni % navod.rychlost_hry == 0) // spodni
+	if (navod.y_mic == navod.VYSKA - 2 && navod.pocet_vykresleni % navod.rychlost_hry == 0) // spodni
 	{
 		if (mod == 0)
 			prohra(0, navod_menu, navod);
