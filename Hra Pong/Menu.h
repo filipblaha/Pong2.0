@@ -331,6 +331,10 @@ public:
 	int exp = 0;
 	int profil_probiha = 0;
 
+	int uroven_profil0 = 0;
+	int uroven_profil1 = 0;
+	int uroven_profil2 = 0;
+
 	void vyber_profilu(int vybrany_profil)
 	{
 		if (vybrany_profil == 0)
@@ -494,8 +498,142 @@ public:
 			XMLCheckResult(eResult);
 		}
 	}
+	int nacteni_vyberu_profilu()
+	{
+		XMLDocument xmlDoc;
+		XMLError eResult = xmlDoc.LoadFile("profil_vyber.xml");
+		XMLCheckResult(eResult);
 
-	int pocet_zivotu = 1;
+		XMLNode* pRoot = xmlDoc.FirstChild();
+		if (pRoot == nullptr) return XML_ERROR_FILE_READ_ERROR;
+
+		XMLElement* pElement0 = pRoot->FirstChildElement("profil0");
+		if (pElement0 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		XMLElement* pListElement0 = pElement0->FirstChildElement("Item");
+		nazev_profil0.clear();
+		while (pListElement0 != nullptr)
+		{
+			int iOutListValue;
+			eResult = pListElement0->QueryIntText(&iOutListValue);
+			XMLCheckResult(eResult);
+
+			nazev_profil0.push_back(iOutListValue);
+			pListElement0 = pListElement0->NextSiblingElement("Item");
+		}
+
+		XMLElement* pElement1 = pRoot->FirstChildElement("profil1");
+		if (pElement1 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		XMLElement* pListElement1 = pElement1->FirstChildElement("Item");
+		nazev_profil1.clear();
+		while (pListElement1 != nullptr)
+		{
+			int iOutListValue;
+			eResult = pListElement1->QueryIntText(&iOutListValue);
+			XMLCheckResult(eResult);
+
+			nazev_profil1.push_back(iOutListValue);
+			pListElement1 = pListElement1->NextSiblingElement("Item");
+		}
+
+		XMLElement* pElement2 = pRoot->FirstChildElement("profil2");
+		if (pElement2 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		XMLElement* pListElement2 = pElement2->FirstChildElement("Item");
+		nazev_profil2.clear();
+		while (pListElement2 != nullptr)
+		{
+			int iOutListValue;
+			eResult = pListElement2->QueryIntText(&iOutListValue);
+			XMLCheckResult(eResult);
+
+			nazev_profil2.push_back(iOutListValue);
+			pListElement2 = pListElement2->NextSiblingElement("Item");
+		}
+
+		XMLElement* pElement3 = pRoot->FirstChildElement("uroven0");
+		if (pElement3 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement3->QueryIntText(&uroven_profil0);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement4 = pRoot->FirstChildElement("uroven11");
+		if (pElement4 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement4->QueryIntText(&uroven_profil1);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement5 = pRoot->FirstChildElement("uroven2");
+		if (pElement5 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement5->QueryIntText(&uroven_profil2);
+		XMLCheckResult(eResult);
+		return XML_SUCCESS;
+	}
+	int ulozeni_vyberu_profilu()
+	{
+		XMLDocument xmlDoc;
+		XMLNode* pRoot = xmlDoc.NewElement("Profil");
+		xmlDoc.InsertFirstChild(pRoot);
+
+		XMLElement* pElement0 = xmlDoc.NewElement("profil0");
+		for (const auto& item : nazev_profil0)
+		{
+			XMLElement* pListElement0 = xmlDoc.NewElement("Item");
+			pListElement0->SetText(item);
+
+			pElement0->InsertEndChild(pListElement0);
+		}
+		pRoot->InsertEndChild(pElement0);
+
+		XMLElement* pElement1 = xmlDoc.NewElement("profil1");
+		for (const auto& item : nazev_profil1)
+		{
+			XMLElement* pListElement1 = xmlDoc.NewElement("Item");
+			pListElement1->SetText(item);
+
+			pElement1->InsertEndChild(pListElement1);
+		}
+		pRoot->InsertEndChild(pElement1);
+
+		XMLElement* pElement2 = xmlDoc.NewElement("profil2");
+		for (const auto& item : nazev_profil2)
+		{
+			XMLElement* pListElement2 = xmlDoc.NewElement("Item");
+			pListElement2->SetText(item);
+
+			pElement2->InsertEndChild(pListElement2);
+		}
+		pRoot->InsertEndChild(pElement2);
+
+		if (profil_probiha == 0)
+		{
+			profil0 profil;
+			uroven_profil0 = level;
+		}
+		if (profil_probiha == 1)
+		{
+			profil0 profil;
+			uroven_profil1 = level;
+		}
+		if (profil_probiha == 2)
+		{
+			profil0 profil;
+			uroven_profil2 = level;
+		}
+
+		XMLElement* pElement3 = xmlDoc.NewElement("uroven0");
+		pElement3->SetText(uroven_profil0);
+		pRoot->InsertEndChild(pElement3);
+
+		XMLElement* pElement4 = xmlDoc.NewElement("uroven1");
+		pElement4->SetText(uroven_profil1);
+		pRoot->InsertEndChild(pElement4);
+
+		XMLElement* pElement5 = xmlDoc.NewElement("uroven2");
+		pElement5->SetText(uroven_profil2);
+		pRoot->InsertEndChild(pElement5);
+
+		XMLError eResult = xmlDoc.SaveFile("profil_vyber.xml");
+		XMLCheckResult(eResult);
+	}
+
+	int pocet_zivotu = 2;
 	int potr_urov1 = 1;
 	int potr_urov2 = 2;
 	int potr_urov3 = 3;
@@ -508,50 +646,19 @@ public:
 	char pouziti_schopnosti = ' ';
 
 	std::vector<char> pole_skin;
-
-	char char1 = 's';
-	char char2 = 'p';
-	char char3 = 'd';
-	char char4 = 'd';
-	char char5 = 'd';
-	char char6 = 'd';
-	char char7 = 'd';
-
 	std::vector<char> nazev_profil0;
-	std::vector<char> vektor_profil0()
-	{
-		nazev_profil0.push_back(char1);
-		nazev_profil0.push_back(char2);
-		nazev_profil0.push_back(char3);
-		nazev_profil0.push_back(char4);
-		nazev_profil0.push_back(char5);
-		nazev_profil0.push_back(char6);
-		nazev_profil0.push_back(char7);
-		return nazev_profil0;
-	}
 	std::vector<char> nazev_profil1;
-	std::vector<char> vektor_profil1()
-	{
-		nazev_profil1.push_back(char1);
-		nazev_profil1.push_back(char2);
-		nazev_profil1.push_back(char3);
-		nazev_profil1.push_back(char4);
-		nazev_profil1.push_back(char5);
-		nazev_profil1.push_back(char6);
-		nazev_profil1.push_back(char7);
-		return nazev_profil1;
-	}
 	std::vector<char> nazev_profil2;
-	std::vector<char> vektor_profil2()
+
+	std::vector<char> nazev_profil_novy;
+	std::vector<char> vytvoreni_noveho_nazvu_profilu()
 	{
-		nazev_profil2.push_back(char1);
-		nazev_profil2.push_back(char2);
-		nazev_profil2.push_back(char3);
-		nazev_profil2.push_back(char4);
-		nazev_profil2.push_back(char5);
-		nazev_profil2.push_back(char6);
-		nazev_profil2.push_back(char7);
-		return nazev_profil2;
+		for (int i = 0; i < novy_profil.size(); i++)
+		{
+			nazev_profil_novy.push_back(novy_profil.at(i));
+		}
+		return nazev_profil_novy;
+
 	}
 
 	void setCursorPosition(int x, int y)
@@ -633,6 +740,8 @@ public:
 	std::string smazani_pokrok_otazka1EN = "Do you want to delete progress?";
 	std::string smazani_pokrok_otazka2CZ = "[ENTER]";
 	std::string smazani_pokrok_otazka2EN = "[ENTER]";
+	std::string profil_nazevCZ = "Zadej nazev profilu";
+	std::string profil_nazevEN = "Enter a profile name";
 
 	std::string herni_modyCZ = "Herni mody";
 	std::string herni_modyEN = "Game modes";
@@ -705,12 +814,19 @@ public:
 	std::string ovladani_pauzaCZ = "Pauza";
 	std::string ovladani_pauzaEN = "Pause";
 
+	std::string novy_profil = "Novy_profil";
+	std::string muj_profil0;
+	std::string muj_profil1;
+	std::string muj_profil2;
 	int rozhodovac(int strana, int& plosina_skin_zmena, int& jazyk_zmena)
 	{
 		Pong navod;
 		/////////////////////    Profily     //////////////////////////
 		if (strana == -1)
 		{
+			nazev_profil_novy.clear();
+			nacteni_vyberu_profilu();
+			vytvoreni_noveho_nazvu_profilu();
 			if (y_tecka == 8)
 			{
 				profil0 profil;
@@ -719,8 +835,12 @@ public:
 				if (del)
 				{
 					profil.vytvoreni_noveho_profilu();
+					nazev_profil0 = nazev_profil_novy;
+					level = 0;
+					ulozeni_vyberu_profilu();
 					enter = 0;
 					del = 0;
+					exit = 1;
 				}
 				return 2;
 			}
@@ -732,8 +852,12 @@ public:
 				if (del)
 				{
 					profil.vytvoreni_noveho_profilu();
+					nazev_profil1 = nazev_profil_novy;
+					level = 0;
+					ulozeni_vyberu_profilu();
 					enter = 0;
 					del = 0;
+					exit = 1;
 				}
 				return 2;
 			}
@@ -745,8 +869,12 @@ public:
 				if (del)
 				{
 					profil.vytvoreni_noveho_profilu();
+					nazev_profil2 = nazev_profil_novy;
+					level = 0;
+					ulozeni_vyberu_profilu();
 					enter = 0;
 					del = 0;
+					exit = 1;
 				}
 				return 2;
 			}
@@ -860,55 +988,5 @@ public:
 				return jazyk_zmena = 1;
 			}
 		}
-	}
-};
-
-class profil_vyber
-{
-public:
-	XMLDocument xmlDoc;
-	Menu navod_menu;
-	std::vector<char> vec = navod_menu.vektor_profil0();
-
-	int vytvoreni_noveho_profilu()
-	{
-		XMLNode* pRoot = xmlDoc.NewElement("Profil");
-		xmlDoc.InsertFirstChild(pRoot);
-
-		XMLElement* pElement0 = xmlDoc.NewElement("profil0");
-		for (const auto& item : vec)
-		{
-			XMLElement* pListElement = xmlDoc.NewElement("Item");
-			pListElement->SetText(item);
-
-			pElement0->InsertEndChild(pListElement);
-		}
-		pRoot->InsertEndChild(pElement0);
-
-		XMLError eResult = xmlDoc.SaveFile("profil_vyber.xml");
-		XMLCheckResult(eResult);
-	}
-	int nacteni_profilu()
-	{
-		XMLError eResult = xmlDoc.LoadFile("profil_vyber.xml");
-		XMLCheckResult(eResult);
-
-		XMLNode* pRoot = xmlDoc.FirstChild();
-		if (pRoot == nullptr) return XML_ERROR_FILE_READ_ERROR;
-
-		XMLElement* pElement0 = pRoot->FirstChildElement("profil0");
-		if (pElement0 == nullptr) return XML_ERROR_PARSING_ELEMENT;
-		XMLElement* pListElement = pElement0->FirstChildElement("Item");
-		vec.clear();
-		while (pListElement != nullptr)
-		{
-			int iOutListValue;
-			eResult = pListElement->QueryIntText(&iOutListValue);
-			XMLCheckResult(eResult);
-
-			vec.push_back(iOutListValue);
-			pListElement = pListElement->NextSiblingElement("Item");
-		}
-		return XML_SUCCESS;
 	}
 };

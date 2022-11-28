@@ -143,6 +143,7 @@
     <Xml Include="profil0.xml" />
     <Xml Include="profil1.xml" />
     <Xml Include="profil2.xml" />
+    <Xml Include="profil_vyber.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

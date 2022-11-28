@@ -55,5 +55,8 @@
     <Xml Include="profil2.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="profil_vyber.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

@@ -1,11 +1,44 @@
 <Profil>
     <profil0>
-        <Item>115</Item>
+        <Item>78</Item>
+        <Item>111</Item>
+        <Item>118</Item>
+        <Item>121</Item>
+        <Item>95</Item>
         <Item>112</Item>
-        <Item>100</Item>
-        <Item>100</Item>
-        <Item>100</Item>
-        <Item>100</Item>
-        <Item>100</Item>
+        <Item>114</Item>
+        <Item>111</Item>
+        <Item>102</Item>
+        <Item>105</Item>
+        <Item>108</Item>
     </profil0>
+    <profil1>
+        <Item>78</Item>
+        <Item>111</Item>
+        <Item>118</Item>
+        <Item>121</Item>
+        <Item>95</Item>
+        <Item>112</Item>
+        <Item>114</Item>
+        <Item>111</Item>
+        <Item>102</Item>
+        <Item>105</Item>
+        <Item>108</Item>
+    </profil1>
+    <profil2>
+        <Item>78</Item>
+        <Item>111</Item>
+        <Item>118</Item>
+        <Item>121</Item>
+        <Item>95</Item>
+        <Item>112</Item>
+        <Item>114</Item>
+        <Item>111</Item>
+        <Item>102</Item>
+        <Item>105</Item>
+        <Item>108</Item>
+    </profil2>
+    <uroven0>0</uroven0>
+    <uroven1>0</uroven1>
+    <uroven2>0</uroven2>
 </Profil>

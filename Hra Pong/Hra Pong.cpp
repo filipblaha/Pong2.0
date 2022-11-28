@@ -53,6 +53,57 @@ void smazani_HUD_power_up(Pong navod)
 	navod_menu.setCursorPosition(12, navod.VYSKA);
 	std::cout << ' ';
 }
+std::vector<char> string_na_vektor(Menu& navod_menu, std::string nazev)
+{
+	if (navod_menu.profil_probiha == 0)
+	{
+		navod_menu.nazev_profil0.clear();
+		for (int i = 0; i < nazev.size(); i++)
+		{
+			navod_menu.nazev_profil0.push_back(nazev.at(i));
+		}
+		return navod_menu.nazev_profil0;
+	}
+	if (navod_menu.profil_probiha == 1)
+	{
+		navod_menu.nazev_profil1.clear();
+		for (int i = 0; i < nazev.size(); i++)
+		{
+			navod_menu.nazev_profil1.push_back(nazev.at(i));
+		}
+		return navod_menu.nazev_profil1;
+	}
+	if (navod_menu.profil_probiha == 2)
+	{
+		navod_menu.nazev_profil2.clear();
+		for (int i = 0; i < nazev.size(); i++)
+		{
+			navod_menu.nazev_profil2.push_back(nazev.at(i));
+		}
+		return navod_menu.nazev_profil2;
+	}
+}
+void vektor_na_string(Menu& navod_menu, std::vector<char> p0, std::vector<char> p1, std::vector<char> p2)
+{
+	navod_menu.muj_profil0.clear();
+	for (int i = 0; i < p0.size(); i++)
+	{
+		navod_menu.muj_profil0.push_back(p0.at(i));
+	}
+	navod_menu.muj_profil0;
+	navod_menu.muj_profil1.clear();
+	for (int i = 0; i < p1.size(); i++)
+	{
+		navod_menu.muj_profil1.push_back(p1.at(i));
+	}
+	navod_menu.muj_profil1;
+	navod_menu.muj_profil2.clear();
+	for (int i = 0; i < p2.size(); i++)
+	{
+		navod_menu.muj_profil2.push_back(p2.at(i));
+	}
+	navod_menu.muj_profil2;
+}
 
 /////////////////////    Vstupy     //////////////////////////
 
@@ -91,7 +142,7 @@ int vstup_hra(Pong& navod)
 		break;
 	}
 }
-Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
+void vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 {
 	switch (_getch())
 	{
@@ -138,7 +189,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 			navod_menu.exit = 0;
 			navod_menu.enter = 0;
 			navod_menu.del = 0;
-			return navod_menu;
 		}
 		break;
 	}
@@ -184,7 +234,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 			navod_menu.exit = 0;
 			navod_menu.enter = 0;
 			navod_menu.del = 0;
-			return navod_menu;
 		}
 		break;
 	}
@@ -197,7 +246,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 				navod_menu.exit = 0;
 				navod_menu.enter = 0;
 				navod_menu.del = 0;
-				return navod_menu;
 			}
 		}
 		break;
@@ -211,7 +259,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 				navod_menu.exit = 0;
 				navod_menu.enter = 0;
 				navod_menu.del = 0;
-				return navod_menu;
 			}
 		}
 		break;
@@ -221,7 +268,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 		{
 			navod_menu.enter = 1;
 			navod_menu.exit = 0;
-			return navod_menu;
 		}
 		break;
 	}
@@ -233,7 +279,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 				navod_menu.exit = 1;
 				navod_menu.del = 0;
 				navod.pokracovani = 0;
-				return navod_menu;
 			}
 		}
 		break;
@@ -258,7 +303,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 				navod_menu.del = 0;
 			}
 			navod_menu.exit = 1;
-			return navod_menu;
 		}
 		break;
 	}
@@ -273,7 +317,6 @@ Menu vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 	default:
 		break;
 	}
-	return navod_menu;
 }
 
 /////////////////////    Vyhra / prohra     //////////////////////////
@@ -522,7 +565,7 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 		while (navod_menu.exit == 0)
 		{
 			while (!_kbhit());
-			navod_menu = vstup_menu(navod_menu, navod, -1);
+			vstup_menu(navod_menu, navod, -1);
 			navod.zivoty = navod_menu.pocet_zivotu;
 		}
 	}
@@ -596,7 +639,7 @@ void vyhra(int mod, Menu& navod_menu, Pong& navod)
 	while (navod_menu.exit == 0)
 	{
 		while (!_kbhit());
-		navod_menu = vstup_menu(navod_menu, navod, -1);
+		vstup_menu(navod_menu, navod, -1);
 		navod.zivoty = navod_menu.pocet_zivotu;
 	}
 }
@@ -1673,26 +1716,18 @@ Menu vykresleni_profil(Menu navod_menu)
 	}
 
 	///////    Text   ///////
+
 	navod_menu.setCursorPosition(10, 5);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.vyber_profiluCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.vyber_profiluEN;
 	navod_menu.setCursorPosition(12, 8);
-	if (!navod_menu.jazyk)
-		std::cout << navod_menu.profil1CZ;
-	if (navod_menu.jazyk)
-		std::cout << navod_menu.profil1EN;
+	std::cout << navod_menu.muj_profil0;
 	navod_menu.setCursorPosition(12, 10);
-	if (!navod_menu.jazyk)
-		std::cout << navod_menu.profil2CZ;
-	if (navod_menu.jazyk)
-		std::cout << navod_menu.profil2EN;
+	std::cout << navod_menu.muj_profil1;
 	navod_menu.setCursorPosition(12, 12);
-	if (!navod_menu.jazyk)
-		std::cout << navod_menu.profil3CZ;
-	if (navod_menu.jazyk)
-		std::cout << navod_menu.profil3EN;
+	std::cout << navod_menu.muj_profil2;
 
 	navod_menu.setCursorPosition(4, 16);
 	if (!navod_menu.jazyk)
@@ -1990,6 +2025,22 @@ Menu vykresleni_vzhled_plosiny(Menu navod_menu)
 	return navod_menu;
 }
 
+void vykresleni_nazev_profilu(Menu navod_menu)
+{
+	for (int j = 8; j < 13; j++)
+	{
+		navod_menu.setCursorPosition(9, j);
+		for (int i = 0; i < 22; i++)
+		{
+			std::cout << ' ';
+		}
+	}
+	navod_menu.setCursorPosition(10, 8);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.profil_nazevCZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.profil_nazevEN;
+}
 void vykresleni_otazka(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(5, 2);
@@ -2448,6 +2499,8 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 	font(0, 20);
 	SetWindow(navod_menu.delka_menu, navod_menu.vyska_menu - 2);
 
+	navod_menu.nacteni_vyberu_profilu();
+	vektor_na_string(navod_menu, navod_menu.nazev_profil0, navod_menu.nazev_profil1, navod_menu.nazev_profil2);
 	vykresleni_menu_start(navod_menu, navod);
 	navod_menu = vykresleni_profil(navod_menu);
 	navod_menu.exit = 0;
@@ -2458,8 +2511,11 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 
 	while (!navod_menu.exit)
 	{
+		std::string nazev;
+		bool jazyk_profil = navod_menu.jazyk;
+
 		vykresleni_tecka(navod_menu);
-		while (!_kbhit());
+		while (!_kbhit()); 
 		smazani_tecka(navod_menu);
 		vstup_menu(navod_menu, navod, -1);
 		if (navod_menu.enter || navod_menu.del)
@@ -2475,21 +2531,33 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 			{
 				if (navod_menu.enter)
 				{
-					//if ("novej profil")
+					if (navod_menu.pouzit == 0)
+					{
+						if (jazyk_profil != navod_menu.jazyk)
+							navod_menu.jazyk = jazyk_profil;
+						vykresleni_nazev_profilu(navod_menu);
+
+						navod_menu.nacteni_vyberu_profilu();
+
+						navod_menu.setCursorPosition(10, 10);
+						std::cin >> nazev;
+						string_na_vektor(navod_menu, nazev);
+						navod_menu.ulozeni_vyberu_profilu();
+					}
 					while (navod.program)
 					{
 						menu_hlavni(navod_menu, navod);
 						navod_menu.ukladani_profilu();
+						navod_menu.ulozeni_vyberu_profilu();
 						navod_menu.exit = 1;
 					}
 				}
 			}
 			else
 			{
-				navod_menu.zmena_jazyka = 1;
-				navod.program = 0;
 				navod_menu.exit = 1;
 			}
+			navod_menu.ulozeni_vyberu_profilu();
 		}
 	}
 }
@@ -2497,10 +2565,11 @@ void menu_profil(Menu& navod_menu, Pong& navod)
 int main()
 {
 	Menu navod_menu;
-	Pong navod;/*
+	Pong navod;
+	/*
 	profil_vyber profil;
 	profil.vytvoreni_noveho_profilu();*/
-	while(navod_menu.zmena_jazyka)
+	while (navod.program)
 	{
 		//klasik(navod_menu);
 		menu_profil(navod_menu, navod);
