@@ -1729,6 +1729,22 @@ Menu vykresleni_profil(Menu navod_menu)
 	navod_menu.setCursorPosition(12, 12);
 	std::cout << navod_menu.muj_profil2;
 
+	navod_menu.setCursorPosition(21, 8);
+	if (!navod_menu.jazyk)
+		std::cout << '(' << navod_menu.profil_urovenCZ <<  navod_menu.uroven_profil0 << ')';
+	if (navod_menu.jazyk)
+		std::cout << '(' << navod_menu.profil_urovenEN << navod_menu.uroven_profil0 << ')';
+	navod_menu.setCursorPosition(21, 10);
+	if (!navod_menu.jazyk)
+		std::cout << '(' << navod_menu.profil_urovenCZ << navod_menu.uroven_profil1 << ')';
+	if (navod_menu.jazyk)
+		std::cout << '(' << navod_menu.profil_urovenEN << navod_menu.uroven_profil1 << ')';
+	navod_menu.setCursorPosition(21, 12);
+	if (!navod_menu.jazyk)
+		std::cout << '(' << navod_menu.profil_urovenCZ << navod_menu.uroven_profil2 << ')';
+	if (navod_menu.jazyk)
+		std::cout << '(' << navod_menu.profil_urovenEN << navod_menu.uroven_profil2 << ')';
+
 	navod_menu.setCursorPosition(4, 16);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.jazykCZ;
@@ -2574,4 +2590,3 @@ int main()
 		//klasik(navod_menu);
 		menu_profil(navod_menu, navod);
 	}
-}

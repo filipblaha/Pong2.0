@@ -602,20 +602,11 @@ public:
 		pRoot->InsertEndChild(pElement2);
 
 		if (profil_probiha == 0)
-		{
-			profil0 profil;
 			uroven_profil0 = level;
-		}
 		if (profil_probiha == 1)
-		{
-			profil0 profil;
 			uroven_profil1 = level;
-		}
 		if (profil_probiha == 2)
-		{
-			profil0 profil;
 			uroven_profil2 = level;
-		}
 
 		XMLElement* pElement3 = xmlDoc.NewElement("uroven0");
 		pElement3->SetText(uroven_profil0);
@@ -728,12 +719,8 @@ public:
 	
 	std::string vyber_profiluCZ = "Vyber si svuj profil";
 	std::string vyber_profiluEN = "Choose your profile";
-	std::string profil1CZ = "Profil 1";
-	std::string profil1EN = "Profile 1";
-	std::string profil2CZ = "Profil 2";
-	std::string profil2EN = "Profile 2";
-	std::string profil3CZ = "Profil 3";
-	std::string profil3EN = "Profile 3";
+	std::string profil_urovenCZ = "Ur. ";
+	std::string profil_urovenEN = "Lvl. ";
 	std::string smazani_pokrokCZ = "Smazat pokrok";
 	std::string smazani_pokrokEN = "Delete progress";
 	std::string smazani_pokrok_otazka1CZ = "Opravdu chcete smazat pokrok?";
