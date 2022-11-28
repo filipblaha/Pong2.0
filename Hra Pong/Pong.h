@@ -28,6 +28,11 @@ public:
 	int ay_mic = -1;
 	int x_mic = DELKA / 2;
 	int y_mic = VYSKA - 5;
+	int ax_bomba = 0;
+	int ay_bomba = 1;
+	int x_bomba = 0;
+	int y_bomba = 0;
+
 	int x_powerup = y_mic;
 	int y_powerup = x_mic;
 
