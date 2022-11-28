@@ -1244,7 +1244,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 
 
 	////////////    Bomba    ////////////
-	int n = 0;
+	int n = 1;
 	int Ub = navod.bloky.at(navod.y_bomba - n).at(navod.x_bomba);
 	int Db = navod.bloky.at(navod.y_bomba + n).at(navod.x_bomba);
 	int Lb = navod.bloky.at(navod.y_bomba).at(navod.x_bomba - n);
@@ -1710,6 +1710,10 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			////////////    vykreslovani mice    ////////////
 			navod_menu.setCursorPosition(navod.x_mic, navod.y_mic);
 			std::cout << navod.mic;
+
+			////////////    vykreslovani bomby    ////////////
+			navod_menu.setCursorPosition(navod.x_bomba, navod.y_bomba);
+			std::cout << 'X';
 
 			////////////    vykreslovani bloku    ////////////
 			if (mod == 3 && navod.pocet_vykresleni % 20 == 0)

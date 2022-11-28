@@ -29,9 +29,9 @@ public:
 	int x_mic = DELKA / 2;
 	int y_mic = VYSKA - 5;
 	int ax_bomba = 0;
-	int ay_bomba = 1;
-	int x_bomba = 0;
-	int y_bomba = 0;
+	int ay_bomba = -1;
+	int x_bomba = DELKA / 2;;
+	int y_bomba = VYSKA - 10;
 
 	int x_powerup = y_mic;
 	int y_powerup = x_mic;
@@ -54,10 +54,10 @@ public:
 
 	void bloky_vytvoreni_klasik()
 	{
-		for (int j = 0; j < VYSKA; j++)
+		for (int j = -1; j < VYSKA + 1; j++)
 		{
 			docas.clear();
-			for (int i = 0; i < DELKA; i++)
+			for (int i = -1; i < DELKA + 1; i++)
 			{
 				if (i != 0 && i != DELKA - 1 && j > 0 && j < 7 && ((i % 3 == 0 && i < 10) || (i % 3 == 1 && i >= 10)))
 				{
