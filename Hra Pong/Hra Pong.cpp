@@ -6,6 +6,7 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 #include <Windows.h>
+#include <Winuser.h> // lepsi ovladani
 
 #include "Menu.h"
 #include "Pong.h"
@@ -109,25 +110,23 @@ void vektor_na_string(Menu& navod_menu, std::vector<char> p0, std::vector<char> 
 
 int vstup_hra(Pong& navod)
 {
-	switch (_getch())
-	{
-	case 'd':
+	if (GetAsyncKeyState(0x44)) 
+	//if (_getch() == 'd') // pro testovani
 	{
 		if (!(navod.x_plosina == navod.DELKA - navod.velikost_plosina - 1)) //zed vpravo
 		{
 			return navod.pohyb = 1;
 		}
-		break;
 	}
-	case 'a':
+	else if (GetAsyncKeyState(0x41)) 
+	//else if (_getch() == 'a')
 	{
 		if (!(navod.x_plosina == 1)) // zed vlevo
 		{
 			return navod.pohyb = -1;
 		}
-		break;
 	}
-	case ' ':
+	else if (GetAsyncKeyState(0x20))
 	{
 		if (navod.slow)
 		{
@@ -136,10 +135,6 @@ int vstup_hra(Pong& navod)
 			navod.trvani = 1;
 			
 		}
-		break;
-	}
-	default:
-		break;
 	}
 }
 void vstup_menu(Menu& navod_menu, Pong& navod, int strana)
@@ -1163,17 +1158,20 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 				navod.ax_bomba = 0;
 			}
 		}
-		////////////    plosina    ////////////
-
-		if (!(navod.pohyb == 0))
+		if (navod.pocet_vykresleni % navod.rychlost_plosiny == 0)
 		{
-			if (navod.pohyb == 1)
+			////////////    plosina    ////////////
+
+			if (!(navod.pohyb == 0))
 			{
-				navod.x_plosina++;
-			}
-			if (navod.pohyb == -1)
-			{
-				navod.x_plosina--;
+				if (navod.pohyb == 1)
+				{
+					navod.x_plosina++;
+				}
+				if (navod.pohyb == -1)
+				{
+					navod.x_plosina--;
+				}
 			}
 		}
 	}
@@ -1323,13 +1321,16 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 	bool stenaLb = (navod.x_bomba == 1);
 	bool stenaRb = (navod.x_bomba == navod.DELKA - 2);
 
-	////////////    mazani plosiny    ////////////
-	if (!(navod.pohyb == 0))
+	if (navod.pocet_vykresleni % navod.rychlost_plosiny == navod.rychlost_plosiny - 1)
 	{
-		navod_menu.setCursorPosition(navod.x_plosina, navod.VYSKA - 3);
-		for (int i = 0; i < navod.velikost_plosina; i++)
+		////////////    mazani plosiny    ////////////
+		if (!(navod.pohyb == 0))
 		{
-			std::cout << " ";
+			navod_menu.setCursorPosition(navod.x_plosina, navod.VYSKA - 3);
+			for (int i = 0; i < navod.velikost_plosina; i++)
+			{
+				std::cout << " ";
+			}
 		}
 	}
 
@@ -1873,16 +1874,19 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 {
 	if (navod.pokracovani)
 	{
-		////////////    vykreslovani plosiny    ////////////
-		if (!(navod.pohyb == 0))
+		if (navod.pocet_vykresleni % navod.rychlost_plosiny == 0)
 		{
-			navod_menu.skin();
-			for (int i = 0; i < navod.velikost_plosina; i++)
+			////////////    vykreslovani plosiny    ////////////
+			if (!(navod.pohyb == 0))
 			{
-				navod_menu.setCursorPosition(navod.x_plosina + i, navod.VYSKA - 3);
-				std::cout << navod_menu.pole_skin[i];
+				navod_menu.skin();
+				for (int i = 0; i < navod.velikost_plosina; i++)
+				{
+					navod_menu.setCursorPosition(navod.x_plosina + i, navod.VYSKA - 3);
+					std::cout << navod_menu.pole_skin[i];
+				}
+				navod.pohyb = 0;
 			}
-			navod.pohyb = 0;
 		}
 		if (navod.pocet_vykresleni % navod.rychlost_hry == 0)
 		{

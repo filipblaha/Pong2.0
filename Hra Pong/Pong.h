@@ -44,6 +44,7 @@ public:
 
 	int cas = 0;
 	int rychlost_hry = 2;
+	int rychlost_plosiny = 2;
 	int padani = 0;
 	int zivoty = 0;
 	int n_exp = 0;
