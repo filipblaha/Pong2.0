@@ -27,7 +27,7 @@ public:
 	int pohyb = 0;
 	int ax_mic = 1;
 	int ay_mic = -1;
-	int x_mic = DELKA / 2;
+	int x_mic = DELKA / 2 + 1;
 	int y_mic = VYSKA - 5;
 	int ax_bomba = 0;
 	int ay_bomba = 1;

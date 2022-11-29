@@ -776,187 +776,109 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	{
 		if (navod.pocet_vykresleni % navod.rychlost_hry == 0)
 		{
-			if ((plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0))
+			while (navod.bloky.at(navod.y_mic + navod.ay_mic).at(navod.x_mic + navod.ax_mic) > 0 || navod.bloky.at(navod.y_mic).at(navod.x_mic + navod.ax_mic) > 0 || navod.bloky.at(navod.y_mic + navod.ay_mic).at(navod.x_mic) > 0 
+				||(navod.y_mic + navod.ay_mic == navod.VYSKA - 3) || (navod.x_mic + navod.ax_mic == navod.DELKA - 1) || (navod.x_mic + navod.ax_mic == 0) || (navod.y_mic + navod.ay_mic == 0))
 			{
-				////  plosina - mic  ////
-				if (plosina)
+				if ((plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0))
 				{
-					if (navod.x_mic > navod.x_plosina - 1 && navod.x_mic <= (navod.x_plosina + navod.velikost_plosina / 2))
+					////  plosina - mic  ////
+					if (plosina)
 					{
-						navod.ay_mic = -1; // vlevo
+						if (navod.x_mic > navod.x_plosina - 1 && navod.x_mic <= (navod.x_plosina + navod.velikost_plosina / 2))
+						{
+							navod.ay_mic = -1; // vlevo
+							navod.ax_mic = -1;
+						}
+						if (navod.x_mic >= (navod.x_plosina + navod.velikost_plosina / 2) && navod.x_mic < (navod.x_plosina + navod.velikost_plosina + 1))
+						{
+							navod.ay_mic = -1; // vpravo
+							navod.ax_mic = 1;
+						}
+					}
+
+					////  steny - mic ////
+
+					if (stenaR) // prava stena
+					{
 						navod.ax_mic = -1;
 					}
-					if (navod.x_mic >= (navod.x_plosina + navod.velikost_plosina / 2) && navod.x_mic < (navod.x_plosina + navod.velikost_plosina + 1))
+					if (stenaL) // leva stena
 					{
-						navod.ay_mic = -1; // vpravo
 						navod.ax_mic = 1;
 					}
-				}
+					if (stenaU) // horni stena
+					{
+						navod.ay_mic = 1;
+					}
 
-				////  steny - mic ////
+					////  bloky - mic  ////
 
-				if (stenaR) // prava stena
-				{
-					navod.ax_mic = -1;
+					if (L > 0) // levy
+					{
+						navod.bloky.at(navod.y_mic).at(navod.x_mic - 1)--;
+						navod.ax_mic = 1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (R > 0) // pravy
+					{
+						navod.bloky.at(navod.y_mic).at(navod.x_mic + 1)--;
+						navod.ax_mic = -1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (U > 0) // hroni
+					{
+						navod.bloky.at(navod.y_mic - 1).at(navod.x_mic)--;
+						navod.ay_mic = 1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (D > 0) // spodni
+					{
+						navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)--;
+						navod.ay_mic = -1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
 				}
-				if (stenaL) // leva stena
+				if (UL > 0 || UR > 0 || DL > 0 || DR > 0)
 				{
-					navod.ax_mic = 1;
-				}
-				if (stenaU) // horni stena
-				{
-					navod.ay_mic = 1;
-				}
-
-				////  bloky - mic  ////
-
-				if (L > 0) // levy
-				{
-					navod.bloky.at(navod.y_mic).at(navod.x_mic - 1)--;
-					navod.ax_mic = 1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (R > 0) // pravy
-				{
-					navod.bloky.at(navod.y_mic).at(navod.x_mic + 1)--;
-					navod.ax_mic = -1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (U > 0) // hroni
-				{
-					navod.bloky.at(navod.y_mic - 1).at(navod.x_mic)--;
-					navod.ay_mic = 1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (D > 0) // spodni
-				{
-					navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)--;
-					navod.ay_mic = -1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
+					if (DL > 0 && navod.ax_mic == -1 && navod.ay_mic == 1) // levo/spodni
+					{
+						navod.bloky.at(navod.y_mic + 1).at(navod.x_mic - 1)--;
+						navod.ax_mic = 1;
+						navod.ay_mic = -1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (DR > 0 && navod.ax_mic == 1 && navod.ay_mic == 1) // pravo/spodni
+					{
+						navod.bloky.at(navod.y_mic + 1).at(navod.x_mic + 1)--;
+						navod.ax_mic = -1;
+						navod.ay_mic = -1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (UL > 0 && navod.ax_mic == -1 && navod.ay_mic == -1) // levo/horni
+					{
+						navod.bloky.at(navod.y_mic - 1).at(navod.x_mic - 1)--;
+						navod.ax_mic = 1;
+						navod.ay_mic = 1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (UR > 0 && navod.ax_mic == 1 && navod.ay_mic == -1) // pravo/horni
+					{
+						navod.bloky.at(navod.y_mic - 1).at(navod.x_mic + 1)--;
+						navod.ax_mic = -1;
+						navod.ay_mic = 1;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
 				}
 			}
-			else if ((plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0) && (UL > 0 || UR > 0 || DL > 0 || DR > 0))
-			{
-				if (DR > 0)
-				{
-					if (U > 0 || stenaU) // pravo/dolni - shora
-					{
-						if (U > 0)
-							navod.bloky.at(navod.y_mic - 1).at(navod.x_mic)--;
-						navod.ax_mic = -1;
-						navod.ay_mic = 1;
-					}
-					if (L > 0 || stenaL) // pravo/dolni - zleva
-					{
-						if (L > 0)
-							navod.bloky.at(navod.y_mic).at(navod.x_mic - 1)--;
-						navod.ax_mic = 1;
-						navod.ay_mic = -1;
-					}
-					navod.bloky.at(navod.y_mic + 1).at(navod.x_mic + 1)--;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (UL > 0)
-				{
-					if (D > 0 || plosina) // levo/horni - zdola
-					{
-						if (D > 0)
-							navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)--;
-						navod.ax_mic = 1;
-						navod.ay_mic = -1;
-					}
-					if (R > 0 || stenaR) // levo/horni - zprava
-					{
-						if (R > 0)
-							navod.bloky.at(navod.y_mic).at(navod.x_mic + 1)--;
-						navod.ax_mic = -1;
-						navod.ay_mic = 1;
-					}
-					navod.bloky.at(navod.y_mic - 1).at(navod.x_mic - 1)--;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (DL > 0)
-				{
-					if (U > 0 || stenaU) // levo/dolni - shora
-					{
-						if (U > 0)
-							navod.bloky.at(navod.y_mic - 1).at(navod.x_mic)--;
-						navod.ax_mic = 1;
-						navod.ay_mic = 1;
-					}
-					if (R > 0 || stenaR) // levo/dolni - zprava
-					{
-						if (R > 0)
-							navod.bloky.at(navod.y_mic).at(navod.x_mic + 1)--;
-						navod.ax_mic = -1;
-						navod.ay_mic = -1;
-					}
-					navod.bloky.at(navod.y_mic + 1).at(navod.x_mic - 1)--;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (UR > 0)
-				{
-					if (D > 0 || plosina) // pravo/dolni - zdola
-					{
-						if (D > 0)
-							navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)--;
-						navod.ax_mic = -1;
-						navod.ay_mic = -1;
-					}
-					if (L > 0 || stenaL) // pravo/dolni - zleva
-					{
-						if (L > 0)
-							navod.bloky.at(navod.y_mic).at(navod.x_mic - 1)--;
-						navod.ax_mic = 1;
-						navod.ay_mic = 1;
-					}
-					navod.bloky.at(navod.y_mic - 1).at(navod.x_mic + 1)--;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-			}
-			else if (!(plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0) && (UL > 0 || UR > 0 || DL > 0 || DR > 0))
-			{
-				if (DL > 0 && navod.ax_mic == -1 && navod.ay_mic == 1) // levo/spodni
-				{
-					navod.bloky.at(navod.y_mic + 1).at(navod.x_mic - 1)--;
-					navod.ax_mic = 1;
-					navod.ay_mic = -1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (DR > 0 && navod.ax_mic == 1 && navod.ay_mic == 1) // pravo/spodni
-				{
-					navod.bloky.at(navod.y_mic + 1).at(navod.x_mic + 1)--;
-					navod.ax_mic = -1;
-					navod.ay_mic = -1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (UL > 0 && navod.ax_mic == -1 && navod.ay_mic == -1) // levo/horni
-				{
-					navod.bloky.at(navod.y_mic - 1).at(navod.x_mic - 1)--;
-					navod.ax_mic = 1;
-					navod.ay_mic = 1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-				if (UR > 0 && navod.ax_mic == 1 && navod.ay_mic == -1) // pravo/horni
-				{
-					navod.bloky.at(navod.y_mic - 1).at(navod.x_mic + 1)--;
-					navod.ax_mic = -1;
-					navod.ay_mic = 1;
-					navod.pocet_bloku--;
-					navod.pocet_rozbitych_bloku++;
-				}
-			}
+			
 
 			////////////    power-up    ////////////
 
