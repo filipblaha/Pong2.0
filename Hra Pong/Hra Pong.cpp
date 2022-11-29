@@ -711,6 +711,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 
 	if (mod == 0)
 	{
+
 		if (navod.pocet_bloku == 0)
 		{
 			vyhra(0, navod_menu, navod);
@@ -718,6 +719,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	}
 	if (navod.y_mic == navod.VYSKA - 2 && navod.pocet_vykresleni % navod.rychlost_hry == 0) // spodni
 	{
+		Sleep(500);
 		if (mod == 0)
 			prohra(0, navod_menu, navod);
 		if (mod == 3)
@@ -776,26 +778,25 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	{
 		if (navod.pocet_vykresleni % navod.rychlost_hry == 0)
 		{
-			while (navod.bloky.at(navod.y_mic + navod.ay_mic).at(navod.x_mic + navod.ax_mic) > 0 || navod.bloky.at(navod.y_mic).at(navod.x_mic + navod.ax_mic) > 0 || navod.bloky.at(navod.y_mic + navod.ay_mic).at(navod.x_mic) > 0 
-				||(navod.y_mic + navod.ay_mic == navod.VYSKA - 3) || (navod.x_mic + navod.ax_mic == navod.DELKA - 1) || (navod.x_mic + navod.ax_mic == 0) || (navod.y_mic + navod.ay_mic == 0))
+			////  plosina - mic  ////
+			if (plosina)
 			{
-				if ((plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0))
+				if (navod.x_mic > navod.x_plosina - 1 && navod.x_mic <= (navod.x_plosina + navod.velikost_plosina / 2))
 				{
-					////  plosina - mic  ////
-					if (plosina)
-					{
-						if (navod.x_mic > navod.x_plosina - 1 && navod.x_mic <= (navod.x_plosina + navod.velikost_plosina / 2))
-						{
-							navod.ay_mic = -1; // vlevo
-							navod.ax_mic = -1;
-						}
-						if (navod.x_mic >= (navod.x_plosina + navod.velikost_plosina / 2) && navod.x_mic < (navod.x_plosina + navod.velikost_plosina + 1))
-						{
-							navod.ay_mic = -1; // vpravo
-							navod.ax_mic = 1;
-						}
-					}
-
+					navod.ay_mic = -1; // vlevo
+					navod.ax_mic = -1;
+				}
+				if (navod.x_mic >= (navod.x_plosina + navod.velikost_plosina / 2) && navod.x_mic < (navod.x_plosina + navod.velikost_plosina + 1))
+				{
+					navod.ay_mic = -1; // vpravo
+					navod.ax_mic = 1;
+				}
+			}
+			while (navod.bloky.at(navod.y_mic + navod.ay_mic).at(navod.x_mic + navod.ax_mic) > 0 || navod.bloky.at(navod.y_mic).at(navod.x_mic + navod.ax_mic) > 0 || 
+				navod.bloky.at(navod.y_mic + navod.ay_mic).at(navod.x_mic) > 0 || (navod.x_mic + navod.ax_mic == navod.DELKA - 1) || (navod.x_mic + navod.ax_mic == 0) || (navod.y_mic + navod.ay_mic == 0))
+			{
+				if ((stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0))
+				{
 					////  steny - mic ////
 
 					if (stenaR) // prava stena
@@ -3009,4 +3010,4 @@ int main()
 		//menu_profil(navod_menu, navod);
 	}
 }
-///zpomalit bombu, chvili ji ukazat?
+/// bombu chvili ukazat
