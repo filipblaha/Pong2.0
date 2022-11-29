@@ -11,6 +11,7 @@ public:
 	bool power_up = 0;
 	bool slow = 0;
 	bool trvani = 0;
+	bool bomba = 1;
 
 	char zed = char(219);
 	char blok1 = char(176);
@@ -29,7 +30,7 @@ public:
 	int x_mic = DELKA / 2;
 	int y_mic = VYSKA - 5;
 	int ax_bomba = 0;
-	int ay_bomba = -1;
+	int ay_bomba = 1;
 	int x_bomba = DELKA / 2;;
 	int y_bomba = VYSKA - 10;
 
