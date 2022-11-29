@@ -776,7 +776,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	{
 		if (navod.pocet_vykresleni % navod.rychlost_hry == 0)
 		{
-			if (plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0)
+			if ((plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0))
 			{
 				////  plosina - mic  ////
 				if (plosina)
@@ -1494,7 +1494,7 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 						std::cout << navod.blok2;
 				}
 			}
-			else if ((L > 0 || U > 0 || R > 0 || D > 0) && (UL > 0 || UR > 0 || DL > 0 || DR > 0))
+			else if ((plosina || stenaR || stenaL || stenaU || L > 0 || U > 0 || R > 0 || D > 0) && (UL > 0 || UR > 0 || DL > 0 || DR > 0))
 			{
 				if (DR > 0)
 				{
