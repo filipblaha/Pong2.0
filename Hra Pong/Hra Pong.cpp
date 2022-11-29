@@ -666,6 +666,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	bool stenaR = (navod.x_mic == navod.DELKA - 2);
 
 	////////////    Bomba    ////////////
+
 	int n = 1;
 	int Ub = navod.bloky.at(navod.y_bomba - n).at(navod.x_bomba);
 	int Db = navod.bloky.at(navod.y_bomba + n).at(navod.x_bomba);
@@ -681,6 +682,8 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	bool stenaUb = (navod.y_bomba == 1);
 	bool stenaLb = (navod.x_bomba == 1);
 	bool stenaRb = (navod.x_bomba == navod.DELKA - 2);
+
+	bool vybuch_stena = 0;
 
 	////////////    casomira    ////////////
 
@@ -719,6 +722,33 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 			prohra(0, navod_menu, navod);
 		if (mod == 3)
 			prohra(3, navod_menu, navod);
+	}
+
+	////////////   vytvoreni bomby  ////////////
+
+	if (navod.pocet_vykresleni % 100 == 0)
+	{
+		navod.bomba = 1;
+		navod.ax_bomba = 0;
+		navod.ay_bomba = 1;
+		navod.y_bomba = navod.VYSKA - 8;;
+
+		int random_x = navod.cas + navod.x_mic;
+		while (random_x > 18)
+		{
+			random_x -= 17;
+			if (random_x < 3)
+			{
+				random_x += 10;
+			}
+		}
+		navod.x_bomba = random_x;
+	}
+	////////////   bomba propadla   ////////////
+
+	if (navod.y_bomba == navod.VYSKA - 2 && navod.pocet_vykresleni % navod.rychlost_hry == 0) // spodni
+	{
+		navod.bomba = 0;
 	}
 
 	////////////   bloky padaji   ////////////
@@ -928,19 +958,114 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 				}
 			}
 
-			////  plosina - bomba  ////
+			////////////    power-up    ////////////
 
+			if (navod.pocet_vykresleni % 200 == 0)
+			{
+				while (navod.bloky.at(navod.y_powerup).at(navod.x_powerup) != 0)
+				{
+					navod.y_powerup--;
+				}
+				navod.x_powerup = navod.y_mic * 3 / 4 + navod.VYSKA * 1 / 8;
+				navod.y_powerup = navod.x_mic * 3 / 4 + navod.DELKA * 1 / 8;
+				navod.bloky.at(navod.y_powerup).at(navod.x_powerup) = -1;
+			}
+			if (L == -1) // levy
+			{
+				navod.bloky.at(navod.y_mic).at(navod.x_mic - 1)++;
+				navod.power_up = 1;
+			}
+			if (R == -1) // pravy
+			{
+				navod.bloky.at(navod.y_mic).at(navod.x_mic + 1)++;
+				navod.power_up = 1;
+			}
+			if (U == -1) // horni
+			{
+				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic)++;
+				navod.power_up = 1;
+			}
+			if (D == -1) // spodni
+			{
+				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)++;
+				navod.power_up = 1;
+			}
+			if (DR == -1)
+			{
+				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic + 1)++;
+				navod.power_up = 1;
+			}
+			if (UR == -1)
+			{
+				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic + 1)++;
+				navod.power_up = 1;
+			}
+			if (DL == -1)
+			{
+				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic - 1)++;
+				navod.power_up = 1;
+			}
+			if (UL == -1)
+			{
+				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic - 1)++;
+				navod.power_up = 1;
+			}
+
+			///////////   zrychleni - mic    /////////////
+
+			if (navod.ax_mic == 1)
+			{
+				navod.x_mic++;
+			}
+			if (navod.ax_mic == -1)
+			{
+				navod.x_mic--;
+			}
+			if (navod.ay_mic == 1)
+			{
+				navod.y_mic++;
+			}
+			if (navod.ay_mic == -1)
+			{
+				navod.y_mic--;
+			}
+		}
+		////  plosina - bomba  ////
+
+		if (navod.pocet_vykresleni % (2 * navod.rychlost_hry) == 0)
+		{
 			if (plosinab)
 			{
-				if (navod.x_bomba > navod.x_plosina - 1 && navod.x_bomba <= (navod.x_plosina + navod.velikost_plosina / 2))
+
+				if (ULb > 0 || URb > 0)
 				{
-					navod.ay_bomba = -1; // vlevo
-					navod.ax_bomba = -1;
+					if (ULb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba - n).at(navod.x_bomba - n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (URb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba - n).at(navod.x_bomba + n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
 				}
-				if (navod.x_bomba >= (navod.x_plosina + navod.velikost_plosina / 2) && navod.x_bomba < (navod.x_plosina + navod.velikost_plosina + 1))
+				else
 				{
-					navod.ay_bomba = -1; // vpravo
-					navod.ax_bomba = 1;
+					if (navod.x_bomba > navod.x_plosina - 1 && navod.x_bomba <= (navod.x_plosina + navod.velikost_plosina / 2))
+					{
+						navod.ay_bomba = -1; // vlevo
+						navod.ax_bomba = -1;
+					}
+					if (navod.x_bomba >= (navod.x_plosina + navod.velikost_plosina / 2) && navod.x_bomba < (navod.x_plosina + navod.velikost_plosina + 1))
+					{
+						navod.ay_bomba = -1; // vpravo
+						navod.ax_bomba = 1;
+					}
 				}
 			}
 
@@ -948,15 +1073,69 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 
 			if (stenaRb) // prava stena
 			{
-				navod.ax_bomba = -1;
+				if (DLb > 0 || ULb > 0)
+				{
+					if (DLb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba + n).at(navod.x_bomba - n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (ULb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba - n).at(navod.x_bomba - n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+				}
+				else
+					navod.ax_bomba = -1;
 			}
 			if (stenaLb) // leva stena
 			{
-				navod.ax_bomba = 1;
+				if (DRb > 0 || URb > 0)
+				{
+					if (DRb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba + n).at(navod.x_bomba + n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (URb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba - n).at(navod.x_bomba + n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+				}
+				else
+					navod.ax_bomba = 1;
 			}
 			if (stenaUb) // horni stena
 			{
-				navod.ay_bomba = 1;
+				if (DRb > 0 || DLb > 0)
+				{
+					if (DRb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba + n).at(navod.x_bomba + n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+					if (DLb > 0)
+					{
+						navod.bomba = 0;
+						navod.bloky.at(navod.y_bomba + n).at(navod.x_bomba - n)--;
+						navod.pocet_bloku--;
+						navod.pocet_rozbitych_bloku++;
+					}
+				}
+				else
+					navod.ay_bomba = 1;
 			}
 
 			/////////    bloky - bomba    ///////
@@ -1034,79 +1213,6 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 					navod.pocet_rozbitych_bloku++;
 				}
 			}
-
-			////////////    power-up    ////////////
-
-			if (navod.pocet_vykresleni % 200 == 0)
-			{
-				while (navod.bloky.at(navod.y_powerup).at(navod.x_powerup) != 0)
-				{
-					navod.y_powerup--;
-				}
-				navod.x_powerup = navod.y_mic * 3 / 4 + navod.VYSKA * 1 / 8;
-				navod.y_powerup = navod.x_mic * 3 / 4 + navod.DELKA * 1 / 8;
-				navod.bloky.at(navod.y_powerup).at(navod.x_powerup) = -1;
-			}
-			if (L == -1) // levy
-			{
-				navod.bloky.at(navod.y_mic).at(navod.x_mic - 1)++;
-				navod.power_up = 1;
-			}
-			if (R == -1) // pravy
-			{
-				navod.bloky.at(navod.y_mic).at(navod.x_mic + 1)++;
-				navod.power_up = 1;
-			}
-			if (U == -1) // hroni
-			{
-				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic)++;
-				navod.power_up = 1;
-			}
-			if (D == -1) // spodni
-			{
-				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic)++;
-				navod.power_up = 1;
-			}
-			if (DR == -1)
-			{
-				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic + 1)++;
-				navod.power_up = 1;
-			}
-			if (UR == -1)
-			{
-				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic + 1)++;
-				navod.power_up = 1;
-			}
-			if (DL == -1)
-			{
-				navod.bloky.at(navod.y_mic + 1).at(navod.x_mic - 1)++;
-				navod.power_up = 1;
-			}
-			if (UL == -1)
-			{
-				navod.bloky.at(navod.y_mic - 1).at(navod.x_mic - 1)++;
-				navod.power_up = 1;
-			}
-
-			///////////   zrychleni - mic    /////////////
-
-			if (navod.ax_mic == 1)
-			{
-				navod.x_mic++;
-			}
-			if (navod.ax_mic == -1)
-			{
-				navod.x_mic--;
-			}
-			if (navod.ay_mic == 1)
-			{
-				navod.y_mic++;
-			}
-			if (navod.ay_mic == -1)
-			{
-				navod.y_mic--;
-			}
-
 			///////////   zrychleni - bomba    /////////////
 
 			if (navod.bomba)
@@ -1134,7 +1240,6 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 				navod.ax_bomba = 0;
 			}
 		}
-
 		////////////    plosina    ////////////
 
 		if (!(navod.pohyb == 0))
@@ -1289,6 +1394,11 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 	int SLb = navod.x_bomba - n;
 	int SRb = navod.x_bomba + n;
 	int SDb = navod.y_bomba + n;
+
+	bool plosinab = (navod.y_bomba == navod.VYSKA - 4);
+	bool stenaUb = (navod.y_bomba == 1);
+	bool stenaLb = (navod.x_bomba == 1);
+	bool stenaRb = (navod.x_bomba == navod.DELKA - 2);
 
 	////////////    mazani plosiny    ////////////
 	if (!(navod.pohyb == 0))
@@ -1576,7 +1686,113 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				}
 
 			}
+
+			////////////    mazani mice    ////////////
+
+			navod_menu.setCursorPosition(SCX, SCY);
+			std::cout << " ";
+
+		}
 			////////////   bomba   ////////////
+
+		if (navod.pocet_vykresleni % (2 * navod.rychlost_hry) == (2 * navod.rychlost_hry) - 1)
+		{
+			if (plosinab)
+			{
+				if (ULb > 0)
+				{
+					navod_menu.setCursorPosition(SLb, SUb);
+					if (ULb == 1)
+						std::cout << " ";
+					if (ULb == 2)
+						std::cout << navod.blok1;
+					if (ULb == 3)
+						std::cout << navod.blok2;
+				}
+				if (URb > 0)
+				{
+					navod_menu.setCursorPosition(SRb, SUb);
+					if (URb == 1)
+						std::cout << " ";
+					if (URb == 2)
+						std::cout << navod.blok1;
+					if (URb == 3)
+						std::cout << navod.blok2;
+				}
+			}
+
+			////  steny - bomba ////
+
+			if (stenaRb) // prava stena
+			{
+				if (DLb > 0)
+				{
+					navod_menu.setCursorPosition(SLb, SDb);
+					if (DLb == 1)
+						std::cout << " ";
+					if (DLb == 2)
+						std::cout << navod.blok1;
+					if (DLb == 3)
+						std::cout << navod.blok2;
+				}
+				if (ULb > 0)
+				{
+					navod_menu.setCursorPosition(SLb, SUb);
+					if (ULb == 1)
+						std::cout << " ";
+					if (ULb == 2)
+						std::cout << navod.blok1;
+					if (ULb == 3)
+						std::cout << navod.blok2;
+				}
+			}
+			if (stenaLb) // leva stena
+			{
+				
+				if (DRb > 0)
+				{
+					navod_menu.setCursorPosition(SRb, SDb);
+					if (DRb == 1)
+						std::cout << " ";
+					if (DRb == 2)
+						std::cout << navod.blok1;
+					if (DRb == 3)
+						std::cout << navod.blok2;
+				}
+				if (URb > 0)
+				{
+					navod_menu.setCursorPosition(SRb, SUb);
+					if (URb == 1)
+						std::cout << " ";
+					if (URb == 2)
+						std::cout << navod.blok1;
+					if (URb == 3)
+						std::cout << navod.blok2;
+				}
+			}
+			if (stenaUb) // horni stena
+			{
+				if (DRb > 0)
+				{
+					navod_menu.setCursorPosition(SRb, SDb);
+					if (DRb == 1)
+						std::cout << " ";
+					if (DRb == 2)
+						std::cout << navod.blok1;
+					if (DRb == 3)
+						std::cout << navod.blok2;
+				}
+				if (DLb > 0)
+				{
+					navod_menu.setCursorPosition(SLb, SDb);
+					if (DLb == 1)
+						std::cout << " ";
+					if (DLb == 2)
+						std::cout << navod.blok1;
+					if (DLb == 3)
+						std::cout << navod.blok2;
+				}
+			}
 			if (Rb > 0 || (DRb > 0 && navod.ax_mic == 1 && navod.ay_bomba == 1) || Db > 0 || (DLb > 0 && navod.ax_bomba == -1 && navod.ay_bomba == 1) || Lb > 0 || (ULb > 0 && navod.ax_bomba == -1 && navod.ay_bomba == -1) || Ub > 0 || (URb > 0 && navod.ax_bomba == 1 && navod.ay_bomba == -1))
 			{
 				
@@ -1682,11 +1898,6 @@ void smazani_hra(int mod, Menu& navod_menu, Pong& navod)
 				
 			}
 
-			////////////    mazani mice    ////////////
-
-			navod_menu.setCursorPosition(SCX, SCY);
-			std::cout << " ";
-
 			////////////    mazani bomby    ////////////
 
 			navod_menu.setCursorPosition(SCXb, SCYb);
@@ -1753,17 +1964,12 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 		if (navod.pocet_vykresleni % navod.rychlost_hry == 0)
 		{
 			////////////    vykreslovani mice    ////////////
+
 			navod_menu.setCursorPosition(navod.x_mic, navod.y_mic);
 			std::cout << navod.mic;
 
-			////////////    vykreslovani bomby    ////////////
-			if (navod.bomba)
-			{
-				navod_menu.setCursorPosition(navod.x_bomba, navod.y_bomba);
-				std::cout << 'X';
-			}
-
 			////////////    vykreslovani bloku    ////////////
+
 			if (mod == 3 && navod.pocet_vykresleni % 20 == 0)
 			{
 				for (int j = 0; j < navod.bloky.size(); j++)
@@ -1794,6 +2000,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			}
 
 			////////////    vykreslovani power-upu   ////////////
+
 			if (navod.pocet_vykresleni % 200 == 0)
 			{
 				for (int j = 0; j < navod.bloky.size(); j++)
@@ -1808,7 +2015,9 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 					}
 				}
 			}
+
 			////////////    vykreslovani poctu bloku    ////////////
+
 			if (mod == 0)
 			{
 				navod_menu.setCursorPosition(3, navod.VYSKA);
@@ -1817,7 +2026,16 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 				std::cout << navod.pocet_bloku;
 			}
 		}
-		//////////    vykreslovani casomiry  ////////////
+		if (navod.pocet_vykresleni % (2 * navod.rychlost_hry) == 0)
+		{
+			////////////    vykreslovani bomby    ////////////
+			if (navod.bomba)
+			{
+				navod_menu.setCursorPosition(navod.x_bomba, navod.y_bomba);
+				std::cout << 'X';
+			}
+			//////////    vykreslovani casomiry  ////////////
+		}
 		if (navod.pocet_vykresleni % 20 == 0)
 		{
 			navod_menu.setCursorPosition(navod.DELKA - 4, navod.VYSKA);
@@ -1827,6 +2045,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 		}
 
 		//////////    vykreslovani HUD power-up  ////////////
+
 		if (navod.power_up)
 		{
 			navod_menu.setCursorPosition(12, navod.VYSKA);
@@ -2868,3 +3087,4 @@ int main()
 		//menu_profil(navod_menu, navod);
 	}
 }
+///zpomalit bombu, chvili ji ukazat?
