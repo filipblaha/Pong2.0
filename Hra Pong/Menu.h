@@ -990,5 +990,30 @@ public:
 				return jazyk_zmena = 1;
 			}
 		}
+		/////////////////////    Nastaveni     //////////////////////////
+
+		if (strana == 4)
+		{
+			if (y_tecka == 12)
+			{
+				setCursorPosition(29, 12);
+				pohyb_vpravo = _getch();
+			}
+			if (y_tecka == 13)
+			{
+				setCursorPosition(29, 13);
+				pohyb_vlevo = _getch();
+			}
+			if (y_tecka == 14)
+			{
+				setCursorPosition(29, 14);
+				pouziti_schopnosti = _getch();
+			}
+			if (y_tecka == 14)
+			{
+				setCursorPosition(29, 15);
+				pauza = _getch();
+			}
+		}
 	}
 };

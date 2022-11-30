@@ -288,10 +288,16 @@ void vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 			}
 			else if (strana == -1)
 			{
-				navod_menu.reset = 1;
+				navod_menu.reset = 0;
 				navod.pokracovani = 0;
 				navod_menu.enter = 0;
 				navod_menu.del = 0;
+			}
+			else if (strana == 4)
+			{
+				navod_menu.enter = 0;
+				navod_menu.del = 0;
+				navod_menu.reset = 0;
 			}
 			else
 			{
@@ -2870,23 +2876,28 @@ void menu_vzhled_plosiny(Menu& navod_menu, Pong& navod)
 
 void menu_ovladani(Menu& navod_menu, Pong& navod)
 {
-	prechod(navod_menu);
-	vykresleni_menu_start(navod_menu, navod);
-	vykresleni_uroven(navod_menu, navod);
-	navod_menu = vykresleni_ovladani(navod_menu);
-	navod_menu.exit = 0;
-	navod_menu.enter = 0;
-
-	while (!navod_menu.exit)
+	navod_menu.reset = 1;
+	while (navod_menu.reset)
 	{
-		vykresleni_tecka(navod_menu);
-		while (!_kbhit());
-		smazani_tecka(navod_menu);
-		vstup_menu(navod_menu, navod, 4);
-		if (navod_menu.enter == 1)
+		prechod(navod_menu);
+		vykresleni_menu_start(navod_menu, navod);
+		vykresleni_uroven(navod_menu, navod);
+		navod_menu = vykresleni_ovladani(navod_menu);
+		navod_menu.exit = 0;
+		navod_menu.enter = 0;
+
+		while (!navod_menu.exit)
 		{
-			navod_menu.rozhodovac(3, navod_menu.plosina_skin, navod_menu.jazyk);
-			navod_menu.exit = 1;
+			vykresleni_tecka(navod_menu);
+			while (!_kbhit());
+			smazani_tecka(navod_menu);
+			vstup_menu(navod_menu, navod, 4);
+			if (navod_menu.enter == 1)
+			{
+				navod_menu.rozhodovac(4, navod_menu.plosina_skin, navod_menu.jazyk);
+				navod_menu.exit = 1;
+				navod_menu.reset = 1;
+			}
 		}
 	}
 }
@@ -3026,13 +3037,10 @@ int main()
 {
 	Menu navod_menu;
 	Pong navod;
-	/*
-	profil_vyber profil;
-	profil.vytvoreni_noveho_profilu();*/
 	while (navod.program)
 	{
-		menu_ovladani(navod_menu, navod);
+		//menu_ovladani(navod_menu, navod);
 		//klasik(navod_menu);
-		//menu_profil(navod_menu, navod);
+		menu_profil(navod_menu, navod);
 	}
 }
