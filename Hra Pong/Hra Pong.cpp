@@ -108,9 +108,9 @@ void vektor_na_string(Menu& navod_menu, std::vector<char> p0, std::vector<char> 
 
 /////////////////////    Vstupy     //////////////////////////
 
-int vstup_hra(Pong& navod)
+int vstup_hra(Menu navod_menu, Pong& navod)
 {
-	if (GetAsyncKeyState(0x44)) 
+	if (GetAsyncKeyState(navod_menu.pohyb_vlevo))
 	//if (_getch() == 'd') // pro testovani
 	{
 		if (!(navod.x_plosina == navod.DELKA - navod.velikost_plosina - 1)) //zed vpravo
@@ -118,7 +118,7 @@ int vstup_hra(Pong& navod)
 			return navod.pohyb = 1;
 		}
 	}
-	else if (GetAsyncKeyState(0x41)) 
+	else if (GetAsyncKeyState(navod_menu.pohyb_vpravo))
 	//else if (_getch() == 'a')
 	{
 		if (!(navod.x_plosina == 1)) // zed vlevo
@@ -126,7 +126,7 @@ int vstup_hra(Pong& navod)
 			return navod.pohyb = -1;
 		}
 	}
-	else if (GetAsyncKeyState(0x20))
+	else if (GetAsyncKeyState(navod_menu.pouziti_schopnosti))
 	{
 		if (navod.slow)
 		{
@@ -136,6 +136,7 @@ int vstup_hra(Pong& navod)
 			
 		}
 	}
+	//pauza
 }
 void vstup_menu(Menu& navod_menu, Pong& navod, int strana)
 {
@@ -689,16 +690,18 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 		navod.padani++;
 
 	////////////    power-up trvani    ////////////
-
-	if (navod.trvani)
+	if (navod.pocet_vykresleni % navod.rychlost_hry == 0)
 	{
-		navod.rychlost_hry = 4;
-		navod.pocet_trvani_power_up++;
-		if (navod.pocet_trvani_power_up == 50)
+		if (navod.trvani)
 		{
-			navod.rychlost_hry = 2;
-			navod.trvani = 0;
-			navod.pocet_trvani_power_up = 0;
+			navod.rychlost_hry = 4;
+			navod.pocet_trvani_power_up++;
+			if (navod.pocet_trvani_power_up == 50 / navod.rychlost_hry)
+			{
+				navod.rychlost_hry = 2;
+				navod.trvani = 0;
+				navod.pocet_trvani_power_up = 0;
+			}
 		}
 	}
 
@@ -1186,7 +1189,7 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 	}
 	else if (navod.pokracovani)
 	{
-		navod.ax_mic = vstup_hra(navod);
+		navod.ax_mic = vstup_hra(navod_menu, navod);
 		navod.ay_mic = -1;
 		navod.y_mic = navod.VYSKA - 5;
 		navod.x_mic = navod.DELKA / 2;
@@ -2007,7 +2010,7 @@ void klasik(Menu& navod_menu)
 		navod.bloky_vytvoreni_klasik();
 		navod = vykresleni_start(0, navod_menu, navod);
 		while (!_kbhit());
-		navod.ax_mic = vstup_hra(navod);
+		navod.ax_mic = vstup_hra(navod_menu, navod);
 
 		while (navod.pokracovani)
 		{
@@ -2020,7 +2023,7 @@ void klasik(Menu& navod_menu)
 				Sleep(14);
 				if (navod.pohyb == 0)
 					if (_kbhit())
-						vstup_hra(navod);
+						vstup_hra(navod_menu, navod);
 			}
 		}
 	}
@@ -2039,7 +2042,7 @@ void stejna_barva(Menu& navod_menu)
 		navod.bloky_vytvoreni_klasik();
 		navod = vykresleni_start(2, navod_menu, navod);
 		while (!_kbhit());
-		navod.ax_mic = vstup_hra(navod);
+		navod.ax_mic = vstup_hra(navod_menu, navod);
 
 		while (navod.pokracovani)
 		{
@@ -2052,7 +2055,7 @@ void stejna_barva(Menu& navod_menu)
 				Sleep(25);
 				if (navod.pohyb == 0)
 					if (_kbhit())
-						vstup_hra(navod);
+						vstup_hra(navod_menu, navod);
 			}
 		}
 	}
@@ -2081,7 +2084,7 @@ void bloky_padaji(Menu& navod_menu)
 				Sleep(25);
 				if (navod.pohyb == 0)
 					if (_kbhit())
-						vstup_hra(navod);
+						vstup_hra(navod_menu, navod);
 			}
 		}
 	}
@@ -2342,38 +2345,31 @@ Menu vykresleni_ovladani(Menu navod_menu)
 	navod_menu.setCursorPosition(26, 8);
 	std::cout << "Q";
 
-	navod_menu.setCursorPosition(7, 12);
-	for (int i = 0; i < 20;i++)
-		std::cout << ".";
-	navod_menu.setCursorPosition(7, 13);
-	for (int i = 0; i < 20;i++)
-		std::cout << ".";
-	navod_menu.setCursorPosition(7, 14);
-	for (int i = 0; i < 20;i++)
-		std::cout << ".";
-	navod_menu.setCursorPosition(7, 15);
-	for (int i = 0; i < 20;i++)
-		std::cout << ".";
-
 	navod_menu.setCursorPosition(6, 10);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_hraCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_hraEN;
+	
 	navod_menu.setCursorPosition(7, 12);
 	if (!navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_pohyb_vlevoCZ;
+		std::cout << navod_menu.ovladani_pohybCZ;
 	if (navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_pohyb_vlevoEN;
-	navod_menu.setCursorPosition(29, 12);
-	std::cout << navod_menu.pohyb_vpravo;
-	navod_menu.setCursorPosition(7, 13);
-	if (!navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_pohyb_vpravoCZ;
-	if (navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_pohyb_vpravoEN;
-	navod_menu.setCursorPosition(29, 13);
-	std::cout << navod_menu.pohyb_vlevo;
+		std::cout << navod_menu.ovladani_pohybEN;
+	//if (navod_menu)
+	{
+		navod_menu.setCursorPosition(31, 11);
+		std::cout << "W";
+		navod_menu.setCursorPosition(29, 12);
+		std::cout << "A S D";
+	}
+	//else
+	{
+		navod_menu.setCursorPosition(31, 11);
+		std::cout << "W";
+		navod_menu.setCursorPosition(29, 12);
+		std::cout << "A S D";
+	}
 	navod_menu.setCursorPosition(7, 14);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_schopnostCZ;
@@ -2395,7 +2391,7 @@ Menu vykresleni_ovladani(Menu navod_menu)
 	navod_menu.x_tecka = 5;
 	navod_menu.y_tecka = 12;
 	navod_menu.horni_zavora_hlavni = 12;
-	navod_menu.dolni_zavora_hlavni = 15;
+	navod_menu.dolni_zavora_hlavni = 12;
 	return navod_menu;
 }
 Menu vykresleni_vzhled_plosiny(Menu navod_menu)
@@ -3019,8 +3015,8 @@ int main()
 	profil.vytvoreni_noveho_profilu();*/
 	while (navod.program)
 	{
-		//klasik(navod_menu);
-		menu_profil(navod_menu, navod);
+		//menu_ovladani(navod_menu, navod);
+		klasik(navod_menu);
+		//menu_profil(navod_menu, navod);
 	}
 }
-/// bombu chvili ukazat

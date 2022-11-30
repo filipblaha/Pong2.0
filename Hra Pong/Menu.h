@@ -331,6 +331,11 @@ public:
 	int exp = 0;
 	int profil_probiha = 0;
 
+	int pohyb_vlevo = 68;
+	int pohyb_vpravo = 65;
+	int pouziti_schopnosti = 32;
+	int pauza = 27;
+
 	int uroven_profil0 = 0;
 	int uroven_profil1 = 0;
 	int uroven_profil2 = 0;
@@ -640,11 +645,6 @@ public:
 	int potr_urov4 = 4;
 	int potr_urov5 = 5;
 
-	char pohyb_vpravo = 'd';
-	char pohyb_vlevo = 'a';
-	char pauza = char(27);
-	char pouziti_schopnosti = ' ';
-
 	std::vector<char> pole_skin;
 	std::vector<char> nazev_profil0;
 	std::vector<char> nazev_profil1;
@@ -807,10 +807,8 @@ public:
 	std::string ovladani_mezernikEN = "Spacebar";
 	std::string ovladani_schopnostCZ = "Pouzit schopnost";
 	std::string ovladani_schopnostEN = "Use ability";
-	std::string ovladani_pohyb_vlevoCZ = "Pohyb - vlevo";
-	std::string ovladani_pohyb_vlevoEN = "Movement - left";
-	std::string ovladani_pohyb_vpravoCZ = "Pohyb - vpravo";
-	std::string ovladani_pohyb_vpravoEN = "Movement - right";
+	std::string ovladani_pohybCZ = "Pohyb";
+	std::string ovladani_pohybEN = "Movement";
 	std::string ovladani_pauzaCZ = "Pauza";
 	std::string ovladani_pauzaEN = "Pause";
 
