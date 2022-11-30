@@ -723,15 +723,24 @@ Pong logika(int mod, Menu& navod_menu, Pong& navod)
 
 	////////////   vytvoreni bomby  ////////////
 
-	if (navod.pocet_vykresleni % 100 == 0)
+	if (navod.bomba_pocitadlo)
+		navod.bomba_zacatek++;
+	if (navod.bomba_zacatek == 20)
 	{
+		navod.bomba_zacatek = 0;
+		navod.bomba_pocitadlo = 0;
+		navod.ay_bomba = 1;
+	}
+	if (navod.pocet_vykresleni % 300 == 0)
+	{
+		navod.bomba_pocitadlo = 1;
 		navod.bomba = 1;
 		navod.ax_bomba = 0;
-		navod.ay_bomba = 1;
+		navod.ay_bomba = 0;
 		navod.y_bomba = navod.VYSKA - 8;;
 
 		int random_x = navod.cas + navod.x_mic;
-		while (random_x > 18)
+		while (random_x > 16)
 		{
 			random_x -= 17;
 			if (random_x < 3)
@@ -1956,7 +1965,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 		if (navod.pocet_vykresleni % (2 * navod.rychlost_hry) == 0)
 		{
 			////////////    vykreslovani bomby    ////////////
-			if (navod.bomba)
+			if (navod.bomba || navod.bomba_pocitadlo)
 			{
 				navod_menu.setCursorPosition(navod.x_bomba, navod.y_bomba);
 				std::cout << 'X';
@@ -3010,8 +3019,8 @@ int main()
 	profil.vytvoreni_noveho_profilu();*/
 	while (navod.program)
 	{
-		klasik(navod_menu);
-		//menu_profil(navod_menu, navod);
+		//klasik(navod_menu);
+		menu_profil(navod_menu, navod);
 	}
 }
 /// bombu chvili ukazat

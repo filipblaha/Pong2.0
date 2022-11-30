@@ -12,6 +12,7 @@ public:
 	bool slow = 0;
 	bool trvani = 0;
 	bool bomba = 0;
+	bool bomba_pocitadlo = 0;
 
 	char zed = char(219);
 	char blok1 = char(176);
@@ -30,10 +31,9 @@ public:
 	int x_mic = DELKA / 2;
 	int y_mic = VYSKA - 5;
 	int ax_bomba = 0;
-	int ay_bomba = 1;
+	int ay_bomba = 0;
 	int x_bomba = DELKA / 2;
 	int y_bomba = VYSKA - 8;
-
 	int x_powerup = y_mic;
 	int y_powerup = x_mic;
 
@@ -43,6 +43,7 @@ public:
 	int pocet_trvani_power_up = 0;
 
 	int cas = 0;
+	int bomba_zacatek = 0;
 	int rychlost_hry = 2;
 	int rychlost_plosiny = 2;
 	int padani = 0;
@@ -56,10 +57,10 @@ public:
 
 	void bloky_vytvoreni_klasik()
 	{
-		for (int j = -1; j < VYSKA + 1; j++)
+		for (int j = 0; j < VYSKA + 1; j++)
 		{
 			docas.clear();
-			for (int i = -1; i < DELKA + 1; i++)
+			for (int i = 0; i < DELKA + 1; i++)
 			{
 				if (i != 0 && i != DELKA - 1 && j > 0 && j < 7 && ((i % 3 == 0 && i < 10) || (i % 3 == 1 && i >= 10)))
 				{
