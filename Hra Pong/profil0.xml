@@ -1,9 +1,13 @@
 <Profil>
-    <pouzit>1</pouzit>
+    <pouzit>0</pouzit>
     <jazyk>0</jazyk>
     <plosina_skin>0</plosina_skin>
     <highscore_cas>0</highscore_cas>
     <highscore_znicenych_bloku>0</highscore_znicenych_bloku>
     <level>0</level>
     <exp>0</exp>
+    <pohyb_vlevo>65</pohyb_vlevo>
+    <pohyb_vpravo>68</pohyb_vpravo>
+    <pouziti_schopnosti>32</pouziti_schopnosti>
+    <pauza>27</pauza>
 </Profil>

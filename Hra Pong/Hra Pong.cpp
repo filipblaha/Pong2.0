@@ -111,7 +111,7 @@ void vektor_na_string(Menu& navod_menu, std::vector<char> p0, std::vector<char> 
 int vstup_hra(Menu navod_menu, Pong& navod)
 {
 	if (GetAsyncKeyState(navod_menu.pohyb_vlevo))
-	//if (_getch() == 'd') // pro testovani
+		//if (_getch() == 'd') // pro testovani
 	{
 		if (!(navod.x_plosina == navod.DELKA - navod.velikost_plosina - 1)) //zed vpravo
 		{
@@ -119,7 +119,7 @@ int vstup_hra(Menu navod_menu, Pong& navod)
 		}
 	}
 	else if (GetAsyncKeyState(navod_menu.pohyb_vpravo))
-	//else if (_getch() == 'a')
+		//else if (_getch() == 'a')
 	{
 		if (!(navod.x_plosina == 1)) // zed vlevo
 		{
@@ -133,9 +133,11 @@ int vstup_hra(Menu navod_menu, Pong& navod)
 			navod.slow = 0;
 			smazani_HUD_power_up(navod);
 			navod.trvani = 1;
-			
+
 		}
 	}
+	else
+		return navod.pohyb = 0;
 	//pauza
 }
 void vstup_menu(Menu& navod_menu, Pong& navod, int strana)
@@ -3044,3 +3046,4 @@ int main()
 		menu_profil(navod_menu, navod);
 	}
 }
+// wcout

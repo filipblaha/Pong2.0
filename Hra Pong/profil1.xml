@@ -6,4 +6,8 @@
     <highscore_znicenych_bloku>0</highscore_znicenych_bloku>
     <level>0</level>
     <exp>0</exp>
+    <pohyb_vlevo>65</pohyb_vlevo>
+    <pohyb_vpravo>68</pohyb_vpravo>
+    <pouziti_schopnosti>32</pouziti_schopnosti>
+    <pauza>27</pauza>
 </Profil>

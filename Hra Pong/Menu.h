@@ -29,6 +29,11 @@ public:
 	int level_s = 0;
 	int exp_s = 0;
 
+	int pohyb_vlevo_s = 65;
+	int pohyb_vpravo_s = 68;
+	int pouziti_schopnosti_s = 32;
+	int pauza_s = 27;
+
 	int vytvoreni_noveho_profilu()
 	{
 		XMLNode* pRoot = xmlDoc.NewElement("Profil");
@@ -46,7 +51,6 @@ public:
 		pElement2->SetText(0);
 		pRoot->InsertEndChild(pElement2);
 
-
 		XMLElement* pElement3 = xmlDoc.NewElement("highscore_cas");
 		pElement3->SetText(0);
 		pRoot->InsertEndChild(pElement3);
@@ -62,6 +66,22 @@ public:
 		XMLElement* pElement6 = xmlDoc.NewElement("exp");
 		pElement6->SetText(0);
 		pRoot->InsertEndChild(pElement6);
+
+		XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
+		pElement7->SetText(65);
+		pRoot->InsertEndChild(pElement7);
+
+		XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
+		pElement8->SetText(68);
+		pRoot->InsertEndChild(pElement8);
+
+		XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
+		pElement9->SetText(32);
+		pRoot->InsertEndChild(pElement9);
+
+		XMLElement* pElement10 = xmlDoc.NewElement("pauza");
+		pElement10->SetText(27);
+		pRoot->InsertEndChild(pElement10);
 
 		XMLError eResult = xmlDoc.SaveFile("profil0.xml");
 		XMLCheckResult(eResult);
@@ -108,6 +128,27 @@ public:
 		if (pElement6 == nullptr) return XML_ERROR_PARSING_ELEMENT;
 		eResult = pElement6->QueryIntText(&exp_s);
 		XMLCheckResult(eResult);
+
+		XMLElement* pElement7 = pRoot->FirstChildElement("pohyb_vlevo");
+		if (pElement7 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement7->QueryIntText(&pohyb_vlevo_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement8 = pRoot->FirstChildElement("pohyb_vpravo");
+		if (pElement8 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement8->QueryIntText(&pohyb_vpravo_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement9 = pRoot->FirstChildElement("pouziti_schopnosti");
+		if (pElement9 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement9->QueryIntText(&pouziti_schopnosti_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement10 = pRoot->FirstChildElement("pauza");
+		if (pElement10 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement10->QueryIntText(&pauza_s);
+		XMLCheckResult(eResult);
+
 		return XML_SUCCESS;
 	}
 };
@@ -122,6 +163,12 @@ public:
 	int highscore_znicenych_bloku_s = 0;
 	int level_s = 0;
 	int exp_s = 0;
+
+
+	int pohyb_vlevo_s = 65;
+	int pohyb_vpravo_s = 68;
+	int pouziti_schopnosti_s = 32;
+	int pauza_s = 27;
 
 	int vytvoreni_noveho_profilu()
 	{
@@ -156,6 +203,22 @@ public:
 		XMLElement* pElement6 = xmlDoc.NewElement("exp");
 		pElement6->SetText(0);
 		pRoot->InsertEndChild(pElement6);
+
+		XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
+		pElement7->SetText(65);
+		pRoot->InsertEndChild(pElement7);
+
+		XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
+		pElement8->SetText(68);
+		pRoot->InsertEndChild(pElement8);
+
+		XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
+		pElement9->SetText(32);
+		pRoot->InsertEndChild(pElement9);
+
+		XMLElement* pElement10 = xmlDoc.NewElement("pauza");
+		pElement10->SetText(27);
+		pRoot->InsertEndChild(pElement10);
 
 		XMLError eResult = xmlDoc.SaveFile("profil1.xml");
 		XMLCheckResult(eResult);
@@ -202,6 +265,27 @@ public:
 		if (pElement6 == nullptr) return XML_ERROR_PARSING_ELEMENT;
 		eResult = pElement6->QueryIntText(&exp_s);
 		XMLCheckResult(eResult);
+
+		XMLElement* pElement7 = pRoot->FirstChildElement("pohyb_vlevo");
+		if (pElement7 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement7->QueryIntText(&pohyb_vlevo_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement8 = pRoot->FirstChildElement("pohyb_vpravo");
+		if (pElement8 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement8->QueryIntText(&pohyb_vpravo_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement9 = pRoot->FirstChildElement("pouziti_schopnosti");
+		if (pElement9 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement9->QueryIntText(&pouziti_schopnosti_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement10 = pRoot->FirstChildElement("pauza");
+		if (pElement10 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement10->QueryIntText(&pauza_s);
+		XMLCheckResult(eResult);
+
 		return XML_SUCCESS;
 	}
 };
@@ -216,6 +300,12 @@ public:
 	int highscore_znicenych_bloku_s = 0;
 	int level_s = 0;
 	int exp_s = 0;
+
+
+	int pohyb_vlevo_s = 65;
+	int pohyb_vpravo_s = 68;
+	int pouziti_schopnosti_s = 32;
+	int pauza_s = 27;
 
 	int vytvoreni_noveho_profilu()
 	{
@@ -250,6 +340,22 @@ public:
 		XMLElement* pElement6 = xmlDoc.NewElement("exp");
 		pElement6->SetText(0);
 		pRoot->InsertEndChild(pElement6);
+
+		XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
+		pElement7->SetText(65);
+		pRoot->InsertEndChild(pElement7);
+
+		XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
+		pElement8->SetText(68);
+		pRoot->InsertEndChild(pElement8);
+
+		XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
+		pElement9->SetText(32);
+		pRoot->InsertEndChild(pElement9);
+
+		XMLElement* pElement10 = xmlDoc.NewElement("pauza");
+		pElement10->SetText(27);
+		pRoot->InsertEndChild(pElement10);
 
 		XMLError eResult = xmlDoc.SaveFile("profil2.xml");
 		XMLCheckResult(eResult);
@@ -296,6 +402,27 @@ public:
 		if (pElement6 == nullptr) return XML_ERROR_PARSING_ELEMENT;
 		eResult = pElement6->QueryIntText(&exp_s);
 		XMLCheckResult(eResult);
+
+		XMLElement* pElement7 = pRoot->FirstChildElement("pohyb_vlevo");
+		if (pElement7 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement7->QueryIntText(&pohyb_vlevo_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement8 = pRoot->FirstChildElement("pohyb_vpravo");
+		if (pElement8 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement8->QueryIntText(&pohyb_vpravo_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement9 = pRoot->FirstChildElement("pouziti_schopnosti");
+		if (pElement9 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement9->QueryIntText(&pouziti_schopnosti_s);
+		XMLCheckResult(eResult);
+
+		XMLElement* pElement10 = pRoot->FirstChildElement("pauza");
+		if (pElement10 == nullptr) return XML_ERROR_PARSING_ELEMENT;
+		eResult = pElement10->QueryIntText(&pauza_s);
+		XMLCheckResult(eResult);
+
 		return XML_SUCCESS;
 	}
 };
@@ -331,8 +458,8 @@ public:
 	int exp = 0;
 	int profil_probiha = 0;
 
-	int pohyb_vlevo = 68;
-	int pohyb_vpravo = 65;
+	int pohyb_vlevo = 65;
+	int pohyb_vpravo = 68;
 	int pouziti_schopnosti = 32;
 	int pauza = 27;
 
@@ -355,6 +482,10 @@ public:
 			highscore_znicenych_bloku = profil.highscore_znicenych_bloku_s;
 			level = profil.level_s;
 			exp = profil.exp_s;
+			pohyb_vlevo = profil.pohyb_vlevo_s;
+			pohyb_vpravo = profil.pohyb_vpravo_s;
+			pouziti_schopnosti = profil.pouziti_schopnosti_s;
+			pauza = profil.pauza_s;
 		}
 		if (vybrany_profil == 1)
 		{
@@ -369,6 +500,10 @@ public:
 			highscore_znicenych_bloku = profil.highscore_znicenych_bloku_s;
 			level = profil.level_s;
 			exp = profil.exp_s;
+			pohyb_vlevo = profil.pohyb_vlevo_s;
+			pohyb_vpravo = profil.pohyb_vpravo_s;
+			pouziti_schopnosti = profil.pouziti_schopnosti_s;
+			pauza = profil.pauza_s;
 		}
 		if (vybrany_profil == 2)
 		{
@@ -383,6 +518,10 @@ public:
 			highscore_znicenych_bloku = profil.highscore_znicenych_bloku_s;
 			level = profil.level_s;
 			exp = profil.exp_s;
+			pohyb_vlevo = profil.pohyb_vlevo_s;
+			pohyb_vpravo = profil.pohyb_vpravo_s;
+			pouziti_schopnosti = profil.pouziti_schopnosti_s;
+			pauza = profil.pauza_s;
 		}
 	}
 	int ukladani_profilu()
@@ -406,7 +545,6 @@ public:
 			pElement2->SetText(plosina_skin);
 			pRoot->InsertEndChild(pElement2);
 
-
 			XMLElement* pElement3 = xmlDoc.NewElement("highscore_cas");
 			pElement3->SetText(highscore_cas);
 			pRoot->InsertEndChild(pElement3);
@@ -422,6 +560,22 @@ public:
 			XMLElement* pElement6 = xmlDoc.NewElement("exp");
 			pElement6->SetText(exp);
 			pRoot->InsertEndChild(pElement6);
+
+			XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
+			pElement7->SetText(pohyb_vlevo);
+			pRoot->InsertEndChild(pElement7);
+
+			XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
+			pElement8->SetText(pohyb_vpravo);
+			pRoot->InsertEndChild(pElement8);
+
+			XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
+			pElement9->SetText(pouziti_schopnosti);
+			pRoot->InsertEndChild(pElement9);
+
+			XMLElement* pElement10 = xmlDoc.NewElement("pauza");
+			pElement10->SetText(pauza);
+			pRoot->InsertEndChild(pElement10);
 
 			XMLError eResult = xmlDoc.SaveFile("profil0.xml");
 			XMLCheckResult(eResult);
@@ -461,6 +615,22 @@ public:
 			pElement6->SetText(exp);
 			pRoot->InsertEndChild(pElement6);
 
+			XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
+			pElement7->SetText(pohyb_vlevo);
+			pRoot->InsertEndChild(pElement7);
+
+			XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
+			pElement8->SetText(pohyb_vpravo);
+			pRoot->InsertEndChild(pElement8);
+
+			XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
+			pElement9->SetText(pouziti_schopnosti);
+			pRoot->InsertEndChild(pElement9);
+
+			XMLElement* pElement10 = xmlDoc.NewElement("pauza");
+			pElement10->SetText(pauza);
+			pRoot->InsertEndChild(pElement10);
+
 			XMLError eResult = xmlDoc.SaveFile("profil1.xml");
 			XMLCheckResult(eResult);
 		}
@@ -498,6 +668,22 @@ public:
 			XMLElement* pElement6 = xmlDoc.NewElement("exp");
 			pElement6->SetText(exp);
 			pRoot->InsertEndChild(pElement6);
+
+			XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
+			pElement7->SetText(pohyb_vlevo);
+			pRoot->InsertEndChild(pElement7);
+
+			XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
+			pElement8->SetText(pohyb_vpravo);
+			pRoot->InsertEndChild(pElement8);
+
+			XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
+			pElement9->SetText(pouziti_schopnosti);
+			pRoot->InsertEndChild(pElement9);
+
+			XMLElement* pElement10 = xmlDoc.NewElement("pauza");
+			pElement10->SetText(pauza);
+			pRoot->InsertEndChild(pElement10);
 
 			XMLError eResult = xmlDoc.SaveFile("profil2.xml");
 			XMLCheckResult(eResult);
@@ -998,21 +1184,29 @@ public:
 			{
 				setCursorPosition(29, 12);
 				pohyb_vpravo = _getch();
+				if (pohyb_vpravo >= 97 && pohyb_vpravo <= 122)
+					pohyb_vpravo -= 32;
 			}
 			if (y_tecka == 13)
 			{
 				setCursorPosition(29, 13);
 				pohyb_vlevo = _getch();
+				if (pohyb_vlevo >= 97 && pohyb_vlevo <= 122)
+					pohyb_vlevo -= 32;
 			}
 			if (y_tecka == 14)
 			{
 				setCursorPosition(29, 14);
 				pouziti_schopnosti = _getch();
+				if (pouziti_schopnosti >= 97 && pouziti_schopnosti <= 122)
+					pouziti_schopnosti -= 32;
 			}
 			if (y_tecka == 14)
 			{
 				setCursorPosition(29, 15);
 				pauza = _getch();
+				if (pauza >= 97 && pauza <= 122)
+					pauza -= 32;
 			}
 		}
 	}
