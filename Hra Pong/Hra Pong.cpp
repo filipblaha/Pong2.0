@@ -2334,64 +2334,80 @@ Menu vykresleni_ovladani(Menu navod_menu)
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_menuEN;
 	navod_menu.setCursorPosition(9, 7);
-		std::cout << "W";
+	std::cout << "W";
 	navod_menu.setCursorPosition(7, 8);
-		std::cout << "A S D";
-	navod_menu.setCursorPosition(15, 8);
+	std::cout << "A S D";
+	navod_menu.setCursorPosition(17, 8);
 	if (!navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_mezernikCZ;
+		std::cout << navod_menu.ovladani_enterCZ;
 	if (navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_mezernikEN;
+		std::cout << navod_menu.ovladani_enterEN;
 	navod_menu.setCursorPosition(26, 8);
 	std::cout << "Q";
+
+	navod_menu.setCursorPosition(7, 12);
+	for (int i = 0; i < 20;i++)
+		std::cout << ".";
+	navod_menu.setCursorPosition(7, 13);
+	for (int i = 0; i < 20;i++)
+		std::cout << ".";
+	navod_menu.setCursorPosition(7, 14);
+	for (int i = 0; i < 20;i++)
+		std::cout << ".";
+	navod_menu.setCursorPosition(7, 15);
+	for (int i = 0; i < 20;i++)
+		std::cout << ".";
 
 	navod_menu.setCursorPosition(6, 10);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_hraCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_hraEN;
-	
 	navod_menu.setCursorPosition(7, 12);
 	if (!navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_pohybCZ;
+		std::cout << navod_menu.ovladani_pohyb_vlevoCZ;
 	if (navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_pohybEN;
-	//if (navod_menu)
-	{
-		navod_menu.setCursorPosition(31, 11);
-		std::cout << "W";
-		navod_menu.setCursorPosition(29, 12);
-		std::cout << "A S D";
-	}
-	//else
-	{
-		navod_menu.setCursorPosition(31, 11);
-		std::cout << "W";
-		navod_menu.setCursorPosition(29, 12);
-		std::cout << "A S D";
-	}
+		std::cout << navod_menu.ovladani_pohyb_vlevoEN;
+	navod_menu.setCursorPosition(29, 12);
+	std::cout << (char)navod_menu.pohyb_vpravo;
+	navod_menu.setCursorPosition(7, 13);
+	if (!navod_menu.jazyk)
+		std::cout << navod_menu.ovladani_pohyb_vpravoCZ;
+	if (navod_menu.jazyk)
+		std::cout << navod_menu.ovladani_pohyb_vpravoEN;
+	navod_menu.setCursorPosition(29, 13);
+	std::cout << (char)navod_menu.pohyb_vlevo;
 	navod_menu.setCursorPosition(7, 14);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_schopnostCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_schopnostEN;
 	navod_menu.setCursorPosition(29, 14);
-	if (!navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_mezernikCZ;
-	if (navod_menu.jazyk)
-		std::cout << navod_menu.ovladani_mezernikEN;
+	if (navod_menu.pouziti_schopnosti == 32)
+	{
+		if (!navod_menu.jazyk)
+			std::cout << navod_menu.ovladani_mezernikCZ;
+		if (navod_menu.jazyk)
+			std::cout << navod_menu.ovladani_mezernikEN;
+	}
+	else
+	std::cout << (char)navod_menu.pouziti_schopnosti;
 	navod_menu.setCursorPosition(7, 15);
 	if (!navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pauzaCZ;
 	if (navod_menu.jazyk)
 		std::cout << navod_menu.ovladani_pauzaEN;
 	navod_menu.setCursorPosition(29, 15);
-	std::cout << "Esc";
-
+	if (navod_menu.pauza == 27)
+	{
+		std::cout << "Esc";
+	}
+	else
+		std::cout << (char)navod_menu.pauza;
 	navod_menu.x_tecka = 5;
 	navod_menu.y_tecka = 12;
 	navod_menu.horni_zavora_hlavni = 12;
-	navod_menu.dolni_zavora_hlavni = 12;
+	navod_menu.dolni_zavora_hlavni = 15;
 	return navod_menu;
 }
 Menu vykresleni_vzhled_plosiny(Menu navod_menu)
@@ -3015,8 +3031,8 @@ int main()
 	profil.vytvoreni_noveho_profilu();*/
 	while (navod.program)
 	{
-		//menu_ovladani(navod_menu, navod);
-		klasik(navod_menu);
+		menu_ovladani(navod_menu, navod);
+		//klasik(navod_menu);
 		//menu_profil(navod_menu, navod);
 	}
 }

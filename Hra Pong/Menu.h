@@ -803,12 +803,16 @@ public:
 	std::string ovladani_menuEN = "Menu controls";
 	std::string ovladani_hraCZ = "Ovladani ve hre";
 	std::string ovladani_hraEN = "In-game controls";
+	std::string ovladani_enterCZ = "Enter";
+	std::string ovladani_enterEN = "Enter";
 	std::string ovladani_mezernikCZ = "Mezernik";
 	std::string ovladani_mezernikEN = "Spacebar";
 	std::string ovladani_schopnostCZ = "Pouzit schopnost";
 	std::string ovladani_schopnostEN = "Use ability";
-	std::string ovladani_pohybCZ = "Pohyb";
-	std::string ovladani_pohybEN = "Movement";
+	std::string ovladani_pohyb_vlevoCZ = "Pohyb - vlevo";
+	std::string ovladani_pohyb_vlevoEN = "Movement - left";
+	std::string ovladani_pohyb_vpravoCZ = "Pohyb - vpravo";
+	std::string ovladani_pohyb_vpravoEN = "Movement - right";
 	std::string ovladani_pauzaCZ = "Pauza";
 	std::string ovladani_pauzaEN = "Pause";
 
