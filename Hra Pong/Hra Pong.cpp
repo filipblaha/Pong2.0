@@ -342,35 +342,35 @@ void vykresleni_konec(Menu navod_menu)
 		{
 			if (j == 0 && i == 0)
 			{
-				std::wcout << char(201);
+				std::wcout << L"\x2554";
 			}
 			else if (i == 0 && j == navod_menu.vyska_menu * 3 / 4)
 			{
-				std::wcout << char(200);
+				std::wcout << L"\x255a";
 			}
 			else if (j == 0 && i == navod_menu.delka_menu * 3 / 4 + 1)
 			{
-				std::wcout << char(187);
+				std::wcout << L"\x2557";
 			}
 			else if (j == navod_menu.vyska_menu * 3 / 4 && i == navod_menu.delka_menu * 3 / 4 + 1)
 			{
-				std::wcout << char(188);
+				std::wcout << L"\x255d";
 			}
 			else if (j == 4 && i == navod_menu.delka_menu * 3 / 4 + 1)
 			{
-				std::wcout << char(185);
+				std::wcout << L"\x2563";
 			}
 			else if (j == 4 && i == 0)
 			{
-				std::wcout << char(204);
+				std::wcout << L"\x2560";
 			}
 			else if (j == 0 || j == 4 || j == navod_menu.vyska_menu * 3 / 4)
 			{
-				std::wcout << char(205);
+				std::wcout << L"\x2550";
 			}
 			else if (i == 0 || i == navod_menu.delka_menu * 3 / 4 + 1)
 			{
-				std::wcout << char(186);
+				std::wcout << L"\x2551";
 			}
 			else
 			{
@@ -517,11 +517,11 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 			for (int i = 0; i < navod.exp_pole.size(); i++)
 			{
 				if (navod.exp_pole.at(i) == 2)
-					std::wcout << char(219);
+					std::wcout << L"\x2588";
 				if (navod.exp_pole.at(i) == 1)
-					std::wcout << char(178);
+					std::wcout << L"\x2593";
 				if (navod.exp_pole.at(i) == 0)
-					std::wcout << char(176);
+					std::wcout << L"\x2591";
 			}
 		}
 		if (navod_menu.jazyk)
@@ -563,11 +563,11 @@ void prohra(int mod, Menu& navod_menu, Pong& navod)
 			for (int i = 0; i < navod.exp_pole.size(); i++)
 			{
 				if (navod.exp_pole.at(i) == 2)
-					std::wcout << char(219);
+					std::wcout << L"\x2588";
 				if (navod.exp_pole.at(i) == 1)
-					std::wcout << char(178);
+					std::wcout << L"\x2593";
 				if (navod.exp_pole.at(i) == 0)
-					std::wcout << char(176);
+					std::wcout << L"\x2591";
 			}
 		}
 		while (navod_menu.exit == 0)
@@ -614,11 +614,11 @@ void vyhra(int mod, Menu& navod_menu, Pong& navod)
 		for (int i = 0; i < navod.exp_pole.size(); i++)
 		{
 			if (navod.exp_pole.at(i) == 2)
-				std::wcout << char(219);
+				std::wcout << L"\x2588";
 			if (navod.exp_pole.at(i) == 1)
-				std::wcout << char(178);
+				std::wcout << L"\x2593";
 			if (navod.exp_pole.at(i) == 0)
-				std::wcout << char(176);
+				std::wcout << L"\x2591";
 		}
 	}
 	if (navod_menu.jazyk)
@@ -638,11 +638,11 @@ void vyhra(int mod, Menu& navod_menu, Pong& navod)
 
 		navod_menu.setCursorPosition(10, 14);
 		for (int i = 0; i < 4; i++)
-			std::wcout << char(219);
+			std::wcout << L"\x2588";
 		for (int i = 0; i < 8; i++)
-			std::wcout << char(178);
+			std::wcout << L"\x2593";
 		for (int i = 0; i < 8; i++)
-			std::wcout << char(176);
+			std::wcout << L"\x2591";
 	}
 	while (navod_menu.exit == 0)
 	{
@@ -1271,7 +1271,7 @@ Pong vykresleni_start(int mod, Menu& navod_menu, Pong& navod)
 	for (int i = 0; i < navod.DELKA; i++)
 	{
 		if (i == 0 || i == navod.DELKA - 1)
-			std::wcout << char(223);
+			std::wcout << L"\x2580";
 		else
 			std::wcout << '-';
 	}
@@ -2111,11 +2111,11 @@ Menu vykresleni_profil(Menu navod_menu)
 	for (int i = 0; i < 24; i++)
 	{
 		if(i == 0)
-			std::wcout << char(218);
+			std::wcout << L"\x250c";
 		else if (i == 23)
-			std::wcout << char(191);
+			std::wcout << L"\x2510";
 		else
-			std::wcout << char(196);
+			std::wcout << L"\x2500";
 	}
 	for (int j = 8; j < 13; j++)
 	{
@@ -2123,7 +2123,7 @@ Menu vykresleni_profil(Menu navod_menu)
 		for (int i = 0; i < 24; i++)
 		{
 			if (i == 0)
-				std::wcout << char(179);
+				std::wcout << L"\x2502";
 		}
 	}
 	for (int j = 8; j < 13; j++)
@@ -2132,38 +2132,38 @@ Menu vykresleni_profil(Menu navod_menu)
 		for (int i = 0; i < 24; i++)
 		{
 			if (i == 0)
-				std::wcout << char(179);
+				std::wcout << L"\x2502";
 		}
 	}
 	navod_menu.setCursorPosition(8, 13);
 	for (int i = 0; i < 24; i++)
 	{
 		if (i == 0)
-			std::wcout << char(192);
+			std::wcout << L"\x2514";
 		else if (i == 23)
-			std::wcout << char(217);
+			std::wcout << L"\x2518";
 		else
-			std::wcout << char(196);
+			std::wcout << L"\x2500";
 	}
 	navod_menu.setCursorPosition(32, 16);
 	for (int i = 0; i < 7; i++)
 	{
 		if (i == 0)
-			std::wcout << char(218);
+			std::wcout << L"\x250c";
 		else if (i == 6)
-			std::wcout << char(191);
+			std::wcout << L"\x2510";
 		else
-			std::wcout << char(196);
+			std::wcout << L"\x2500";
 	}
 	navod_menu.setCursorPosition(32, 17);
 	for (int i = 0; i < 7; i++)
 	{
 		if (i == 0 || i == 6)
-			std::wcout << char(179);
+			std::wcout << L"\x2502";
 		else if (i == 3)
 			std::wcout << char(17);
 		else if (i == 4 || i == 5)
-			std::wcout << char(196);
+			std::wcout << L"\x2500";
 		else
 			std::wcout << ' ';
 	}
@@ -2171,11 +2171,11 @@ Menu vykresleni_profil(Menu navod_menu)
 	for (int i = 0; i < 7; i++)
 	{
 		if (i == 0)
-			std::wcout << char(192);
+			std::wcout << L"\x2514";
 		else if (i == 6)
-			std::wcout << char(217);
+			std::wcout << L"\x2518";
 		else
-			std::wcout << char(196);
+			std::wcout << L"\x2500";
 	}
 
 	///////    Text   ///////
@@ -2545,9 +2545,9 @@ void vykresleni_logo(Menu navod_menu)
 			if (j == 2)
 			{
 				if (i == 0 || i == 3 || i == 5 || i == 8 || i == 10 || i == 13 || i == 15 || i == 18)
-					std::wcout << char(219);
+					std::wcout << L"\x2588";
 				else if (i == 1 || i == 2 || i == 6 || i == 7 || i == 16 || i == 17)
-					std::wcout << char(223);
+					std::wcout << L"\x2580";
 				else
 				{
 					if (i < 19)
@@ -2564,7 +2564,7 @@ void vykresleni_logo(Menu navod_menu)
 			if (j == 2)
 			{
 				if (i == 0 || i == 3 || i == 5 || i == 8 || i == 10 || i == 11 || i == 13 || i == 15)
-					std::wcout << char(219);
+					std::wcout << L"\x2588";
 				else
 				{
 					if (i < 19)
@@ -2581,9 +2581,9 @@ void vykresleni_logo(Menu navod_menu)
 			if (j == 2)
 			{
 				if (i == 0 || i == 5 || i == 8 || i == 10 || i == 12 || i == 13 || i == 15 || i == 18)
-					std::wcout << char(219);
+					std::wcout << L"\x2588";
 				else if (i > 0 && i < 4 || i == 17)
-					std::wcout << char(223);
+					std::wcout << L"\x2580";
 				else
 				{
 					if (i < 19)
@@ -2600,9 +2600,9 @@ void vykresleni_logo(Menu navod_menu)
 			if (j == 2)
 			{
 				if (i == 0 || i == 5 || i == 8 || i == 10 || i == 13 || i == 15 || i == 18)
-					std::wcout << char(219);
+					std::wcout << L"\x2588";
 				else if (i == 6 || i == 7 || i == 16 || i == 17)
-					std::wcout << char(220);
+					std::wcout << L"\x2584";
 				else
 				{
 					if (i < 19)
@@ -2615,7 +2615,7 @@ void vykresleni_logo(Menu navod_menu)
 void vykresleni_tecka(Menu navod_menu)
 {
 	navod_menu.setCursorPosition(navod_menu.x_tecka, navod_menu.y_tecka);
-	std::wcout << char(254);
+	std::wcout << L"\x25ba";
 }
 void smazani_tecka(Menu navod_menu)
 {
@@ -2631,22 +2631,22 @@ void vykresleni_oznaceni(Menu navod_menu)
 			if (j == 0 && i == 0)
 			{
 				navod_menu.setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni);
-				std::wcout << char(201);
+				std::wcout << L"\x2554";
 			}
 			if (j == 0 && i == 7)
 			{
 				navod_menu.setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni);
-				std::wcout << char(187);
+				std::wcout << L"\x2557";
 			}
 			if (j == 2 && i == 0)
 			{
 				navod_menu.setCursorPosition(navod_menu.x_oznaceni, navod_menu.y_oznaceni + 2);
-				std::wcout << char(200);
+				std::wcout << L"\x255a";
 			}
 			if (j == 2 && i == 7)
 			{
 				navod_menu.setCursorPosition(navod_menu.x_oznaceni + 7, navod_menu.y_oznaceni + 2);
-				std::wcout << char(188);
+				std::wcout << L"\x255d";
 			}
 		}
 	}
@@ -2692,27 +2692,27 @@ void vykresleni_menu_start(Menu navod_menu, Pong navod)
 		{
 			if (j == 0 && i == 0)
 			{
-				std::wcout << char(201);
+				std::wcout << L"\x2554";
 			}
 			else if (i == 0 && j == navod_menu.vyska_menu - 1)
 			{
-				std::wcout << char(200);
+				std::wcout << L"\x255a";
 			}
 			else if (j == 0 && i == navod_menu.delka_menu - 1)
 			{
-				std::wcout << char(187);
+				std::wcout << L"\x2557";
 			}
 			else if (j == navod_menu.vyska_menu - 1 && i == navod_menu.delka_menu - 1)
 			{
-				std::wcout << char(188);
+				std::wcout << L"\x255d";
 			}
 			else if (j == 0 || j == navod_menu.vyska_menu - 1)
 			{
-				std::wcout << char(205);
+				std::wcout << L"\x2550";
 			}
 			else if (i == 0 || i == navod_menu.delka_menu - 1)
 			{
-				std::wcout << char(186);
+				std::wcout << L"\x2551";
 			}
 			else
 			{
@@ -2747,9 +2747,9 @@ void vykresleni_uroven(Menu navod_menu, Pong navod)
 	for (int i = 0; i < navod.exp_pole.size(); i++)
 	{
 		if (navod.exp_pole.at(i) == 2)
-			std::wcout << char(219);
+			std::wcout << L"\x2588";
 		if (navod.exp_pole.at(i) == 0)
-			std::wcout << char(176);
+			std::wcout << L"\x2591";
 	}
 }
 void smazani_menu(Menu navod_menu)

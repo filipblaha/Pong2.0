@@ -16,11 +16,11 @@ public:
 	bool bomba = 0;
 	bool bomba_pocitadlo = 0;
 
-	char zed = char(219);
-	char blok1 = char(176);
-	char blok2 = char(177);
-	char blok3 = char(178);
-	char mic = 'O';
+	const wchar_t* zed = L"\x2588";
+	const wchar_t* blok1 = L"\x2591";
+	const wchar_t* blok2 = L"\x2592";
+	const wchar_t* blok3 = L"\x2593";
+	const wchar_t* mic = L"\x25cb";
 
 	int DELKA = 20;
 	int VYSKA = 20;
