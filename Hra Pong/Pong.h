@@ -20,7 +20,10 @@ public:
 	const wchar_t* blok1 = L"\x2591";
 	const wchar_t* blok2 = L"\x2592";
 	const wchar_t* blok3 = L"\x2593";
-	const wchar_t* mic = L"\x25cb";
+	const wchar_t* mic_skin = L"\x058e";
+	const wchar_t* bomba_skin = L"\x263c"; //L"\x047a"  L"\x058e"  L"\x263c"  x03b8
+	const wchar_t* bomba_skin_start = L"\x25cc";
+	const wchar_t* slow_skin = L"\x25ca";
 
 	int DELKA = 20;
 	int VYSKA = 20;

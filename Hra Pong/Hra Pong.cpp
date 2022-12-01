@@ -1238,7 +1238,7 @@ Pong vykresleni_start(int mod, Menu& navod_menu, Pong& navod)
 
 	////////////    vykreslovani mice na zacatku    ////////////
 	navod_menu.setCursorPosition(navod.x_mic, navod.y_mic);
-	std::wcout << navod.mic;
+	std::wcout << navod.mic_skin;
 
 	////////////    vykreslovani bloku na zacatku    ////////////
 	for (int j = 0; j < navod.bloky.size(); j++)
@@ -1917,7 +1917,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 			////////////    vykreslovani mice    ////////////
 
 			navod_menu.setCursorPosition(navod.x_mic, navod.y_mic);
-			std::wcout << navod.mic;
+			std::wcout << navod.mic_skin;
 
 			////////////    vykreslovani bloku    ////////////
 
@@ -1961,7 +1961,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 						if (navod.bloky.at(j).at(i) == -1)
 						{
 							navod_menu.setCursorPosition(navod.x_powerup, navod.y_powerup);
-							std::wcout << '$';
+							std::wcout << navod.slow_skin;
 						}
 					}
 				}
@@ -1980,10 +1980,15 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 		if (navod.pocet_vykresleni % (2 * navod.rychlost_hry) == 0)
 		{
 			////////////    vykreslovani bomby    ////////////
-			if (navod.bomba || navod.bomba_pocitadlo)
+			if (navod.bomba)
 			{
 				navod_menu.setCursorPosition(navod.x_bomba, navod.y_bomba);
-				std::wcout << 'X';
+				std::wcout << navod.bomba_skin;
+			}
+			if (navod.bomba_pocitadlo)
+			{
+				navod_menu.setCursorPosition(navod.x_bomba, navod.y_bomba);
+				std::wcout << navod.bomba_skin_start;
 			}
 			//////////    vykreslovani casomiry  ////////////
 		}
@@ -2000,7 +2005,7 @@ void vykresleni_hra(int mod, Menu& navod_menu, Pong& navod)
 		if (navod.power_up)
 		{
 			navod_menu.setCursorPosition(12, navod.VYSKA);
-			std::wcout << '$';
+			std::wcout << navod.slow_skin;
 			navod.slow = 1;
 			navod.power_up = 0;
 		}
@@ -3052,4 +3057,4 @@ int main()
 		menu_profil(navod_menu, navod);
 	}
 }
-// wcout
+// vector out of range vyzkouset bombu
