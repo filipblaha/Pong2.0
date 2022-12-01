@@ -8,6 +8,9 @@
 #endif
 #include <Windows.h>
 
+#include <fcntl.h>
+#include <io.h> // graficke knihovny
+
 #include "Pong.h"
 #include "tinyxml2.h"
 
@@ -29,8 +32,8 @@ public:
 	int level_s = 0;
 	int exp_s = 0;
 
-	int pohyb_vlevo_s = 65;
-	int pohyb_vpravo_s = 68;
+	int pohyb_vlevo_s = 68;
+	int pohyb_vpravo_s = 65;
 	int pouziti_schopnosti_s = 32;
 	int pauza_s = 27;
 
@@ -68,11 +71,11 @@ public:
 		pRoot->InsertEndChild(pElement6);
 
 		XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
-		pElement7->SetText(65);
+		pElement7->SetText(68);
 		pRoot->InsertEndChild(pElement7);
 
 		XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
-		pElement8->SetText(68);
+		pElement8->SetText(65);
 		pRoot->InsertEndChild(pElement8);
 
 		XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
@@ -165,8 +168,8 @@ public:
 	int exp_s = 0;
 
 
-	int pohyb_vlevo_s = 65;
-	int pohyb_vpravo_s = 68;
+	int pohyb_vlevo_s = 68;
+	int pohyb_vpravo_s = 65;
 	int pouziti_schopnosti_s = 32;
 	int pauza_s = 27;
 
@@ -205,11 +208,11 @@ public:
 		pRoot->InsertEndChild(pElement6);
 
 		XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
-		pElement7->SetText(65);
+		pElement7->SetText(68);
 		pRoot->InsertEndChild(pElement7);
 
 		XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
-		pElement8->SetText(68);
+		pElement8->SetText(65);
 		pRoot->InsertEndChild(pElement8);
 
 		XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
@@ -302,8 +305,8 @@ public:
 	int exp_s = 0;
 
 
-	int pohyb_vlevo_s = 65;
-	int pohyb_vpravo_s = 68;
+	int pohyb_vlevo_s = 68;
+	int pohyb_vpravo_s = 65;
 	int pouziti_schopnosti_s = 32;
 	int pauza_s = 27;
 
@@ -342,11 +345,11 @@ public:
 		pRoot->InsertEndChild(pElement6);
 
 		XMLElement* pElement7 = xmlDoc.NewElement("pohyb_vlevo");
-		pElement7->SetText(65);
+		pElement7->SetText(68);
 		pRoot->InsertEndChild(pElement7);
 
 		XMLElement* pElement8 = xmlDoc.NewElement("pohyb_vpravo");
-		pElement8->SetText(68);
+		pElement8->SetText(65);
 		pRoot->InsertEndChild(pElement8);
 
 		XMLElement* pElement9 = xmlDoc.NewElement("pouziti_schopnosti");
@@ -912,100 +915,100 @@ public:
 
 	/////////////////////    Preklad     //////////////////////////
 	
-	std::string vyber_profiluCZ = "Vyber si svuj profil";
-	std::string vyber_profiluEN = "Choose your profile";
-	std::string profil1CZ = "Profil 1";
-	std::string profil1EN = "Profile 1";
-	std::string profil2CZ = "Profil 2";
-	std::string profil2EN = "Profile 2";
-	std::string profil3CZ = "Profil 3";
-	std::string profil3EN = "Profile 3";
-	std::string smazani_pokrokCZ = "Smazat pokrok";
-	std::string smazani_pokrokEN = "Delete progress";
-	std::string smazani_pokrok_otazka1CZ = "Opravdu chcete smazat pokrok?";
-	std::string smazani_pokrok_otazka1EN = "Do you want to delete progress?";
-	std::string smazani_pokrok_otazka2CZ = "[ENTER]";
-	std::string smazani_pokrok_otazka2EN = "[ENTER]";
-	std::string profil_nazevCZ = "Zadej nazev profilu";
-	std::string profil_nazevEN = "Enter a profile name";
+	std::wstring vyber_profiluCZ = L"Vyber si svuj profil";
+	std::wstring vyber_profiluEN = L"Choose your profile";
+	std::wstring profil1CZ = L"Profil 1";
+	std::wstring profil1EN = L"Profile 1";
+	std::wstring profil2CZ = L"Profil 2";
+	std::wstring profil2EN = L"Profile 2";
+	std::wstring profil3CZ = L"Profil 3";
+	std::wstring profil3EN = L"Profile 3";
+	std::wstring smazani_pokrokCZ = L"Smazat pokrok";
+	std::wstring smazani_pokrokEN = L"Delete progress";
+	std::wstring smazani_pokrok_otazka1CZ = L"Opravdu chcete smazat pokrok?";
+	std::wstring smazani_pokrok_otazka1EN = L"Do you want to delete progress?";
+	std::wstring smazani_pokrok_otazka2CZ = L"[ENTER]";
+	std::wstring smazani_pokrok_otazka2EN = L"[ENTER]";
+	std::wstring profil_nazevCZ = L"Zadej nazev profilu";
+	std::wstring profil_nazevEN = L"Enter a profile name";
 
-	std::string herni_modyCZ = "Herni mody";
-	std::string herni_modyEN = "Game modes";
-	std::string vzhled_plosinyCZ = "Vzhled plosiny";
-	std::string vzhled_plosinyEN = "Skins";
-	std::string nastaveniCZ = "Nastaveni";
-	std::string nastaveniEN = "Settings";
-	std::string verzeCZ = "verze ";
-	std::string verzeEN = "version ";
-	std::string HERNI_MODYCZ = "HERNI MODY";
-	std::string HERNI_MODYEN = "GAME MODES";
-	std::string NASTAVENICZ = "NASTAVENI";
-	std::string NASTAVENIEN = "SETTINGS";
-	std::string VZHLED_PLOSINYCZ = "VZHLED PLOSINY";
-	std::string VZHLED_PLOSINYEN = "SKINS";
-	std::string neodemcenoCZ = "Odemkne se na urovni  ";
-	std::string neodemcenoEN = "Unlocks after level ";
-	std::string klasikCZ = "Klasik";
-	std::string klasikEN = "Classic";
-	std::string rogue_likeCZ = "Rogue like - zatim nefunkcni";
-	std::string rogue_likeEN = "Rogue like - zatim nefunkcni";
-	std::string stejne_tvaryCZ = "Stejne tvary - zatim nefunkcni";
-	std::string stejne_tvaryEN = "Hit the same color - zatim nefunkcni";
-	std::string bloky_padajiCZ = "Bloky padaji";
-	std::string bloky_padajiEN = "Falling blocks";
-	std::string jazykCZ = "Jazyk";
-	std::string jazykEN = "Language";
-	std::string ceskyCZ = "Cesky";
-	std::string ceskyEN = "Czech";
-	std::string anglickyCZ = "Anglicky";
-	std::string anglickyEN = "English";
-	std::string ovladaniCZ = "Ovladani";
-	std::string ovladaniEN = "Controls";
-	std::string OVLADANICZ = "OVLADANI";
-	std::string OVLADANIEN = "CONTROLS";
+	std::wstring herni_modyCZ = L"Herni mody";
+	std::wstring herni_modyEN = L"Game modes";
+	std::wstring vzhled_plosinyCZ = L"Vzhled plosiny";
+	std::wstring vzhled_plosinyEN = L"Skins";
+	std::wstring nastaveniCZ = L"Nastaveni";
+	std::wstring nastaveniEN = L"Settings";
+	std::wstring verzeCZ = L"verze ";
+	std::wstring verzeEN = L"version ";
+	std::wstring HERNI_MODYCZ = L"HERNI MODY";
+	std::wstring HERNI_MODYEN = L"GAME MODES";
+	std::wstring NASTAVENICZ = L"NASTAVENI";
+	std::wstring NASTAVENIEN = L"SETTINGS";
+	std::wstring VZHLED_PLOSINYCZ = L"VZHLED PLOSINY";
+	std::wstring VZHLED_PLOSINYEN = L"SKINS";
+	std::wstring neodemcenoCZ = L"Odemkne se na urovni  ";
+	std::wstring neodemcenoEN = L"Unlocks after level ";
+	std::wstring klasikCZ = L"Klasik";
+	std::wstring klasikEN = L"Classic";
+	std::wstring rogue_likeCZ = L"Rogue like - zatim nefunkcni";
+	std::wstring rogue_likeEN = L"Rogue like - zatim nefunkcni";
+	std::wstring stejne_tvaryCZ = L"Stejne tvary - zatim nefunkcni";
+	std::wstring stejne_tvaryEN = L"Hit the same color - zatim nefunkcni";
+	std::wstring bloky_padajiCZ = L"Bloky padaji";
+	std::wstring bloky_padajiEN = L"Falling blocks";
+	std::wstring jazykCZ = L"Jazyk";
+	std::wstring jazykEN = L"Language";
+	std::wstring ceskyCZ = L"Cesky";
+	std::wstring ceskyEN = L"Czech";
+	std::wstring anglickyCZ = L"Anglicky";
+	std::wstring anglickyEN = L"English";
+	std::wstring ovladaniCZ = L"Ovladani";
+	std::wstring ovladaniEN = L"Controls";
+	std::wstring OVLADANICZ = L"OVLADANI";
+	std::wstring OVLADANIEN = L"CONTROLS";
 
-	std::string odchodP1CZ = "Zkus to znovu.";
-	std::string odchodP1EN = "Try again.";
-	std::string odchodV1CZ = "VYHRAL JSI!";
-	std::string odchodV1EN = "YOU'VE WON!";
-	std::string odchod2CZ = "Restart[MEZERNIK]";
-	std::string odchod2EN = "Restart [SPACEBAR]";
-	std::string odchod3CZ = "Menu[Q]";
-	std::string odchod3EN = "Menu [Q]";
-	std::string odchod4CZ = "NEJLEPSI CAS: ";
-	std::string odchod4EN = "BEST TIME: ";
-	std::string odchodV5CZ = "Dosazeny cas: ";
-	std::string odchodV5EN = "Your time: ";
-	std::string odchodP5CZ = "Bloku zbylo: ";
-	std::string odchodP5EN = "Blocks left: ";
-	std::string odchod6CZ = "Uroven ";
-	std::string odchod6EN = "Level ";
-	std::string odchod7CZ = "Bloku zniceno: ";
-	std::string odchod7EN = "Blocks destroyed: ";
-	std::string odchod8CZ = "NEJVICE ZNICENYCH BLOKU: ";
-	std::string odchod8EN = "HIGHSCORE: ";
+	std::wstring odchodP1CZ = L"Zkus to znovu.";
+	std::wstring odchodP1EN = L"Try again.";
+	std::wstring odchodV1CZ = L"VYHRAL JSI!";
+	std::wstring odchodV1EN = L"YOU'VE WON!";
+	std::wstring odchod2CZ = L"Restart[MEZERNIK]";
+	std::wstring odchod2EN = L"Restart [SPACEBAR]";
+	std::wstring odchod3CZ = L"Menu[Q]";
+	std::wstring odchod3EN = L"Menu [Q]";
+	std::wstring odchod4CZ = L"NEJLEPSI CAS: ";
+	std::wstring odchod4EN = L"BEST TIME: ";
+	std::wstring odchodV5CZ = L"Dosazeny cas: ";
+	std::wstring odchodV5EN = L"Your time: ";
+	std::wstring odchodP5CZ = L"Bloku zbylo: ";
+	std::wstring odchodP5EN = L"Blocks left: ";
+	std::wstring odchod6CZ = L"Uroven ";
+	std::wstring odchod6EN = L"Level ";
+	std::wstring odchod7CZ = L"Bloku zniceno: ";
+	std::wstring odchod7EN = L"Blocks destroyed: ";
+	std::wstring odchod8CZ = L"NEJVICE ZNICENYCH BLOKU: ";
+	std::wstring odchod8EN = L"HIGHSCORE: ";
 
-	std::string ovladani_menuCZ = "Ovladani v menu";
-	std::string ovladani_menuEN = "Menu controls";
-	std::string ovladani_hraCZ = "Ovladani ve hre";
-	std::string ovladani_hraEN = "In-game controls";
-	std::string ovladani_enterCZ = "Enter";
-	std::string ovladani_enterEN = "Enter";
-	std::string ovladani_mezernikCZ = "Mezernik";
-	std::string ovladani_mezernikEN = "Spacebar";
-	std::string ovladani_schopnostCZ = "Pouzit schopnost";
-	std::string ovladani_schopnostEN = "Use ability";
-	std::string ovladani_pohyb_vlevoCZ = "Pohyb - vlevo";
-	std::string ovladani_pohyb_vlevoEN = "Movement - left";
-	std::string ovladani_pohyb_vpravoCZ = "Pohyb - vpravo";
-	std::string ovladani_pohyb_vpravoEN = "Movement - right";
-	std::string ovladani_pauzaCZ = "Pauza";
-	std::string ovladani_pauzaEN = "Pause";
+	std::wstring ovladani_menuCZ = L"Ovladani v menu";
+	std::wstring ovladani_menuEN = L"Menu controls";
+	std::wstring ovladani_hraCZ = L"Ovladani ve hre";
+	std::wstring ovladani_hraEN = L"In-game controls";
+	std::wstring ovladani_enterCZ = L"Enter";
+	std::wstring ovladani_enterEN = L"Enter";
+	std::wstring ovladani_mezernikCZ = L"Mezernik";
+	std::wstring ovladani_mezernikEN = L"Spacebar";
+	std::wstring ovladani_schopnostCZ = L"Pouzit schopnost";
+	std::wstring ovladani_schopnostEN = L"Use ability";
+	std::wstring ovladani_pohyb_vlevoCZ = L"Pohyb - vlevo";
+	std::wstring ovladani_pohyb_vlevoEN = L"Movement - left";
+	std::wstring ovladani_pohyb_vpravoCZ = L"Pohyb - vpravo";
+	std::wstring ovladani_pohyb_vpravoEN = L"Movement - right";
+	std::wstring ovladani_pauzaCZ = L"Pauza";
+	std::wstring ovladani_pauzaEN = L"Pause";
 
-	std::string novy_profil = "Novy_profil";
-	std::string muj_profil0;
-	std::string muj_profil1;
-	std::string muj_profil2;
+	std::wstring novy_profil = L"Novy_profil";
+	std::wstring muj_profil0;
+	std::wstring muj_profil1;
+	std::wstring muj_profil2;
 	int rozhodovac(int strana, int& plosina_skin_zmena, int& jazyk_zmena)
 	{
 		Pong navod;
@@ -1131,7 +1134,7 @@ public:
 				if (level >= potr_urov5)
 				{
 					setCursorPosition(27, 14);
-					std::cout << "      ";
+					std::wcout << L"      ";
 					setCursorPosition(27, 14);
 					Pong navod;
 					pole_skin.resize(navod.velikost_plosina);

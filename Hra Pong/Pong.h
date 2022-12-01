@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <fcntl.h>
+#include <io.h> // graficke knihovny
 
 class Pong
 {
